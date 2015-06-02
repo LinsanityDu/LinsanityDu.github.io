@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Algorithms/" style="font-size: 20px;">Algorithms</a><a href="/tags/HashTable/" style="font-size: 10px;">HashTable</a><a href="/tags/LintCode/" style="font-size: 10px;">LintCode</a><a href="/tags/Others/" style="font-size: 10px;">Others</a><a href="/tags/geeeksforgeeks/" style="font-size: 10px;">geeeksforgeeks</a>
+						<a href="/tags/Algorithms/" style="font-size: 20px;">Algorithms</a><a href="/tags/HashTable/" style="font-size: 10px;">HashTable</a><a href="/tags/LintCode/" style="font-size: 16.67px;">LintCode</a><a href="/tags/Others/" style="font-size: 10px;">Others</a><a href="/tags/Queue/" style="font-size: 10px;">Queue</a><a href="/tags/Sorting/" style="font-size: 10px;">Sorting</a><a href="/tags/Stack/" style="font-size: 13.33px;">Stack</a><a href="/tags/geeeksforgeeks/" style="font-size: 10px;">geeeksforgeeks</a>
 					</div>
 				</section>
 				
@@ -190,6 +190,304 @@
 	</div>
 </nav>
       <div class="body-wrap">
+  
+    <article id="post-MinStack" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/01/MinStack/" class="article-date">
+  	<time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished">2015-06-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/01/MinStack/">[LintCode] - Min Stack</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/min-stack/#" target="_blank" rel="external">link</a></h5><p>Implement a stack with min() function, which will return the smallest number in the stack.</p>
+<p>It should support push, pop and min operation all in O(1) cost.</p>
+<h5 id="Example">Example</h5><p>Operations: push(1), pop(), push(2), push(3), min(), push(1), min() Return: 1, 2, 1</p>
+<h5 id="Note">Note</h5><p>min operation will never be called if there is no number in the stack</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>This is a classic data structure problem. My thought is using two stack: one NORMAL stack is used to store all numbers that are pushed in; the other one is used to store the MINIMUM number so far. </p>
+<p>When we are doing “push” operation, we push the number into the NORMAL stack as usual; we also push this number into the MINIMUM stack if this number is smaller than the peek of the MINIMUM stack. Here we need to care about two things:</p>
+<p>(1) If the MINIMUM stack is empty, we just push the number into it.</p>
+<p>(2) If the number is larger than the peek of the MINIMUM stack, we just push the minStack.peek() into minStack to guarantee NORMAL and MINIMUM stack have the same number of elements.</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> class Solution {
+
+    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> <span class="built_in">stack</span>;
+    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> minStack;
+    <span class="keyword">public</span> Solution() {
+        <span class="comment">// do initialize if necessary</span>
+        <span class="built_in">stack</span> <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
+        minStack <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
+    }
+
+    <span class="keyword">public</span> <span class="literal">void</span> push(int number) {
+        <span class="comment">// write your code here</span>
+        <span class="built_in">stack</span><span class="built_in">.</span>push(number);
+        <span class="keyword">if</span> (minStack<span class="built_in">.</span>isEmpty()) {
+            minStack<span class="built_in">.</span>push(number);
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (number <span class="subst">&lt;</span> minStack<span class="built_in">.</span>peek()) {
+                minStack<span class="built_in">.</span>push(number);
+            } <span class="keyword">else</span> {
+                minStack<span class="built_in">.</span>push(minStack<span class="built_in">.</span>peek());
+            }
+        }
+
+    }
+
+    <span class="keyword">public</span> int pop() {
+        <span class="comment">// write your code here</span>
+        minStack<span class="built_in">.</span>pop();
+        <span class="keyword">return</span> <span class="built_in">stack</span><span class="built_in">.</span>pop();
+    }
+
+    <span class="keyword">public</span> int <span class="keyword">min</span>() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">return</span> minStack<span class="built_in">.</span>peek();
+    }
+}
+</code></pre><p><img src="http://www.ritambhara.in/wp-content/uploads/2012/07/minstack_1.png" alt="">     </p>
+<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stack/">Stack</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-ImplementQueueByTwoStacks" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/01/ImplementQueueByTwoStacks/" class="article-date">
+  	<time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished">2015-06-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/01/ImplementQueueByTwoStacks/">[LintCode] - Implement Queue by Two Stacks</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/implement-queue-by-two-stacks/#" target="_blank" rel="external">link</a></h5><p>As the title described, you should only use two stacks to implement a queue’s actions.</p>
+<p>The queue should support push(element), pop() and top() where pop is pop the first(a.k.a front) element in the queue.</p>
+<p>Both pop and top methods should return the value of first element.</p>
+<h5 id="Example">Example</h5><p>For push(1), pop(), push(2), push(3), top(), pop(), you should return 1, 2 and 2</p>
+<h5 id="Challenge">Challenge</h5><p>implement it by two stacks, do not use any other data structure and push, pop and top should be O(1) by AVERAGE.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Push: S1 - Push(x)</p>
+<p>Pop: if S2 is empty. S1 -&gt; S2 then S2.pop()</p>
+<p>Top: similar like Pop</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">private</span> Stack&lt;Integer&gt; stack1;
+    <span class="keyword">private</span> Stack&lt;Integer&gt; stack2;
+
+    <span class="keyword">public</span> Solution() {
+       <span class="comment">// do initialization if necessary</span>
+       stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
+       stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
+    }
+
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">push</span>(<span class="keyword">int</span> element) {
+        <span class="comment">// write your code here</span>
+        stack1.<span class="keyword">push</span>(element);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">pop</span>() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">if</span> (stack2.isEmpty()) {
+            <span class="keyword">while</span> (!stack1.isEmpty()) {
+                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
+            }
+        }
+        <span class="keyword">return</span> stack2.<span class="keyword">pop</span>();
+    }
+
+    <span class="keyword">public</span> <span class="keyword">int</span> top() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">if</span> (stack2.isEmpty()) {
+            <span class="keyword">while</span> (!stack1.isEmpty()) {
+                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
+            }
+        }
+        <span class="keyword">return</span> stack2.peek();
+    }
+}
+</code></pre><p><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTE3FA4w_ianic7LCKdQYJZGhkm_mXJWX3mAMBR4ha823hgB5936g" alt="">     </p>
+<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Queue/">Queue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stack/">Stack</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-SelectionSort" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/05/31/SelectionSort/" class="article-date">
+  	<time datetime="2015-05-31T23:55:31.000Z" itemprop="datePublished">2015-05-31</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/05/31/SelectionSort/">Selection Sort</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="What_is_Selection_Sort?"><em>What is Selection Sort?</em></h4><p>The selection sort algorithm sorts an array by repeated finding the minimum element from the unsorted subarray and putting it at the beginning. The algorithm maintains two subarrays in a given array.</p>
+<p>(1) The subarray that is already sorted.<br>(2) The remaining subarray which is unsorted.</p>
+<p>In every iteration of selection sort, the minimum element from the unsorted subarray is picked and moved to the sorted subarray.</p>
+<p>Here is an step-by-step explaination:</p>
+<pre><code><span class="type">array</span>[] = {<span class="number">64</span>, <span class="number">25</span>, <span class="number">12</span>, <span class="number">22</span>, <span class="number">11</span>}
+
+// <span class="type">Find</span> the minimum element <span class="keyword">in</span> <span class="type">array</span>[<span class="number">0</span>...<span class="number">4</span>] <span class="keyword">and</span> place it at the beginning
+<span class="number">11</span> <span class="number">25</span> <span class="number">12</span> <span class="number">22</span> <span class="number">64</span>
+
+// <span class="type">Find</span> the minimum element <span class="keyword">in</span> <span class="type">array</span>[<span class="number">1</span>...<span class="number">4</span>] <span class="keyword">and</span> place it at the beginning <span class="keyword">of</span> <span class="type">array</span>[<span class="number">1</span>...<span class="number">4</span>]
+<span class="number">11</span> <span class="number">12</span> <span class="number">25</span> <span class="number">22</span> <span class="number">64</span>
+
+// <span class="type">Find</span> the minimum element <span class="keyword">in</span> <span class="type">array</span>[<span class="number">2</span>...<span class="number">4</span>] <span class="keyword">and</span> place it at the beginning <span class="keyword">of</span> <span class="type">array</span>[<span class="number">2</span>...<span class="number">4</span>]
+<span class="number">11</span> <span class="number">12</span> <span class="number">22</span> <span class="number">25</span> <span class="number">64</span>
+
+// <span class="type">Find</span> the minimum element <span class="keyword">in</span> <span class="type">array</span>[<span class="number">3</span>...<span class="number">4</span>] <span class="keyword">and</span> place it at the beginning <span class="keyword">of</span> <span class="type">array</span>[<span class="number">3</span>...<span class="number">4</span>]
+<span class="number">11</span> <span class="number">12</span> <span class="number">22</span> <span class="number">25</span> <span class="number">64</span>
+</code></pre><p>Here is a Java program for implementing the selection sort.</p>
+<pre><code><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>{
+    <span class="keyword">int</span> temp = a;
+    a = b;
+    b = temp;
+}
+
+<span class="function"><span class="keyword">void</span> <span class="title">selectionSort</span><span class="params">(<span class="keyword">int</span>[] <span class="built_in">array</span>)</span> </span>{
+    <span class="keyword">int</span> minIndex;
+
+    <span class="comment">// one-by-one move in the unsorted subarray</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">array</span>.length - <span class="number">1</span>; i++) {
+        minIndex = i;
+        <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; <span class="built_in">array</span>.length; j++) {
+            <span class="keyword">if</span> (<span class="built_in">array</span>[j] &lt; <span class="built_in">array</span>[minIndex]) {
+                minIndex = j;
+            }
+        }
+        swap(<span class="built_in">array</span>[i], <span class="built_in">array</span>[minIndex]);
+    }
+}
+</code></pre><h4 id="Time_Complexity"><em>Time Complexity</em></h4><p>O(n^2) for worst, best and average case, because of two nested loops</p>
+<h4 id="Space_Complexity"><em>Space Complexity</em></h4><p>O(n) total, O(1) auxiliary</p>
+<p><img src="http://upload.wikimedia.org/wikipedia/commons/b/b0/Selection_sort_animation.gif" alt="">     </p>
+<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Sorting/">Sorting</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/Algorithm/">Algorithm</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
   
     <article id="post-LintCode-HashFunction" class="article article-type-post" itemscope itemprop="blogPost">
   

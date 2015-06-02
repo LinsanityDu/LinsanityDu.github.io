@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Tag: Others | LinのCoding</title>
+  <title>Tag: Queue | LinのCoding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="InterviewPreparation Algorithm">
 <meta property="og:type" content="website">
 <meta property="og:title" content="LinのCoding">
-<meta property="og:url" content="http://www.piedbiper.tk/tags/Others/index.html">
+<meta property="og:url" content="http://www.piedbiper.tk/tags/Queue/index.html">
 <meta property="og:site_name" content="LinのCoding">
 <meta property="og:description" content="InterviewPreparation Algorithm">
 <meta name="twitter:card" content="summary">
@@ -191,11 +191,11 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-MyFirstBlog" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-ImplementQueueByTwoStacks" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/05/19/MyFirstBlog/" class="article-date">
-  	<time datetime="2015-05-20T03:57:01.000Z" itemprop="datePublished">2015-05-19</time>
+      <a href="/2015/06/01/ImplementQueueByTwoStacks/" class="article-date">
+  	<time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished">2015-06-01</time>
 </a>
     </div>
   
@@ -208,7 +208,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/05/19/MyFirstBlog/">My School</a>
+      <a class="article-title" href="/2015/06/01/ImplementQueueByTwoStacks/">[LintCode] - Implement Queue by Two Stacks</a>
     </h1>
   
 
@@ -217,25 +217,63 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>My school</li>
-</ul>
-<p><a href="http://www.wpi.edu" target="_blank" rel="external">Worcester Polytechnic Institute</a></p>
-<p><img src="http://upload.wikimedia.org/wikipedia/en/c/c4/WPI_Beech_Tree.jpg" alt=""></p>
-<p>Hello WPI!</p>
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/implement-queue-by-two-stacks/#" target="_blank" rel="external">link</a></h5><p>As the title described, you should only use two stacks to implement a queue’s actions.</p>
+<p>The queue should support push(element), pop() and top() where pop is pop the first(a.k.a front) element in the queue.</p>
+<p>Both pop and top methods should return the value of first element.</p>
+<h5 id="Example">Example</h5><p>For push(1), pop(), push(2), push(3), top(), pop(), you should return 1, 2 and 2</p>
+<h5 id="Challenge">Challenge</h5><p>implement it by two stacks, do not use any other data structure and push, pop and top should be O(1) by AVERAGE.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Push: S1 - Push(x)</p>
+<p>Pop: if S2 is empty. S1 -&gt; S2 then S2.pop()</p>
+<p>Top: similar like Pop</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">private</span> Stack&lt;Integer&gt; stack1;
+    <span class="keyword">private</span> Stack&lt;Integer&gt; stack2;
 
+    <span class="keyword">public</span> Solution() {
+       <span class="comment">// do initialization if necessary</span>
+       stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
+       stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
+    }
+
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">push</span>(<span class="keyword">int</span> element) {
+        <span class="comment">// write your code here</span>
+        stack1.<span class="keyword">push</span>(element);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">pop</span>() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">if</span> (stack2.isEmpty()) {
+            <span class="keyword">while</span> (!stack1.isEmpty()) {
+                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
+            }
+        }
+        <span class="keyword">return</span> stack2.<span class="keyword">pop</span>();
+    }
+
+    <span class="keyword">public</span> <span class="keyword">int</span> top() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">if</span> (stack2.isEmpty()) {
+            <span class="keyword">while</span> (!stack1.isEmpty()) {
+                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
+            }
+        }
+        <span class="keyword">return</span> stack2.peek();
+    }
+}
+</code></pre><p><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTE3FA4w_ianic7LCKdQYJZGhkm_mXJWX3mAMBR4ha823hgB5936g" alt="">     </p>
+<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
       
     </div>
     
     <div class="article-info article-info-index">
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Others/">Others</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Queue/">Queue</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stack/">Stack</a></li></ul>
 	</div>
 
       
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Others/">Others</a>
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
 	</div>
 
 
