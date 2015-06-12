@@ -113,7 +113,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/Algorithms/" style="font-size: 20px;">Algorithms</a><a href="/tags/HashTable/" style="font-size: 15px;">HashTable</a><a href="/tags/Heap/" style="font-size: 10px;">Heap</a><a href="/tags/LintCode/" style="font-size: 17.5px;">LintCode</a><a href="/tags/Others/" style="font-size: 10px;">Others</a><a href="/tags/Queue/" style="font-size: 10px;">Queue</a><a href="/tags/Sorting/" style="font-size: 10px;">Sorting</a><a href="/tags/Stack/" style="font-size: 12.5px;">Stack</a><a href="/tags/geeeksforgeeks/" style="font-size: 10px;">geeeksforgeeks</a>
+						<a href="/tags/Algorithms/" style="font-size: 20px;">Algorithms</a><a href="/tags/HashTable/" style="font-size: 15px;">HashTable</a><a href="/tags/Heap/" style="font-size: 10px;">Heap</a><a href="/tags/LinkedList/" style="font-size: 10px;">LinkedList</a><a href="/tags/LintCode/" style="font-size: 17.5px;">LintCode</a><a href="/tags/Others/" style="font-size: 10px;">Others</a><a href="/tags/Queue/" style="font-size: 10px;">Queue</a><a href="/tags/Sorting/" style="font-size: 10px;">Sorting</a><a href="/tags/Stack/" style="font-size: 12.5px;">Stack</a><a href="/tags/geeeksforgeeks/" style="font-size: 10px;">geeeksforgeeks</a>
 					</div>
 				</section>
 				
@@ -290,6 +290,152 @@ public class <span class="type">Solution</span> {
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashTable/">HashTable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-LRUCache" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/10/LRUCache/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/10/LRUCache/">[LintCode] - LRUCache</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/lru-cache/#" target="_blank" rel="external">link</a></h5><p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.</p>
+<p>get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.</p>
+<p>set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
+<h4 id="Thought_and_solution"><em>Thought and solution</em></h4><p>If we need O(1) time complexity in the operation, we need to use HashMap.</p>
+<p>方法1：</p>
+<p>使用 HashMap+ 双向链表实现：</p>
+<ol>
+<li><p>如果需要移除老的节点，我们从头节点移除。</p>
+</li>
+<li><p>如果某个节点被访问（SET/GET），将其移除并挂在双向链表的结尾。</p>
+</li>
+<li><p>链表满了后，我们删除头节点。</p>
+</li>
+<li><p>最近访问的节点在链尾。最久被访问的节点在链头。</p>
+</li>
+</ol>
+<p>在这个方法中，头尾节点是Sentinel节点，在整个过程中并不移动。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class Solution {
+    private class Node{
+        Node <span class="built_in">prev</span>;
+        Node <span class="built_in">next</span>;
+        <span class="typename">int</span> <span class="built_in">key</span>;
+        <span class="typename">int</span> <span class="built_in">value</span>;
+
+        public Node(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
+            this.<span class="built_in">key</span> = <span class="built_in">key</span>;
+            this.<span class="built_in">value</span> = <span class="built_in">value</span>;
+            this.<span class="built_in">prev</span> = <span class="built_in">null</span>;
+            this.<span class="built_in">next</span> = <span class="built_in">null</span>;
+        }
+    }
+
+    private <span class="typename">int</span> capacity;
+    private HashMap&lt;Integer, Node&gt; hs = new HashMap&lt;Integer, Node&gt;();
+    private Node head = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
+    private Node tail = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
+    <span class="comment">// @param capacity, an integer</span>
+    public Solution(<span class="typename">int</span> capacity) {
+        <span class="comment">// write your code here</span>
+        this.capacity = capacity;
+        tail.<span class="built_in">prev</span> = head;
+        head.<span class="built_in">next</span> = tail;
+    }
+
+    <span class="comment">// @return an integer</span>
+    public <span class="typename">int</span> <span class="built_in">get</span>(<span class="typename">int</span> <span class="built_in">key</span>) {
+        <span class="comment">// write your code here</span>
+        if( !hs.containsKey(<span class="built_in">key</span>)) {
+            return -<span class="number">1</span>;
+        }
+
+        <span class="comment">// remove current</span>
+        Node current = hs.<span class="built_in">get</span>(<span class="built_in">key</span>);
+        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current.<span class="built_in">next</span>;
+        current.<span class="built_in">next</span>.<span class="built_in">prev</span> = current.<span class="built_in">prev</span>;
+
+        <span class="comment">// move current to tail</span>
+        move_to_tail(current);
+
+        return hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span>;
+    }
+
+    <span class="comment">// @param key, an integer</span>
+    <span class="comment">// @param value, an integer</span>
+    <span class="comment">// @return nothing</span>
+    public void <span class="built_in">set</span>(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
+        <span class="comment">// write your code here</span>
+        if( <span class="built_in">get</span>(<span class="built_in">key</span>) != -<span class="number">1</span>) {
+            hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span> = <span class="built_in">value</span>;
+            return;
+        }
+
+        if (hs.size() == capacity) {
+            hs.remove(head.<span class="built_in">next</span>.<span class="built_in">key</span>);
+            head.<span class="built_in">next</span> = head.<span class="built_in">next</span>.<span class="built_in">next</span>;
+            head.<span class="built_in">next</span>.<span class="built_in">prev</span> = head;
+        }
+
+        Node insert = new Node(<span class="built_in">key</span>, <span class="built_in">value</span>);
+        hs.put(<span class="built_in">key</span>, insert);
+        move_to_tail(insert);
+    }
+
+    private void move_to_tail(Node current) {
+        current.<span class="built_in">prev</span> = tail.<span class="built_in">prev</span>;
+        tail.<span class="built_in">prev</span> = current;
+        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current;
+        current.<span class="built_in">next</span> = tail;
+    }
+}
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashTable/">HashTable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LinkedList/">LinkedList</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
 	</div>
 
       
