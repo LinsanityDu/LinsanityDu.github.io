@@ -337,6 +337,109 @@
 
 
   
+    <article id="post-LargestRectangleInHistogram" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/10/LargestRectangleInHistogram/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/10/LargestRectangleInHistogram/">[LintCode] - LargestRectangleInHistogram</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/largest-rectangle-in-histogram/#" target="_blank" rel="external">link</a></h5><p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
+<p><img src="http://www.lintcode.com/media/problem/histogram1.png" alt=""></p>
+<p>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
+<p><img src="http://www.lintcode.com/media/problem/histogram_area.png" alt=""></p>
+<p>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
+<h4 id="Thought_and_solution"><em>Thought and solution</em></h4><h5 id="Implementation_of_Monotone-Stack">Implementation of Monotone-Stack</h5><p>单调栈，顾名思义就是说栈内的元素，按照某种方式排序下，必须是单调的。如果新入栈的元素破坏了单调性，就弹出栈内元素，直到满足单调性。</p>
+<p>它可以很方便地求出某个数的左边或者右边第一个比它大或者小的元素，而且总时间复杂度O(N)。</p>
+<p>如果我们要找第一个比某个数<em>小</em>的数，我们就要维护一个<em>递增</em>序列</p>
+<p>如果我们要找第一个比某个数<em>大</em>得数，我们就要维护一个<em>递减</em>序列</p>
+<h6 id="例子">例子</h6><p>数组[2 1 5 6 2 3]   栈为空[]</p>
+<p>1.数字2进栈   栈中左边没有数字   不存在在2左边比他小的元素</p>
+<p>  数组[1 5 6 2 3] 栈为[2]</p>
+<p>2.数字1进栈 由于2&gt;1 2出栈 1成为2右边第一个比2小的元素 对于1来说不存在左边比他小的元素</p>
+<p>  数组[5 6 2 3]  栈为[1]</p>
+<p>3.数字5进栈 由于5&gt;1 1保留 1成为5左边第一个比5小的元素</p>
+<p>  数组[6 2 3]  栈为[1 5]</p>
+<p>4.数字6进栈 由于6&gt;5 6保留 5成为6左边第一个比6小的元素</p>
+<p>  数组[2 3]  栈为[1 5 6]</p>
+<p>5.数字2进栈 由于2&lt;6 6出栈 2成为6右边第一个比6小的元素<br>           同理，由于2&lt;5 5出栈 2成为5右边第一个比5小的元素<br>           1 成为2左边边比2小的第一个数<br>  数组[3]   栈为[1 2]</p>
+<p>6.数字3进栈 由于3&gt;2 2保留 2成为3右边第一个比3小的元素</p>
+<p>  此时数组为空  栈为[1 2 3]</p>
+<h4 id="Code_Reference"><em>Code Reference</em></h4><pre><code>Public class Solution {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> largestRectangleArea(<span class="built_in">int</span>[] <span class="variable">height</span>) {
+        <span class="keyword">if</span>(<span class="variable">height</span> == <span class="keyword">null</span> || <span class="variable">height</span>.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }    
+
+        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();
+        <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">0</span>;
+        <span class="built_in">int</span> len = <span class="variable">height</span>.length;
+        <span class="built_in">int</span> i = <span class="number">0</span>;
+
+        <span class="keyword">while</span> (i &lt;= len) {
+            <span class="keyword">if</span> (stack.isEmpty() || (i &lt; len &amp;&amp; <span class="variable">height</span>[i] &gt;= <span class="variable">height</span>[stack.peek()])) {
+                s.push(i);
+                i++;
+            } <span class="keyword">else</span> {
+                <span class="built_in">int</span> h = <span class="variable">height</span>[stack.pop()];
+                <span class="built_in">int</span> <span class="variable">width</span> = stack.isEmpty() ? i : i - stack.peek() - <span class="number">1</span>;
+                <span class="built_in">max</span> = Math.<span class="built_in">max</span>(<span class="built_in">max</span>, h * <span class="variable">width</span>);
+
+            }
+        }
+        <span class="keyword">return</span> <span class="built_in">max</span>;
+
+    }
+}
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Stack/">Stack</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-MaxTree" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -429,6 +532,134 @@ public class <span class="type">Solution</span> {
 }
 </code></pre><p>Recursion: (in the future)</p>
 
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashTable/">HashTable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
+    <article id="post-MedianInDataStream" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/10/MedianInDataStream/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/10/MedianInDataStream/">[LintCode] - MedianInDataStream</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/data-stream-median/" target="_blank" rel="external">link</a></h5><p>Numbers keep coming, return the median of numbers at every time a new number added.</p>
+<h5 id="Example">Example</h5><p>For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].</p>
+<p>For numbers coming list: [4, 5, 1, 3, 2, 6, 0], return [4, 4, 4, 3, 3, 3, 3].</p>
+<p>For numbers coming list: [2, 20, 100], return [2, 2, 20].</p>
+<h5 id="Challenge">Challenge</h5><p>Total run time in O(nlogn).</p>
+<h5 id="Clarification">Clarification</h5><p>What’s the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Implementation_of_PriorityQueue_in_Java">Implementation of PriorityQueue in Java</h5><p>PriorityQueue是从JDK1.5开始提供的新的数据结构接口，它是一种基于优先级堆的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列（参阅 Comparable），也可以根据 Comparator 来指定，这取决于使用哪种构造方法。优先级队列不允许 null 元素。依靠自然排序的优先级队列还不允许插入不可比较的对象（这样做可能导致 ClassCastException）。</p>
+<p>比如队列 1 3 5 10 2 自动会被排列 1 2 3 5 10</p>
+<p>Example:</p>
+<p>MinHeap:</p>
+<p>Queue<integer> queue = new PriorityQueue<integer>();<br>            qi.add(5);<br>            qi.add(2);<br>            qi.add(1);<br>            qi.add(10);<br>            qi.add(3);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 1 2 3 5 10</p>
+<p>MaxHeap:</p>
+<p>Override the comparator:</p>
+<pre><code>Comparator&lt;<span class="type">Integer</span>&gt; revCmp = new Comparator&lt;<span class="type">Integer</span>&gt;() {
+    @Override
+    <span class="keyword">public</span> <span class="built_in">int</span> compare(<span class="type">Integer</span> left, <span class="type">Integer</span> right) {
+        <span class="keyword">return</span> right - left;
+    }
+};
+</code></pre><p>Queue<integer> q2 = new PriorityQueue<integer>(5, cmp);<br>            q2.add(2);<br>            q2.add(8);<br>            q2.add(9);<br>            q2.add(1);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 9 8 2 1</p>
+<h5 id="Solution_1">Solution 1</h5><p>我们创建两个堆，一个最大堆maxHeap，一个最小堆</p>
+<p>maxHeap保存较小的半边数据，minHeap保存较大的半边数据。</p>
+<p>1.无论如何，直接把新值插入到maxHeap。</p>
+<ol>
+<li><p>当minHeap为空，直接退出。</p>
+</li>
+<li><p>当maxHeap比minHeap多2个值，直接移动一个值到maxHeap即可。</p>
+</li>
+<li><p>当maxHeap比minHeap多1个值，比较顶端的2个值，如果maxHeap的最大值大于minHeap的最小值，交换2个值即可。</p>
+</li>
+<li><p>当maxHeap较大时，中值是maxHeap的顶值，否则取2者的顶值的中间值。</p>
+</li>
+</ol>
+<pre><code><span class="keyword">public</span> class Solution {
+<span class="comment">/**
+ * @param nums: A list of integers.
+ * @return: the median of numbers
+ */</span>
+<span class="keyword">public</span> <span class="built_in">int</span>[] medianII(<span class="built_in">int</span>[] nums) {
+    <span class="comment">// write your code here</span>
+    <span class="keyword">if</span>(nums==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  
+    <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[nums.length];  
+
+    PriorityQueue&lt;Integer&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();  
+    PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;(<span class="number">11</span>, <span class="keyword">new</span> Comparator&lt;Integer&gt;() {  
+        @Override  
+        <span class="keyword">public</span> <span class="built_in">int</span> compare(Integer x, Integer y) {  
+            <span class="keyword">return</span> y-x;  
+        }  
+    });  
+    res[<span class="number">0</span>] = nums[<span class="number">0</span>];  
+    maxHeap.<span class="built_in">add</span>(nums[<span class="number">0</span>]);  
+
+    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++) {  
+        <span class="built_in">int</span> x = maxHeap.peek();  
+        <span class="keyword">if</span>(nums[i] &lt;= x) {  
+            maxHeap.<span class="built_in">add</span>(nums[i]);  
+        } <span class="keyword">else</span> {  
+            minHeap.<span class="built_in">add</span>(nums[i]);  
+        }  
+        <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &gt; minHeap.<span class="built_in">size</span>()+<span class="number">1</span> ) {  
+            minHeap.<span class="built_in">add</span>(maxHeap.poll());  
+        } <span class="keyword">else</span> <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &lt; minHeap.<span class="built_in">size</span>()) {  
+            maxHeap.<span class="built_in">add</span>(minHeap.poll());  
+        }  
+        res[i] = maxHeap.peek();  
+    }  
+    <span class="keyword">return</span> res;  
+}
+}
+</code></pre>
       
     </div>
     

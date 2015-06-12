@@ -3,20 +3,23 @@
 <head>
   <meta charset="utf-8">
   
-  <title>[LintCode] - LongestConsecutiveSequence | LinのCoding</title>
+  <title>[LintCode] - MedianInDataStream | LinのCoding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="QuestionlinkGiven an unsorted array of integers, find the length of the longest consecutive elements sequence.
-ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is [1, 2, 3">
+  <meta name="description" content="QuestionlinkNumbers keep coming, return the median of numbers at every time a new number added.
+ExampleFor numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].
+For numbers coming list: [4, 5,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[LintCode] - LongestConsecutiveSequence">
-<meta property="og:url" content="http://www.piedbiper.tk/2015/06/04/LongestConsecutiveSequence/index.html">
+<meta property="og:title" content="[LintCode] - MedianInDataStream">
+<meta property="og:url" content="http://www.piedbiper.tk/2015/06/10/MedianInDataStream/index.html">
 <meta property="og:site_name" content="LinのCoding">
-<meta property="og:description" content="QuestionlinkGiven an unsorted array of integers, find the length of the longest consecutive elements sequence.
-ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is [1, 2, 3">
+<meta property="og:description" content="QuestionlinkNumbers keep coming, return the median of numbers at every time a new number added.
+ExampleFor numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].
+For numbers coming list: [4, 5,">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[LintCode] - LongestConsecutiveSequence">
-<meta name="twitter:description" content="QuestionlinkGiven an unsorted array of integers, find the length of the longest consecutive elements sequence.
-ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is [1, 2, 3">
+<meta name="twitter:title" content="[LintCode] - MedianInDataStream">
+<meta name="twitter:description" content="QuestionlinkNumbers keep coming, return the median of numbers at every time a new number added.
+ExampleFor numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].
+For numbers coming list: [4, 5,">
   
     <link rel="alternative" href="/atom.xml" title="LinのCoding" type="application/atom+xml">
   
@@ -192,11 +195,11 @@ ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-LongestConsecutiveSequence" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MedianInDataStream" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/06/04/LongestConsecutiveSequence/" class="article-date">
-  	<time datetime="2015-06-05T01:49:51.000Z" itemprop="datePublished">2015-06-04</time>
+      <a href="/2015/06/10/MedianInDataStream/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
 </a>
     </div>
   
@@ -209,7 +212,7 @@ ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is
         
   
     <h1 class="article-title" itemprop="name">
-      [LintCode] - LongestConsecutiveSequence
+      [LintCode] - MedianInDataStream
     </h1>
   
 
@@ -233,60 +236,77 @@ ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/longest-consecutive-sequence/#" target="_blank" rel="external">link</a></h5><p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
-<h5 id="Example">Example</h5><p>Given [100, 4, 200, 1, 3, 2],<br>The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</p>
-<h5 id="Clarification">Clarification</h5><p>Your algorithm should run in O(n) complexity.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Thought_1">Thought 1</h5><p>Using HashMap</p>
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/data-stream-median/" target="_blank" rel="external">link</a></h5><p>Numbers keep coming, return the median of numbers at every time a new number added.</p>
+<h5 id="Example">Example</h5><p>For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].</p>
+<p>For numbers coming list: [4, 5, 1, 3, 2, 6, 0], return [4, 4, 4, 3, 3, 3, 3].</p>
+<p>For numbers coming list: [2, 20, 100], return [2, 2, 20].</p>
+<h5 id="Challenge">Challenge</h5><p>Total run time in O(nlogn).</p>
+<h5 id="Clarification">Clarification</h5><p>What’s the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Implementation_of_PriorityQueue_in_Java">Implementation of PriorityQueue in Java</h5><p>PriorityQueue是从JDK1.5开始提供的新的数据结构接口，它是一种基于优先级堆的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列（参阅 Comparable），也可以根据 Comparator 来指定，这取决于使用哪种构造方法。优先级队列不允许 null 元素。依靠自然排序的优先级队列还不允许插入不可比较的对象（这样做可能导致 ClassCastException）。</p>
+<p>比如队列 1 3 5 10 2 自动会被排列 1 2 3 5 10</p>
+<p>Example:</p>
+<p>MinHeap:</p>
+<p>Queue<integer> queue = new PriorityQueue<integer>();<br>            qi.add(5);<br>            qi.add(2);<br>            qi.add(1);<br>            qi.add(10);<br>            qi.add(3);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 1 2 3 5 10</p>
+<p>MaxHeap:</p>
+<p>Override the comparator:</p>
+<pre><code>Comparator&lt;<span class="type">Integer</span>&gt; revCmp = new Comparator&lt;<span class="type">Integer</span>&gt;() {
+    @Override
+    <span class="keyword">public</span> <span class="built_in">int</span> compare(<span class="type">Integer</span> left, <span class="type">Integer</span> right) {
+        <span class="keyword">return</span> right - left;
+    }
+};
+</code></pre><p>Queue<integer> q2 = new PriorityQueue<integer>(5, cmp);<br>            q2.add(2);<br>            q2.add(8);<br>            q2.add(9);<br>            q2.add(1);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 9 8 2 1</p>
+<h5 id="Solution_1">Solution 1</h5><p>我们创建两个堆，一个最大堆maxHeap，一个最小堆</p>
+<p>maxHeap保存较小的半边数据，minHeap保存较大的半边数据。</p>
+<p>1.无论如何，直接把新值插入到maxHeap。</p>
 <ol>
-<li><p>In the map, we create some sets representing consecutive space. For example, we have a sequence [3, 4, 5]. We can have key: 3 - value: 5 and key: 5 - value: 3. And put them in the HashMap.</p>
+<li><p>当minHeap为空，直接退出。</p>
 </li>
-<li><p>When a new number coming in, such as N = 6. We can search whether the sequence ending from N - 1 and starting from N + 1 exists or not. We can join and enlarge the set.</p>
+<li><p>当maxHeap比minHeap多2个值，直接移动一个值到maxHeap即可。</p>
 </li>
-<li><p>update maxValue.</p>
+<li><p>当maxHeap比minHeap多1个值，比较顶端的2个值，如果maxHeap的最大值大于minHeap的最小值，交换2个值即可。</p>
+</li>
+<li><p>当maxHeap较大时，中值是maxHeap的顶值，否则取2者的顶值的中间值。</p>
 </li>
 </ol>
-<h4 id="My_Code_for_Thought_1"><em>My Code for Thought 1</em></h4><pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    public int longestConsecutive(int[] num) {
-        <span class="keyword">if</span> (num == null) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }
+<pre><code><span class="keyword">public</span> class Solution {
+<span class="comment">/**
+ * @param nums: A list of integers.
+ * @return: the median of numbers
+ */</span>
+<span class="keyword">public</span> <span class="built_in">int</span>[] medianII(<span class="built_in">int</span>[] nums) {
+    <span class="comment">// write your code here</span>
+    <span class="keyword">if</span>(nums==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  
+    <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[nums.length];  
 
-        <span class="type">HashMap</span>&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt;();
-        int <span class="built_in">max</span> = <span class="number">0</span>;
-        int len = num.length;
+    PriorityQueue&lt;Integer&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();  
+    PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;(<span class="number">11</span>, <span class="keyword">new</span> Comparator&lt;Integer&gt;() {  
+        @Override  
+        <span class="keyword">public</span> <span class="built_in">int</span> compare(Integer x, Integer y) {  
+            <span class="keyword">return</span> y-x;  
+        }  
+    });  
+    res[<span class="number">0</span>] = nums[<span class="number">0</span>];  
+    maxHeap.<span class="built_in">add</span>(nums[<span class="number">0</span>]);  
 
-        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; len; i++) {
-            <span class="keyword">if</span> (<span class="built_in">map</span>.<span class="built_in">contains</span>(num[i])) {
-                <span class="keyword">continue</span>;
-            }
-
-            int <span class="keyword">left</span> = num[i];
-            int <span class="keyword">right</span> = num[i];
-
-            int board = <span class="built_in">map</span>.<span class="keyword">get</span>(num[i] - <span class="number">1</span>);
-            <span class="keyword">if</span> (board != null &amp;&amp; board &lt; <span class="keyword">left</span>) {
-                <span class="keyword">left</span> = board;
-
-                <span class="built_in">map</span>.remove(<span class="keyword">left</span>);
-                <span class="built_in">map</span>.remove(num[i] - <span class="number">1</span>);
-            }
-
-            board = <span class="built_in">map</span>.<span class="keyword">get</span>(num[i] + <span class="number">1</span>);
-            <span class="keyword">if</span> (board != null &amp;&amp; board &gt; <span class="keyword">right</span>) {
-                <span class="keyword">right</span> = board;
-
-                <span class="built_in">map</span>.remove(<span class="keyword">right</span>);
-                <span class="built_in">map</span>.remove(num[i] + <span class="number">1</span>);
-            }
-
-            <span class="built_in">map</span>.put(<span class="keyword">left</span>, <span class="keyword">right</span>);
-            <span class="built_in">map</span>.put(<span class="keyword">right</span>, <span class="keyword">left</span>);
-
-            <span class="built_in">max</span> = <span class="type">Math</span>.<span class="built_in">max</span>(<span class="built_in">max</span>, <span class="keyword">right</span> - <span class="keyword">left</span> + <span class="number">1</span>);
-        }
-        <span class="keyword">return</span> <span class="built_in">max</span>;
-
-    }
+    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++) {  
+        <span class="built_in">int</span> x = maxHeap.peek();  
+        <span class="keyword">if</span>(nums[i] &lt;= x) {  
+            maxHeap.<span class="built_in">add</span>(nums[i]);  
+        } <span class="keyword">else</span> {  
+            minHeap.<span class="built_in">add</span>(nums[i]);  
+        }  
+        <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &gt; minHeap.<span class="built_in">size</span>()+<span class="number">1</span> ) {  
+            minHeap.<span class="built_in">add</span>(maxHeap.poll());  
+        } <span class="keyword">else</span> <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &lt; minHeap.<span class="built_in">size</span>()) {  
+            maxHeap.<span class="built_in">add</span>(minHeap.poll());  
+        }  
+        res[i] = maxHeap.peek();  
+    }  
+    <span class="keyword">return</span> res;  
+}
 }
 </code></pre>
       
@@ -297,18 +317,18 @@ ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is
     
 <nav id="article-nav">
   
-    <a href="/2015/06/10/MedianInDataStream/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2015/06/10/MaxTree/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          [LintCode] - MedianInDataStream
+          [LintCode] - MaxTree
         
       </div>
     </a>
   
   
-    <a href="/2015/06/04/Heapify/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">[LintCode] - Heapify</div>
+    <a href="/2015/06/04/LongestConsecutiveSequence/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[LintCode] - LongestConsecutiveSequence</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -337,7 +357,7 @@ ExampleGiven [100, 4, 200, 1, 3, 2],The longest consecutive elements sequence is
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="LongestConsecutiveSequence" data-title="[LintCode] - LongestConsecutiveSequence" data-url="http://www.piedbiper.tk/2015/06/04/LongestConsecutiveSequence/"></div>
+	<div class="ds-thread" data-thread-key="MedianInDataStream" data-title="[LintCode] - MedianInDataStream" data-url="http://www.piedbiper.tk/2015/06/10/MedianInDataStream/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

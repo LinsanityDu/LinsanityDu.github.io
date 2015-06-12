@@ -458,6 +458,134 @@ public class <span class="type">Solution</span> {
 
 
   
+    <article id="post-MedianInDataStream" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/10/MedianInDataStream/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/06/10/MedianInDataStream/">[LintCode] - MedianInDataStream</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/data-stream-median/" target="_blank" rel="external">link</a></h5><p>Numbers keep coming, return the median of numbers at every time a new number added.</p>
+<h5 id="Example">Example</h5><p>For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].</p>
+<p>For numbers coming list: [4, 5, 1, 3, 2, 6, 0], return [4, 4, 4, 3, 3, 3, 3].</p>
+<p>For numbers coming list: [2, 20, 100], return [2, 2, 20].</p>
+<h5 id="Challenge">Challenge</h5><p>Total run time in O(nlogn).</p>
+<h5 id="Clarification">Clarification</h5><p>What’s the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Implementation_of_PriorityQueue_in_Java">Implementation of PriorityQueue in Java</h5><p>PriorityQueue是从JDK1.5开始提供的新的数据结构接口，它是一种基于优先级堆的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列（参阅 Comparable），也可以根据 Comparator 来指定，这取决于使用哪种构造方法。优先级队列不允许 null 元素。依靠自然排序的优先级队列还不允许插入不可比较的对象（这样做可能导致 ClassCastException）。</p>
+<p>比如队列 1 3 5 10 2 自动会被排列 1 2 3 5 10</p>
+<p>Example:</p>
+<p>MinHeap:</p>
+<p>Queue<integer> queue = new PriorityQueue<integer>();<br>            qi.add(5);<br>            qi.add(2);<br>            qi.add(1);<br>            qi.add(10);<br>            qi.add(3);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 1 2 3 5 10</p>
+<p>MaxHeap:</p>
+<p>Override the comparator:</p>
+<pre><code>Comparator&lt;<span class="type">Integer</span>&gt; revCmp = new Comparator&lt;<span class="type">Integer</span>&gt;() {
+    @Override
+    <span class="keyword">public</span> <span class="built_in">int</span> compare(<span class="type">Integer</span> left, <span class="type">Integer</span> right) {
+        <span class="keyword">return</span> right - left;
+    }
+};
+</code></pre><p>Queue<integer> q2 = new PriorityQueue<integer>(5, cmp);<br>            q2.add(2);<br>            q2.add(8);<br>            q2.add(9);<br>            q2.add(1);</integer></integer></p>
+<p>从queue中poll出数据的顺序: 9 8 2 1</p>
+<h5 id="Solution_1">Solution 1</h5><p>我们创建两个堆，一个最大堆maxHeap，一个最小堆</p>
+<p>maxHeap保存较小的半边数据，minHeap保存较大的半边数据。</p>
+<p>1.无论如何，直接把新值插入到maxHeap。</p>
+<ol>
+<li><p>当minHeap为空，直接退出。</p>
+</li>
+<li><p>当maxHeap比minHeap多2个值，直接移动一个值到maxHeap即可。</p>
+</li>
+<li><p>当maxHeap比minHeap多1个值，比较顶端的2个值，如果maxHeap的最大值大于minHeap的最小值，交换2个值即可。</p>
+</li>
+<li><p>当maxHeap较大时，中值是maxHeap的顶值，否则取2者的顶值的中间值。</p>
+</li>
+</ol>
+<pre><code><span class="keyword">public</span> class Solution {
+<span class="comment">/**
+ * @param nums: A list of integers.
+ * @return: the median of numbers
+ */</span>
+<span class="keyword">public</span> <span class="built_in">int</span>[] medianII(<span class="built_in">int</span>[] nums) {
+    <span class="comment">// write your code here</span>
+    <span class="keyword">if</span>(nums==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  
+    <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[nums.length];  
+
+    PriorityQueue&lt;Integer&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();  
+    PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;(<span class="number">11</span>, <span class="keyword">new</span> Comparator&lt;Integer&gt;() {  
+        @Override  
+        <span class="keyword">public</span> <span class="built_in">int</span> compare(Integer x, Integer y) {  
+            <span class="keyword">return</span> y-x;  
+        }  
+    });  
+    res[<span class="number">0</span>] = nums[<span class="number">0</span>];  
+    maxHeap.<span class="built_in">add</span>(nums[<span class="number">0</span>]);  
+
+    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++) {  
+        <span class="built_in">int</span> x = maxHeap.peek();  
+        <span class="keyword">if</span>(nums[i] &lt;= x) {  
+            maxHeap.<span class="built_in">add</span>(nums[i]);  
+        } <span class="keyword">else</span> {  
+            minHeap.<span class="built_in">add</span>(nums[i]);  
+        }  
+        <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &gt; minHeap.<span class="built_in">size</span>()+<span class="number">1</span> ) {  
+            minHeap.<span class="built_in">add</span>(maxHeap.poll());  
+        } <span class="keyword">else</span> <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &lt; minHeap.<span class="built_in">size</span>()) {  
+            maxHeap.<span class="built_in">add</span>(minHeap.poll());  
+        }  
+        res[i] = maxHeap.peek();  
+    }  
+    <span class="keyword">return</span> res;  
+}
+}
+</code></pre>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashTable/">HashTable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+  
     <article id="post-LongestConsecutiveSequence" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
