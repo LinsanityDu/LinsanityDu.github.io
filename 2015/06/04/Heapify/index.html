@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>[LintCode] - Heapify | LinのCoding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="QuestionlinkGiven an integer array, heapify it into a min-heap array.
+For a heap array A, A[0] is the root of heap, and for each A[i], A[i  2 + 1] is the left child of A[i] and A[i  2 + 2] is the righ">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[LintCode] - Heapify">
+<meta property="og:url" content="http://www.piedbiper.tk/2015/06/04/Heapify/index.html">
+<meta property="og:site_name" content="LinのCoding">
+<meta property="og:description" content="QuestionlinkGiven an integer array, heapify it into a min-heap array.
+For a heap array A, A[0] is the root of heap, and for each A[i], A[i  2 + 1] is the left child of A[i] and A[i  2 + 2] is the righ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[LintCode] - Heapify">
+<meta name="twitter:description" content="QuestionlinkGiven an integer array, heapify it into a min-heap array.
+For a heap array A, A[0] is the root of heap, and for each A[i], A[i  2 + 1] is the left child of A[i] and A[i  2 + 2] is the righ">
+  
+    <link rel="alternative" href="/atom.xml" title="LinのCoding" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img lazy-src="http://static.comicvine.com/uploads/scale_super/11111/111111327/3278747-dc-detective-conan-17352255-857-933.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Lin Du</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Computer Science != Coding</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						<div class="icon-wrap icon-link hide" data-idx="2">
+							<div class="loopback_l"></div>
+							<div class="loopback_r"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						<li>友情链接</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="https://github.com/LinsanityDu" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="http://www.weibo.com/p/1005053215819365/home?from=page_100505&mod=TAB#place" title="weibo">weibo</a>
+					        
+								<a class="facebook" target="_blank" href="https://www.facebook.com/lin.du.9081" title="facebook">facebook</a>
+					        
+								<a class="linkedin" target="_blank" href="https://www.linkedin.com/profile/view?id=383673761&trk=hp-identity-name" title="linkedin">linkedin</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/Algorithms/" style="font-size: 20px;">Algorithms</a><a href="/tags/HashTable/" style="font-size: 15px;">HashTable</a><a href="/tags/Heap/" style="font-size: 10px;">Heap</a><a href="/tags/LintCode/" style="font-size: 17.5px;">LintCode</a><a href="/tags/Others/" style="font-size: 10px;">Others</a><a href="/tags/Queue/" style="font-size: 10px;">Queue</a><a href="/tags/Sorting/" style="font-size: 10px;">Sorting</a><a href="/tags/Stack/" style="font-size: 12.5px;">Stack</a><a href="/tags/geeeksforgeeks/" style="font-size: 10px;">geeeksforgeeks</a>
+					</div>
+				</section>
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.1point3acres.com/bbs/">一亩三分地论坛</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.bilibili.com/">无节操的B站</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://www.joindota.com/en/start">JoinDota</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://bbs.sgamer.com/forum-44-1.html">中国最多喷子的聚集地</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">Too Young Too Simple，Sometimes Naive</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Lin Du</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="http://static.comicvine.com/uploads/scale_super/11111/111111327/3278747-dc-detective-conan-17352255-857-933.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Lin Du</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Computer Science != Coding</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/LinsanityDu" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="http://www.weibo.com/p/1005053215819365/home?from=page_100505&mod=TAB#place" title="weibo">weibo</a>
+			        
+						<a class="facebook" target="_blank" href="https://www.facebook.com/lin.du.9081" title="facebook">facebook</a>
+			        
+						<a class="linkedin" target="_blank" href="https://www.linkedin.com/profile/view?id=383673761&trk=hp-identity-name" title="linkedin">linkedin</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-Heapify" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/06/04/Heapify/" class="article-date">
+  	<time datetime="2015-06-05T01:12:54.000Z" itemprop="datePublished">2015-06-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      [LintCode] - Heapify
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Heap/">Heap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/heapify/#" target="_blank" rel="external">link</a></h5><p>Given an integer array, heapify it into a min-heap array.</p>
+<p>For a heap array A, A[0] is the root of heap, and for each A[i], A[i <em> 2 + 1] is the left child of A[i] and A[i </em> 2 + 2] is the right child of A[i].</p>
+<h5 id="Example">Example</h5><p>Given [3,2,1,4,5], return [1,2,3,4,5] or any legal heap array.</p>
+<h5 id="Challenge">Challenge</h5><p>O(n) time complexity</p>
+<h5 id="Clarification">Clarification</h5><h6 id="What_is_heap?"><em>What is heap?</em></h6><p>Heap is a data structure, which usually have three methods: push, pop and top. where “push” add a new element the heap, “pop” delete the minimum/maximum element in the heap, “top” return the minimum/maximum element.</p>
+<h6 id="What_is_heapify?"><em>What is heapify?</em></h6><p>Convert an unordered integer array into a heap array. If it is min-heap, for each element A[i], we will get A[i <em> 2 + 1] &gt;= A[i] and A[i </em> 2 + 2] &gt;= A[i].</p>
+<p>What if there is a lot of solutions?<br>Return any of them.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>What is the representation of heap?</p>
+<p>The heap is often placed in an array with the layout of a complete binary tree. The complete binary tree maps the binary tree structure into the array indices; each array index represents a node:</p>
+<pre><code>If <span class="built_in">i</span> is the index of the current node:
+Parent of <span class="built_in">i</span> = <span class="built_in">floor</span>((<span class="built_in">i</span> - <span class="number">1</span>) / <span class="number">2</span>)
+Left Child of <span class="built_in">i</span> = <span class="number">2</span> * <span class="built_in">i</span> + <span class="number">1</span>
+Right Child of <span class="built_in">i</span> = <span class="number">2</span> * <span class="built_in">i</span> + <span class="number">2</span>
+</code></pre><p>Then, a sorted array is created by repeatly removing the largest element from the heap(the root of the heap), and inserting it into the array. The heap is updated after each removal to maintain the heap. Once all objects have been removed from the heap, the result is a sorted array.</p>
+<p>Heapsort can be performed in place. The array can be split into two parts, the sorted array and the heap. </p>
+<p>First, let us have the pseudocode of heapify:</p>
+<pre><code>(Put elements <span class="operator">of</span> <span class="string">'a'</span> <span class="operator">in</span> heap order, <span class="operator">in</span>-place)
+Procedure heapify(<span class="operator">a</span>, count) is
+    (<span class="built_in">start</span> is assigned <span class="operator">the</span> index <span class="operator">in</span> <span class="string">'a'</span> <span class="operator">of</span> <span class="operator">the</span> <span class="keyword">last</span> parent node)
+    (<span class="operator">the</span> <span class="keyword">last</span> <span class="keyword">element</span> <span class="operator">in</span> <span class="operator">a</span> <span class="number">0</span>-based array is <span class="keyword">at</span> index count - <span class="number">1</span>; find <span class="operator">the</span> parent <span class="operator">of</span> that <span class="keyword">element</span>)
+    <span class="built_in">start</span> = floor((count - <span class="number">2</span>) / <span class="number">2</span>)
+
+    <span class="keyword">while</span> <span class="built_in">start</span> &gt;= <span class="number">0</span> <span class="built_in">do</span>
+        (sift down <span class="operator">the</span> node <span class="keyword">at</span> <span class="operator">the</span> index <span class="string">'start'</span> <span class="built_in">to</span> <span class="operator">the</span> proper place such that all nodes below <span class="operator">the</span> <span class="built_in">start</span> index are <span class="operator">in</span> heap order)
+        siftDown(<span class="operator">a</span>, <span class="built_in">start</span>, count - <span class="number">1</span>)
+        (go <span class="built_in">to</span> <span class="operator">the</span> next parent node)
+        <span class="built_in">start</span> = <span class="built_in">start</span> - <span class="number">1</span>
+    (<span class="keyword">after</span> sifting down <span class="operator">the</span> root all nodes/elements are <span class="operator">in</span> heap order)
+
+
+Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start</span>, <span class="function"><span class="keyword">end</span>) <span class="title">is</span> </span>
+    root = <span class="built_in">start</span>
+    <span class="keyword">while</span> root * <span class="number">2</span> + <span class="number">1</span> &lt;= <span class="function"><span class="keyword">end</span> <span class="title">do</span>  (<span class="title">While</span> <span class="title">the</span> <span class="title">root</span> <span class="title">has</span> <span class="title">at</span> <span class="title">least</span> <span class="title">one</span> <span class="title">chile</span>)</span>
+        child = root * <span class="number">2</span> + <span class="number">1</span>
+        swap = root
+
+        <span class="keyword">if</span> (<span class="operator">a</span>[swap] &lt; <span class="operator">a</span>[child])
+            swap = child
+        (If there is <span class="operator">a</span> <span class="constant">right</span> child <span class="operator">and</span> that child is greater)
+        <span class="keyword">if</span> (child + <span class="number">1</span> &lt;= <span class="function"><span class="keyword">end</span> <span class="title">and</span> <span class="title">a</span>[<span class="title">swap</span>] &lt; <span class="title">a</span>[<span class="title">child</span> + <span class="title">1</span>])</span>
+            swap = child + <span class="number">1</span>
+        <span class="keyword">if</span> swap = root
+        (The root holds <span class="operator">the</span> largest <span class="keyword">element</span>. Since we assume <span class="operator">the</span> heaps rooted <span class="keyword">at</span> <span class="operator">the</span> children are valid. this means that we are done.)
+            <span class="constant">return</span> 
+        <span class="keyword">else</span> 
+            swap(s[root], <span class="operator">a</span>[swap])
+            root = swap (repear <span class="built_in">to</span> continue sifting down <span class="operator">the</span> child now)
+</code></pre><p>The <em>heapify</em> procedure can be thought of as building a heap from the bottom up by successively sifting downward to establish the heap property. An alternative version that builds the heap top-down and sifts upward is called “<em>siftup</em>“. This “siftup” version can be visualized as starting with an empty heap and successively inserting elements, but the “siftdown” treats the entire input array as a full but “broken” heap and “repairs” it starting from the last non-trivial sub-heap (that is, the last parent node).</p>
+<p>Below is the pesudocode of “siftup”</p>
+<pre><code>Procudure heapify(a, count) is
+    (<span class="operator"><span class="keyword">end</span> <span class="keyword">is</span> assigned the <span class="keyword">index</span> <span class="keyword">of</span> the <span class="keyword">first</span> child <span class="keyword">of</span> the root)
+    <span class="keyword">end</span> = <span class="number">1</span>
+
+    while <span class="keyword">end</span> &lt; <span class="keyword">count</span>
+        (sift up the node <span class="keyword">at</span> <span class="keyword">index</span> <span class="keyword">end</span> <span class="keyword">to</span> the proper place such that <span class="keyword">all</span> nodes above the <span class="keyword">end</span> <span class="keyword">index</span> <span class="keyword">are</span> <span class="keyword">in</span> heap <span class="keyword">order</span>)
+        siftup(a, <span class="number">0</span>, <span class="keyword">end</span>)
+        <span class="keyword">end</span> = <span class="keyword">end</span> + <span class="number">1</span>
+    (<span class="keyword">after</span> sifting up the <span class="keyword">last</span> node <span class="keyword">all</span> nodes <span class="keyword">are</span> <span class="keyword">in</span> heap <span class="keyword">order</span>)
+
+<span class="keyword">Procedure</span> siftup(a, <span class="keyword">start</span>, <span class="keyword">end</span>)
+    <span class="keyword">input</span>: <span class="keyword">start</span> represents the <span class="keyword">limit</span> <span class="keyword">of</span> how far up the heap <span class="keyword">to</span> sift.
+           <span class="keyword">end</span> <span class="keyword">is</span> the node <span class="keyword">to</span> sift up.
+
+    child = <span class="keyword">end</span>
+    while child &gt; <span class="keyword">start</span>
+        parent = <span class="keyword">floor</span> ((child - <span class="number">1</span>) / <span class="number">2</span>)
+        <span class="keyword">if</span> a[parent] &lt; a[child] 
+            swap(a[parent], a[child])
+            child = parent (<span class="keyword">repeat</span> <span class="keyword">to</span> <span class="keyword">continue</span> sifting up the parent <span class="keyword">now</span>)
+        <span class="keyword">else</span>
+            <span class="keyword">return</span></span>
+</code></pre><p>For comparison, the “siftdown” has O(n) time complexity, while the “siftup” has O(nlogn) time complexity due to its equivalence with inserting each element, one at a time, into an empty heap.</p>
+<h4 id="My_Code_(the_siftdown_approach)"><em>My Code (the siftdown approach)</em></h4><pre><code>public class Solution {
+    /**
+<span class="label">     * @param A:</span> Given an integer array
+<span class="label">     * @return:</span> void
+     */
+    public void heapify(int[] <span class="literal">A</span>) {
+        // write your code here
+        for (int i = <span class="literal">A</span>.length/<span class="number">2</span><span class="comment">; i &gt;= 0; i--) {</span>
+            siftdown(<span class="literal">A</span>, i)<span class="comment">;</span>
+        }
+
+    }
+
+    public void siftdown(int[] <span class="literal">A</span>, int k) {
+         <span class="keyword">while</span> (k &lt; <span class="literal">A</span>.length) {
+            int smallest = k<span class="comment">;</span>
+            <span class="keyword">if</span> (k * <span class="number">2</span> + <span class="number">1</span> &lt; <span class="literal">A</span>.length &amp;&amp; <span class="literal">A</span>[k * <span class="number">2</span> + <span class="number">1</span>] &lt; <span class="literal">A</span>[smallest]) {
+                smallest = k * <span class="number">2</span> + <span class="number">1</span><span class="comment">;</span>
+            }
+            <span class="keyword">if</span> (k * <span class="number">2</span> + <span class="number">2</span> &lt; <span class="literal">A</span>.length &amp;&amp; <span class="literal">A</span>[k * <span class="number">2</span> + <span class="number">2</span>] &lt; <span class="literal">A</span>[smallest]) {
+                smallest = k * <span class="number">2</span> + <span class="number">2</span><span class="comment">;</span>
+            }
+            <span class="keyword">if</span> (smallest == k) {
+                <span class="keyword">break</span><span class="comment">;</span>
+            }
+            int temp = <span class="literal">A</span>[smallest]<span class="comment">;</span>
+            <span class="literal">A</span>[smallest] = <span class="literal">A</span>[k]<span class="comment">;</span>
+            <span class="literal">A</span>[k] = temp<span class="comment">;</span>
+            swap(<span class="literal">A</span>[smallest], <span class="literal">A</span>[k])<span class="comment">;</span>
+            k = smallest<span class="comment">;</span>
+        }
+    }
+}
+</code></pre>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/06/04/LongestConsecutiveSequence/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          [LintCode] - LongestConsecutiveSequence
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/06/01/MinStack/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[LintCode] - Min Stack</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到：</span>
+		<a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+		<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Heapify" data-title="[LintCode] - Heapify" data-url="http://www.piedbiper.tk/2015/06/04/Heapify/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 Lin Du
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/mobile.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+<! -- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+
+  </div>
+</body>
+</html>

@@ -3,30 +3,20 @@
 <head>
   <meta charset="utf-8">
   
-  <title>My School | LinのCoding</title>
+  <title>[LintCode] - MaxTree | LinのCoding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="My school
-
-Worcester Polytechnic Institute
-
-Hello WPI!">
+  <meta name="description" content="QuestionlinkGiven an integer array with no duplicates. A max tree building on this array is defined as follow:
+The root is the maximum number in the arrayThe left subtree and right subtree are the max">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My School">
-<meta property="og:url" content="http://www.piedbiper.tk/2015/05/19/MyFirstBlog/index.html">
+<meta property="og:title" content="[LintCode] - MaxTree">
+<meta property="og:url" content="http://www.piedbiper.tk/2015/06/10/MaxTree/index.html">
 <meta property="og:site_name" content="LinのCoding">
-<meta property="og:description" content="My school
-
-Worcester Polytechnic Institute
-
-Hello WPI!">
-<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/en/c/c4/WPI_Beech_Tree.jpg">
+<meta property="og:description" content="QuestionlinkGiven an integer array with no duplicates. A max tree building on this array is defined as follow:
+The root is the maximum number in the arrayThe left subtree and right subtree are the max">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="My School">
-<meta name="twitter:description" content="My school
-
-Worcester Polytechnic Institute
-
-Hello WPI!">
+<meta name="twitter:title" content="[LintCode] - MaxTree">
+<meta name="twitter:description" content="QuestionlinkGiven an integer array with no duplicates. A max tree building on this array is defined as follow:
+The root is the maximum number in the arrayThe left subtree and right subtree are the max">
   
     <link rel="alternative" href="/atom.xml" title="LinのCoding" type="application/atom+xml">
   
@@ -202,11 +192,11 @@ Hello WPI!">
 		</header>				
 	</div>
 </nav>
-      <div class="body-wrap"><article id="post-MyFirstBlog" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-MaxTree" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/05/19/MyFirstBlog/" class="article-date">
-  	<time datetime="2015-05-20T03:57:01.000Z" itemprop="datePublished">2015-05-19</time>
+      <a href="/2015/06/10/MaxTree/" class="article-date">
+  	<time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished">2015-06-10</time>
 </a>
     </div>
   
@@ -219,7 +209,7 @@ Hello WPI!">
         
   
     <h1 class="article-title" itemprop="name">
-      My School
+      [LintCode] - MaxTree
     </h1>
   
 
@@ -228,12 +218,12 @@ Hello WPI!">
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Others/">Others</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Algorithms/">Algorithms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HashTable/">HashTable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LintCode/">LintCode</a></li></ul>
 	</div>
 
         
 	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/Others/">Others</a>
+	<a class="article-category-link" href="/categories/LintCode/">LintCode</a>
 	</div>
 
 
@@ -243,12 +233,71 @@ Hello WPI!">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>My school</li>
-</ul>
-<p><a href="http://www.wpi.edu" target="_blank" rel="external">Worcester Polytechnic Institute</a></p>
-<p><img src="http://upload.wikimedia.org/wikipedia/en/c/c4/WPI_Beech_Tree.jpg" alt=""></p>
-<p>Hello WPI!</p>
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/max-tree/" target="_blank" rel="external">link</a></h5><p>Given an integer array with no duplicates. A max tree building on this array is defined as follow:</p>
+<p>The root is the maximum number in the array<br>The left subtree and right subtree are the max trees of the subarray divided by the root number.<br>Construct the max tree by the given array.</p>
+<h5 id="Challenge">Challenge</h5><p>O(n) time and memory.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Recursion: use recursion method, in the worst case, the complexity is O(n^2).</p>
+<p>Linear method: Refer to the analysis of some other people: <a href="http://www.meetqun.com/thread-3335-1-1.html" target="_blank" rel="external">link</a></p>
+<p>这个题Leetcode上没有，其实这种树叫做笛卡树（ Cartesian tree）。直接递归建树的话复杂度最差会退化到O(n^2)。经典建树方法，用到的是单调堆栈。我们堆栈里存放的树，只有左子树，没有有子树，且根节点最大。</p>
+<p>（1） 如果新来一个数，比堆栈顶的树根的数小，则把这个数作为一个单独的节点压入堆栈。</p>
+<p>（2） 否则，不断从堆栈里弹出树，新弹出的树以旧弹出的树为右子树，连接起来，直到目前堆栈顶的树根的数大于新来的数。然后，弹出的那些数，已经形成了一个新的树，这个树作为新节点的左子树，把这个新树压入堆栈。</p>
+<p>这样的堆栈是单调的，越靠近堆栈顶的数越小。</p>
+<p>最后还要按照（2）的方法，把所有树弹出来，每个旧树作为新树的右子树。</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>Non-recursion:</p>
+<pre><code>/**
+ * <span class="type">Definition</span> <span class="keyword">of</span> <span class="type">TreeNode</span>:
+ * public class <span class="type">TreeNode</span> {
+ *     public <span class="type">int</span> val;
+ *     public <span class="type">TreeNode</span> left, right;
+ *     public <span class="type">TreeNode</span>(<span class="type">int</span> val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class <span class="type">Solution</span> {
+    /**
+     * @param A: <span class="type">Given</span> an integer <span class="type">array</span> <span class="keyword">with</span> no duplicates.
+     * @<span class="keyword">return</span>: <span class="type">The</span> root <span class="keyword">of</span> max tree.
+     */
+    public <span class="type">TreeNode</span> maxTree(<span class="type">int</span>[] A) {
+        // write your code here
+        <span class="keyword">if</span> (A == null || A.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> null;
+        }
+
+        <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt; stack = new <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt;();
+        <span class="type">int</span> len = A.length;
+
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) {
+            <span class="keyword">if</span> (stack.isEmpty() || stack.peek().val &gt;= A[i]) {
+                stack.push(new <span class="type">TreeNode</span>(A[i]));
+            } <span class="keyword">else</span> {
+                <span class="type">TreeNode</span> hasLeftSon = new <span class="type">TreeNode</span>(A[i]);
+                <span class="type">TreeNode</span> leftson = stack.pop();
+                <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; stack.peek().val &lt; A[i]) {
+                    <span class="type">TreeNode</span> temp = stack.peek();
+                    temp.right = leftson;
+                    leftson = temp;
+                    stack.pop();
+                }
+                hasLeftSon.left = leftson;
+                stack.push(hasLeftSon);
+            }
+        }
+
+        <span class="type">TreeNode</span> <span class="literal">result</span> = stack.pop();
+
+        <span class="keyword">while</span>(!stack.isEmpty()) {
+            <span class="type">TreeNode</span> temp = stack.pop();
+            temp.right = <span class="literal">result</span>;
+            <span class="literal">result</span> = temp;
+        }
+
+        <span class="keyword">return</span> <span class="literal">result</span>;
+    }
+}
+</code></pre><p>Recursion: (in the future)</p>
 
       
     </div>
@@ -258,15 +307,11 @@ Hello WPI!">
     
 <nav id="article-nav">
   
-    <a href="/2015/05/20/AsymptoticAnalysis/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          Asymptotic Analysis
-        
-      </div>
-    </a>
   
+    <a href="/2015/06/04/LongestConsecutiveSequence/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">[LintCode] - LongestConsecutiveSequence</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
   
 </nav>
 
@@ -293,7 +338,7 @@ Hello WPI!">
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="MyFirstBlog" data-title="My School" data-url="http://www.piedbiper.tk/2015/05/19/MyFirstBlog/"></div>
+	<div class="ds-thread" data-thread-key="MaxTree" data-title="[LintCode] - MaxTree" data-url="http://www.piedbiper.tk/2015/06/10/MaxTree/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
