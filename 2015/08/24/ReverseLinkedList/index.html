@@ -4,23 +4,34 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>[LintCode] - Hash Function | LinのCoding</title>
+    <title>[LeetCode 206] - ReverseLinkedList | LinのCoding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Lin Du">
     
 
     
-    <meta name="description" content="QuestionlinkIn data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash f">
+    <meta name="description" content="QuestionlinkReverse a singly linked list.
+Hint:A linked list can be reversed either iteratively or recursively. Could you implement both?
+My Thought两种方法：iteratively and recursively
+Iteratively: 模板做法
+R">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[LintCode] - Hash Function">
-<meta property="og:url" content="http://www.piedbiper.tk/2015/05/31/LintCode-HashFunction/index.html">
+<meta property="og:title" content="[LeetCode 206] - ReverseLinkedList">
+<meta property="og:url" content="http://www.piedbiper.tk/2015/08/24/ReverseLinkedList/index.html">
 <meta property="og:site_name" content="LinのCoding">
-<meta property="og:description" content="QuestionlinkIn data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash f">
-<meta property="og:image" content="http://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Hash_table_4_1_1_0_0_1_0_LL.svg/300px-Hash_table_4_1_1_0_0_1_0_LL.svg.png">
+<meta property="og:description" content="QuestionlinkReverse a singly linked list.
+Hint:A linked list can be reversed either iteratively or recursively. Could you implement both?
+My Thought两种方法：iteratively and recursively
+Iteratively: 模板做法
+R">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[LintCode] - Hash Function">
-<meta name="twitter:description" content="QuestionlinkIn data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash f">
+<meta name="twitter:title" content="[LeetCode 206] - ReverseLinkedList">
+<meta name="twitter:description" content="QuestionlinkReverse a singly linked list.
+Hint:A linked list can be reversed either iteratively or recursively. Could you implement both?
+My Thought两种方法：iteratively and recursively
+Iteratively: 模板做法
+R">
 
     
     <link rel="alternative" href="/atom.xml" title="LinのCoding" type="application/atom+xml">
@@ -84,14 +95,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/31/LintCode-HashFunction/" title="[LintCode] - Hash Function" itemprop="url">[LintCode] - Hash Function</a>
+      <a href="/2015/08/24/ReverseLinkedList/" title="[LeetCode 206] - ReverseLinkedList" itemprop="url">[LeetCode 206] - ReverseLinkedList</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-05-31T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
+    <time datetime="2015-08-24T23:44:34.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
     
   </p>
 </header>
@@ -100,52 +111,65 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Question"><span class="toc-number">1.</span> <span class="toc-text">Question</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#link"><span class="toc-number">1.1.</span> <span class="toc-text">link</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Example"><span class="toc-number">1.2.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Clarification"><span class="toc-number">1.3.</span> <span class="toc-text">Clarification</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought_and_Solution"><span class="toc-number">2.</span> <span class="toc-text">Thought and Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Code"><span class="toc-number">3.</span> <span class="toc-text">My Code</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-"><span class="toc-number">3.0.1.</span> <span class="toc-text">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</span></a></li></ol></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Question"><span class="toc-number">1.</span> <span class="toc-text">Question</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#link"><span class="toc-number">1.1.</span> <span class="toc-text">link</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Thought"><span class="toc-number">2.</span> <span class="toc-text">My Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Code"><span class="toc-number">3.</span> <span class="toc-text">My Code</span></a></li></ol>
 		
 		</div>
 		
-		<h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/hash-function/#" target="_blank" rel="external">link</a></h5><p>In data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash function is to “hash” the key as unreasonable as possible. A good hash function can avoid collision as less as possible. A widely used hash function algorithm is using a magic number 33, consider any string as a 33 based big integer like follow:</p>
-<p>hashcode(“abcd”) = (ascii(a) <em> 33^3 + ascii(b) </em> 33^2 + ascii(c) *33 + ascii(d)) % HASH_SIZE </p>
-<p>here HASH_SIZE is the capacity of the hash table (you can assume a hash table is like an array with index 0 ~ HASH_SIZE-1).</p>
-<p>Given a string as a key and the size of hash table, return the hash value of this key.</p>
-<h5 id="Example">Example</h5><p>For key=”abcd” and size=100, return 78</p>
-<h5 id="Clarification">Clarification</h5><p>For this problem, you are not necessary to design your own hash algorithm or consider any collision issue, you just need to implement the algorithm as described.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Just implement the given algorithm, but you need to care about the integer overflow. We can do it by type transformation easily. </p>
-<p>Maybe I can find another way to do it later.</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>class <span class="type">Solution</span> {
-    /**
-    * @param key: A <span class="type">String</span> you should hash
-    * @param <span class="type">HASH_SIZE</span>: <span class="type">An</span> integer
-     * @<span class="keyword">return</span> an integer
-     */
-    public <span class="type">int</span> hashCode(<span class="type">char</span>[] key,<span class="type">int</span> <span class="type">HASH_SIZE</span>) {
-        // write your code here
-        <span class="keyword">if</span> (key == null || key.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }
-        long <span class="literal">result</span> = <span class="number">0</span>;
-        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; key.length; i++) {
-            <span class="literal">result</span> = <span class="literal">result</span> * <span class="number">33</span> + (<span class="type">int</span>)key[i];
-            <span class="literal">result</span> %= <span class="type">HASH_SIZE</span>;
-        }
-        <span class="keyword">return</span> (<span class="type">int</span>)<span class="literal">result</span>;
+		<h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="external">link</a></h5><p>Reverse a singly linked list.</p>
+<p>Hint:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>两种方法：iteratively and recursively</p>
+<p>Iteratively: 模板做法</p>
+<p>Recursively: 更加直观 需要看面试官要求</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>两种方法：迭代和递归</p>
+<pre><code>/**
+ * <span class="type">Definition</span> <span class="keyword">for</span> singly-linked list.
+ * public class <span class="type">ListNode</span> {
+ *     <span class="type">int</span> val;
+ *     <span class="type">ListNode</span> next;
+ *     <span class="type">ListNode</span>(<span class="type">int</span> x) { val = x; }
+ * }
+ */
+public class <span class="type">Solution</span> {
+    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
+        <span class="keyword">if</span> (head == null) <span class="keyword">return</span> head;
+        <span class="keyword">if</span> (head.next == null) <span class="keyword">return</span> head;
+        <span class="type">ListNode</span> secondEle = head.next;
+        head.next = null;
+        <span class="type">ListNode</span> revSecondEle = reverseList(secondEle);
+        secondEle.next = head;
+        <span class="keyword">return</span> revSecondEle;
     }
-}    
-</code></pre><p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Hash_table_4_1_1_0_0_1_0_LL.svg/300px-Hash_table_4_1_1_0_0_1_0_LL.svg.png" alt="">     </p>
-<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>  
+}
+
+
+
+public class <span class="type">Solution</span> {
+    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
+        <span class="type">ListNode</span> <span class="literal">result</span> = null;
+        <span class="type">ListNode</span> cur = head;
+        <span class="keyword">while</span> (cur != null) {
+             <span class="type">ListNode</span> temp = cur.next;
+             cur.next = <span class="literal">result</span>;
+             <span class="literal">result</span> = cur;
+             cur = temp;
+        }
+        <span class="keyword">return</span> <span class="literal">result</span>;
+    }
+}
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
   </div>
 
 </div>
@@ -154,7 +178,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://www.piedbiper.tk/2015/05/31/LintCode-HashFunction/" data-title="[LintCode] - Hash Function | LinのCoding" data-tsina="null" class="share clearfix">
+	  <div data-url="http://www.piedbiper.tk/2015/08/24/ReverseLinkedList/" data-title="[LeetCode 206] - ReverseLinkedList | LinのCoding" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -167,19 +191,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/05/31/SelectionSort/" title="Selection Sort">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Selection Sort</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/05/20/AsymptoticAnalysis/"  title="Asymptotic Analysis">
+<a href="/2015/08/24/RemoveLinkedListElements/"  title="RemoveLinkedListElements">
  <strong>下一篇：</strong><br/> 
- <span>Asymptotic Analysis
+ <span>RemoveLinkedListElements
 </span>
 </a>
 </div>
@@ -194,7 +210,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
  
- <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Question"><span class="toc-number">1.</span> <span class="toc-text">Question</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#link"><span class="toc-number">1.1.</span> <span class="toc-text">link</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Example"><span class="toc-number">1.2.</span> <span class="toc-text">Example</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Clarification"><span class="toc-number">1.3.</span> <span class="toc-text">Clarification</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Thought_and_Solution"><span class="toc-number">2.</span> <span class="toc-text">Thought and Solution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Code"><span class="toc-number">3.</span> <span class="toc-text">My Code</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-"><span class="toc-number">3.0.1.</span> <span class="toc-text">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</span></a></li></ol></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Question"><span class="toc-number">1.</span> <span class="toc-text">Question</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#link"><span class="toc-number">1.1.</span> <span class="toc-text">link</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Thought"><span class="toc-number">2.</span> <span class="toc-text">My Thought</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#My_Code"><span class="toc-number">3.</span> <span class="toc-text">My Code</span></a></li></ol>
  
   </div>
 

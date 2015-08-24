@@ -85,6 +85,104 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/05/31/InsertionSort/" title="InsertionSort" itemprop="url">InsertionSort</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-01T01:34:57.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/31/BubbleSort/" title="BubbleSort" itemprop="url">BubbleSort</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-01T01:34:52.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/05/31/SelectionSort/" title="Selection Sort" itemprop="url">Selection Sort</a>
   </h1>
   <p class="article-author">By
@@ -158,6 +256,93 @@
   <div class="article-tags">
   
   <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Sorting/">Sorting</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/05/31/LintCode-HashFunction/" title="[LintCode] - Hash Function" itemprop="url">[LintCode] - Hash Function</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-05-31T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/hash-function/#" target="_blank" rel="external">link</a></h5><p>In data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash function is to “hash” the key as unreasonable as possible. A good hash function can avoid collision as less as possible. A widely used hash function algorithm is using a magic number 33, consider any string as a 33 based big integer like follow:</p>
+<p>hashcode(“abcd”) = (ascii(a) <em> 33^3 + ascii(b) </em> 33^2 + ascii(c) *33 + ascii(d)) % HASH_SIZE </p>
+<p>here HASH_SIZE is the capacity of the hash table (you can assume a hash table is like an array with index 0 ~ HASH_SIZE-1).</p>
+<p>Given a string as a key and the size of hash table, return the hash value of this key.</p>
+<h5 id="Example">Example</h5><p>For key=”abcd” and size=100, return 78</p>
+<h5 id="Clarification">Clarification</h5><p>For this problem, you are not necessary to design your own hash algorithm or consider any collision issue, you just need to implement the algorithm as described.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Just implement the given algorithm, but you need to care about the integer overflow. We can do it by type transformation easily. </p>
+<p>Maybe I can find another way to do it later.</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>class <span class="type">Solution</span> {
+    /**
+    * @param key: A <span class="type">String</span> you should hash
+    * @param <span class="type">HASH_SIZE</span>: <span class="type">An</span> integer
+     * @<span class="keyword">return</span> an integer
+     */
+    public <span class="type">int</span> hashCode(<span class="type">char</span>[] key,<span class="type">int</span> <span class="type">HASH_SIZE</span>) {
+        // write your code here
+        <span class="keyword">if</span> (key == null || key.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        long <span class="literal">result</span> = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; key.length; i++) {
+            <span class="literal">result</span> = <span class="literal">result</span> * <span class="number">33</span> + (<span class="type">int</span>)key[i];
+            <span class="literal">result</span> %= <span class="type">HASH_SIZE</span>;
+        }
+        <span class="keyword">return</span> (<span class="type">int</span>)<span class="literal">result</span>;
+    }
+}    
+</code></pre><p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Hash_table_4_1_1_0_0_1_0_LL.svg/300px-Hash_table_4_1_1_0_0_1_0_LL.svg.png" alt="">     </p>
+<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
   </div>
 
 </div>
@@ -334,7 +519,7 @@
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
 		  
 		
 		  
@@ -355,11 +540,7 @@
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>15</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>9</sup></a></li>
+				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>18</sup></a></li>
 			
 		
 			
@@ -367,15 +548,23 @@
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>9</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>3</sup></a></li>
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>4</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Stack/" title="Stack">Stack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>3</sup></a></li>
 			
 		
 			
@@ -384,10 +573,6 @@
 		
 			
 				<li><a href="/tags/Sorting/" title="Sorting">Sorting<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>1</sup></a></li>
 			
 		
 			

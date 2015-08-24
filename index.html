@@ -85,6 +85,273 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/08/24/ReverseLinkedList/" title="[LeetCode 206] - ReverseLinkedList" itemprop="url">[LeetCode 206] - ReverseLinkedList</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-24T23:44:34.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="external">link</a></h5><p>Reverse a singly linked list.</p>
+<p>Hint:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>两种方法：iteratively and recursively</p>
+<p>Iteratively: 模板做法</p>
+<p>Recursively: 更加直观 需要看面试官要求</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>两种方法：迭代和递归</p>
+<pre><code>/**
+ * <span class="type">Definition</span> <span class="keyword">for</span> singly-linked list.
+ * public class <span class="type">ListNode</span> {
+ *     <span class="type">int</span> val;
+ *     <span class="type">ListNode</span> next;
+ *     <span class="type">ListNode</span>(<span class="type">int</span> x) { val = x; }
+ * }
+ */
+public class <span class="type">Solution</span> {
+    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
+        <span class="keyword">if</span> (head == null) <span class="keyword">return</span> head;
+        <span class="keyword">if</span> (head.next == null) <span class="keyword">return</span> head;
+        <span class="type">ListNode</span> secondEle = head.next;
+        head.next = null;
+        <span class="type">ListNode</span> revSecondEle = reverseList(secondEle);
+        secondEle.next = head;
+        <span class="keyword">return</span> revSecondEle;
+    }
+}
+
+
+
+public class <span class="type">Solution</span> {
+    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
+        <span class="type">ListNode</span> <span class="literal">result</span> = null;
+        <span class="type">ListNode</span> cur = head;
+        <span class="keyword">while</span> (cur != null) {
+             <span class="type">ListNode</span> temp = cur.next;
+             cur.next = <span class="literal">result</span>;
+             <span class="literal">result</span> = cur;
+             cur = temp;
+        }
+        <span class="keyword">return</span> <span class="literal">result</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/24/RemoveLinkedListElements/" title="RemoveLinkedListElements" itemprop="url">RemoveLinkedListElements</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-24T22:08:45.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-linked-list-elements/" target="_blank" rel="external">link</a></h5><p>Remove all elements from a linked list of integers that have value val.</p>
+<p>Example<br>Given: 1 —&gt; 2 —&gt; 6 —&gt; 3 —&gt; 4 —&gt; 5 —&gt; 6, val = 6<br>Return: 1 —&gt; 2 —&gt; 3 —&gt; 4 —&gt; 5</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>由于头结点可能删除，所以我们要使用dummy node。另外删除一个node需要维护的当前node和当前node的前一个node。然后OnePass就可以解决了。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>/**
+ * Definition <span class="keyword">for</span> singly-linked list.
+ * <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> {</span>
+ *     int val;
+ *     ListNode <span class="keyword">next</span>;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
+    <span class="keyword">public</span> ListNode removeElements(ListNode head, int val) {
+        <span class="keyword">if</span> (head == <span class="literal">null</span>) {
+            <span class="keyword">return</span> head;
+        }
+        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);
+        dummy.<span class="keyword">next</span> = head;
+        ListNode pre = dummy;
+        ListNode cur = head;
+        <span class="keyword">while</span> (cur != <span class="literal">null</span>) {
+            <span class="keyword">if</span> (cur.val == val) {
+                pre.<span class="keyword">next</span> = cur.<span class="keyword">next</span>;
+                cur = cur.<span class="keyword">next</span>;
+            } <span class="keyword">else</span> {
+                pre = pre.<span class="keyword">next</span>;
+                cur = cur.<span class="keyword">next</span>;
+            }
+        }
+        <span class="keyword">return</span> dummy.<span class="keyword">next</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/24/DeleteNodeInLinkedList/" title="[LeetCode 237] - DeleteNodeInLinkedList" itemprop="url">[LeetCode 237] - DeleteNodeInLinkedList</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-24T21:47:06.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/delete-node-in-a-linked-list/" target="_blank" rel="external">link</a></h5><p>Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.</p>
+<p>Supposed the linked list is 1 -&gt; 2 -&gt; 3 -&gt; 4 and you are given the third node with value 3, the linked list should become 1 -&gt; 2 -&gt; 4 after calling your function.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>一般来说 delete node 需要知道node的前一个node， 这个题里面只给了要删的node，所以只需要把当前node overwrite掉就好了。code也很简单，两行搞定。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>/**
+ * Definition <span class="keyword">for</span> singly-linked list.
+ * <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> {</span>
+ *     int val;
+ *     ListNode <span class="keyword">next</span>;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
+    <span class="keyword">public</span> void deleteNode(ListNode node) {
+        node.val = node.<span class="keyword">next</span>.val;
+        node.<span class="keyword">next</span> = node.<span class="keyword">next</span>.<span class="keyword">next</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/24/3SumCloset/" title="[LeetCode 16]- 3SumCloset" itemprop="url">[LeetCode 16]- 3SumCloset</a>
   </h1>
   <p class="article-author">By
@@ -701,6 +968,130 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/06/10/MaxTree/" title="[LintCode] - MaxTree" itemprop="url">[LintCode] - MaxTree</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/max-tree/" target="_blank" rel="external">link</a></h5><p>Given an integer array with no duplicates. A max tree building on this array is defined as follow:</p>
+<p>The root is the maximum number in the array<br>The left subtree and right subtree are the max trees of the subarray divided by the root number.<br>Construct the max tree by the given array.</p>
+<h5 id="Challenge">Challenge</h5><p>O(n) time and memory.</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Recursion: use recursion method, in the worst case, the complexity is O(n^2).</p>
+<p>Linear method: Refer to the analysis of some other people: <a href="http://www.meetqun.com/thread-3335-1-1.html" target="_blank" rel="external">link</a></p>
+<p>这个题Leetcode上没有，其实这种树叫做笛卡树（ Cartesian tree）。直接递归建树的话复杂度最差会退化到O(n^2)。经典建树方法，用到的是单调堆栈。我们堆栈里存放的树，只有左子树，没有有子树，且根节点最大。</p>
+<p>（1） 如果新来一个数，比堆栈顶的树根的数小，则把这个数作为一个单独的节点压入堆栈。</p>
+<p>（2） 否则，不断从堆栈里弹出树，新弹出的树以旧弹出的树为右子树，连接起来，直到目前堆栈顶的树根的数大于新来的数。然后，弹出的那些数，已经形成了一个新的树，这个树作为新节点的左子树，把这个新树压入堆栈。</p>
+<p>这样的堆栈是单调的，越靠近堆栈顶的数越小。</p>
+<p>最后还要按照（2）的方法，把所有树弹出来，每个旧树作为新树的右子树。</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>Non-recursion:</p>
+<pre><code>/**
+ * <span class="type">Definition</span> <span class="keyword">of</span> <span class="type">TreeNode</span>:
+ * public class <span class="type">TreeNode</span> {
+ *     public <span class="type">int</span> val;
+ *     public <span class="type">TreeNode</span> left, right;
+ *     public <span class="type">TreeNode</span>(<span class="type">int</span> val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class <span class="type">Solution</span> {
+    /**
+     * @param A: <span class="type">Given</span> an integer <span class="type">array</span> <span class="keyword">with</span> no duplicates.
+     * @<span class="keyword">return</span>: <span class="type">The</span> root <span class="keyword">of</span> max tree.
+     */
+    public <span class="type">TreeNode</span> maxTree(<span class="type">int</span>[] A) {
+        // write your code here
+        <span class="keyword">if</span> (A == null || A.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> null;
+        }
+
+        <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt; stack = new <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt;();
+        <span class="type">int</span> len = A.length;
+
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) {
+            <span class="keyword">if</span> (stack.isEmpty() || stack.peek().val &gt;= A[i]) {
+                stack.push(new <span class="type">TreeNode</span>(A[i]));
+            } <span class="keyword">else</span> {
+                <span class="type">TreeNode</span> hasLeftSon = new <span class="type">TreeNode</span>(A[i]);
+                <span class="type">TreeNode</span> leftson = stack.pop();
+                <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; stack.peek().val &lt; A[i]) {
+                    <span class="type">TreeNode</span> temp = stack.peek();
+                    temp.right = leftson;
+                    leftson = temp;
+                    stack.pop();
+                }
+                hasLeftSon.left = leftson;
+                stack.push(hasLeftSon);
+            }
+        }
+
+        <span class="type">TreeNode</span> <span class="literal">result</span> = stack.pop();
+
+        <span class="keyword">while</span>(!stack.isEmpty()) {
+            <span class="type">TreeNode</span> temp = stack.pop();
+            temp.right = <span class="literal">result</span>;
+            <span class="literal">result</span> = temp;
+        }
+
+        <span class="keyword">return</span> <span class="literal">result</span>;
+    }
+}
+</code></pre><p>Recursion: (in the future)</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/06/10/MedianInDataStream/" title="[LintCode] - MedianInDataStream" itemprop="url">[LintCode] - MedianInDataStream</a>
   </h1>
   <p class="article-author">By
@@ -787,130 +1178,6 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 }
 }
 </code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/MaxTree/" title="[LintCode] - MaxTree" itemprop="url">[LintCode] - MaxTree</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/max-tree/" target="_blank" rel="external">link</a></h5><p>Given an integer array with no duplicates. A max tree building on this array is defined as follow:</p>
-<p>The root is the maximum number in the array<br>The left subtree and right subtree are the max trees of the subarray divided by the root number.<br>Construct the max tree by the given array.</p>
-<h5 id="Challenge">Challenge</h5><p>O(n) time and memory.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Recursion: use recursion method, in the worst case, the complexity is O(n^2).</p>
-<p>Linear method: Refer to the analysis of some other people: <a href="http://www.meetqun.com/thread-3335-1-1.html" target="_blank" rel="external">link</a></p>
-<p>这个题Leetcode上没有，其实这种树叫做笛卡树（ Cartesian tree）。直接递归建树的话复杂度最差会退化到O(n^2)。经典建树方法，用到的是单调堆栈。我们堆栈里存放的树，只有左子树，没有有子树，且根节点最大。</p>
-<p>（1） 如果新来一个数，比堆栈顶的树根的数小，则把这个数作为一个单独的节点压入堆栈。</p>
-<p>（2） 否则，不断从堆栈里弹出树，新弹出的树以旧弹出的树为右子树，连接起来，直到目前堆栈顶的树根的数大于新来的数。然后，弹出的那些数，已经形成了一个新的树，这个树作为新节点的左子树，把这个新树压入堆栈。</p>
-<p>这样的堆栈是单调的，越靠近堆栈顶的数越小。</p>
-<p>最后还要按照（2）的方法，把所有树弹出来，每个旧树作为新树的右子树。</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>Non-recursion:</p>
-<pre><code>/**
- * <span class="type">Definition</span> <span class="keyword">of</span> <span class="type">TreeNode</span>:
- * public class <span class="type">TreeNode</span> {
- *     public <span class="type">int</span> val;
- *     public <span class="type">TreeNode</span> left, right;
- *     public <span class="type">TreeNode</span>(<span class="type">int</span> val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class <span class="type">Solution</span> {
-    /**
-     * @param A: <span class="type">Given</span> an integer <span class="type">array</span> <span class="keyword">with</span> no duplicates.
-     * @<span class="keyword">return</span>: <span class="type">The</span> root <span class="keyword">of</span> max tree.
-     */
-    public <span class="type">TreeNode</span> maxTree(<span class="type">int</span>[] A) {
-        // write your code here
-        <span class="keyword">if</span> (A == null || A.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> null;
-        }
-
-        <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt; stack = new <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt;();
-        <span class="type">int</span> len = A.length;
-
-        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) {
-            <span class="keyword">if</span> (stack.isEmpty() || stack.peek().val &gt;= A[i]) {
-                stack.push(new <span class="type">TreeNode</span>(A[i]));
-            } <span class="keyword">else</span> {
-                <span class="type">TreeNode</span> hasLeftSon = new <span class="type">TreeNode</span>(A[i]);
-                <span class="type">TreeNode</span> leftson = stack.pop();
-                <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; stack.peek().val &lt; A[i]) {
-                    <span class="type">TreeNode</span> temp = stack.peek();
-                    temp.right = leftson;
-                    leftson = temp;
-                    stack.pop();
-                }
-                hasLeftSon.left = leftson;
-                stack.push(hasLeftSon);
-            }
-        }
-
-        <span class="type">TreeNode</span> <span class="literal">result</span> = stack.pop();
-
-        <span class="keyword">while</span>(!stack.isEmpty()) {
-            <span class="type">TreeNode</span> temp = stack.pop();
-            temp.right = <span class="literal">result</span>;
-            <span class="literal">result</span> = temp;
-        }
-
-        <span class="keyword">return</span> <span class="literal">result</span>;
-    }
-}
-</code></pre><p>Recursion: (in the future)</p>
-
         
         
         <p class="article-more-link">
@@ -1340,110 +1607,6 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/01/MinStack/" title="[LintCode] - Min Stack" itemprop="url">[LintCode] - Min Stack</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-06-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/min-stack/#" target="_blank" rel="external">link</a></h5><p>Implement a stack with min() function, which will return the smallest number in the stack.</p>
-<p>It should support push, pop and min operation all in O(1) cost.</p>
-<h5 id="Example">Example</h5><p>Operations: push(1), pop(), push(2), push(3), min(), push(1), min() Return: 1, 2, 1</p>
-<h5 id="Note">Note</h5><p>min operation will never be called if there is no number in the stack</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>This is a classic data structure problem. My thought is using two stack: one NORMAL stack is used to store all numbers that are pushed in; the other one is used to store the MINIMUM number so far. </p>
-<p>When we are doing “push” operation, we push the number into the NORMAL stack as usual; we also push this number into the MINIMUM stack if this number is smaller than the peek of the MINIMUM stack. Here we need to care about two things:</p>
-<p>(1) If the MINIMUM stack is empty, we just push the number into it.</p>
-<p>(2) If the number is larger than the peek of the MINIMUM stack, we just push the minStack.peek() into minStack to guarantee NORMAL and MINIMUM stack have the same number of elements.</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> class Solution {
-
-    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> <span class="built_in">stack</span>;
-    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> minStack;
-    <span class="keyword">public</span> Solution() {
-        <span class="comment">// do initialize if necessary</span>
-        <span class="built_in">stack</span> <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
-        minStack <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
-    }
-
-    <span class="keyword">public</span> <span class="literal">void</span> push(int number) {
-        <span class="comment">// write your code here</span>
-        <span class="built_in">stack</span><span class="built_in">.</span>push(number);
-        <span class="keyword">if</span> (minStack<span class="built_in">.</span>isEmpty()) {
-            minStack<span class="built_in">.</span>push(number);
-        } <span class="keyword">else</span> {
-            <span class="keyword">if</span> (number <span class="subst">&lt;</span> minStack<span class="built_in">.</span>peek()) {
-                minStack<span class="built_in">.</span>push(number);
-            } <span class="keyword">else</span> {
-                minStack<span class="built_in">.</span>push(minStack<span class="built_in">.</span>peek());
-            }
-        }
-
-    }
-
-    <span class="keyword">public</span> int pop() {
-        <span class="comment">// write your code here</span>
-        minStack<span class="built_in">.</span>pop();
-        <span class="keyword">return</span> <span class="built_in">stack</span><span class="built_in">.</span>pop();
-    }
-
-    <span class="keyword">public</span> int <span class="keyword">min</span>() {
-        <span class="comment">// write your code here</span>
-        <span class="keyword">return</span> minStack<span class="built_in">.</span>peek();
-    }
-}
-</code></pre><p><img src="http://www.ritambhara.in/wp-content/uploads/2012/07/minstack_1.png" alt="">     </p>
-<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LintCode/">LintCode</a><a href="/tags/Stack/">Stack</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
       <a href="/2015/06/01/ImplementQueueByTwoStacks/" title="[LintCode] - Implement Queue by Two Stacks" itemprop="url">[LintCode] - Implement Queue by Two Stacks</a>
   </h1>
   <p class="article-author">By
@@ -1547,145 +1710,64 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/05/31/InsertionSort/" title="InsertionSort" itemprop="url">InsertionSort</a>
+      <a href="/2015/06/01/MinStack/" title="[LintCode] - Min Stack" itemprop="url">[LintCode] - Min Stack</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-01T01:34:57.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
+    <time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-06-01</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/min-stack/#" target="_blank" rel="external">link</a></h5><p>Implement a stack with min() function, which will return the smallest number in the stack.</p>
+<p>It should support push, pop and min operation all in O(1) cost.</p>
+<h5 id="Example">Example</h5><p>Operations: push(1), pop(), push(2), push(3), min(), push(1), min() Return: 1, 2, 1</p>
+<h5 id="Note">Note</h5><p>min operation will never be called if there is no number in the stack</p>
+<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>This is a classic data structure problem. My thought is using two stack: one NORMAL stack is used to store all numbers that are pushed in; the other one is used to store the MINIMUM number so far. </p>
+<p>When we are doing “push” operation, we push the number into the NORMAL stack as usual; we also push this number into the MINIMUM stack if this number is smaller than the peek of the MINIMUM stack. Here we need to care about two things:</p>
+<p>(1) If the MINIMUM stack is empty, we just push the number into it.</p>
+<p>(2) If the number is larger than the peek of the MINIMUM stack, we just push the minStack.peek() into minStack to guarantee NORMAL and MINIMUM stack have the same number of elements.</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> class Solution {
 
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/05/31/BubbleSort/" title="BubbleSort" itemprop="url">BubbleSort</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-01T01:34:52.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/05/31/LintCode-HashFunction/" title="[LintCode] - Hash Function" itemprop="url">[LintCode] - Hash Function</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-05-31T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-05-31</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/hash-function/#" target="_blank" rel="external">link</a></h5><p>In data structure Hash, hash function is used to convert a string(or any other type) into an integer smaller than hash size and bigger or equal to zero. The objective of designing a hash function is to “hash” the key as unreasonable as possible. A good hash function can avoid collision as less as possible. A widely used hash function algorithm is using a magic number 33, consider any string as a 33 based big integer like follow:</p>
-<p>hashcode(“abcd”) = (ascii(a) <em> 33^3 + ascii(b) </em> 33^2 + ascii(c) *33 + ascii(d)) % HASH_SIZE </p>
-<p>here HASH_SIZE is the capacity of the hash table (you can assume a hash table is like an array with index 0 ~ HASH_SIZE-1).</p>
-<p>Given a string as a key and the size of hash table, return the hash value of this key.</p>
-<h5 id="Example">Example</h5><p>For key=”abcd” and size=100, return 78</p>
-<h5 id="Clarification">Clarification</h5><p>For this problem, you are not necessary to design your own hash algorithm or consider any collision issue, you just need to implement the algorithm as described.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Just implement the given algorithm, but you need to care about the integer overflow. We can do it by type transformation easily. </p>
-<p>Maybe I can find another way to do it later.</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>class <span class="type">Solution</span> {
-    /**
-    * @param key: A <span class="type">String</span> you should hash
-    * @param <span class="type">HASH_SIZE</span>: <span class="type">An</span> integer
-     * @<span class="keyword">return</span> an integer
-     */
-    public <span class="type">int</span> hashCode(<span class="type">char</span>[] key,<span class="type">int</span> <span class="type">HASH_SIZE</span>) {
-        // write your code here
-        <span class="keyword">if</span> (key == null || key.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }
-        long <span class="literal">result</span> = <span class="number">0</span>;
-        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; key.length; i++) {
-            <span class="literal">result</span> = <span class="literal">result</span> * <span class="number">33</span> + (<span class="type">int</span>)key[i];
-            <span class="literal">result</span> %= <span class="type">HASH_SIZE</span>;
-        }
-        <span class="keyword">return</span> (<span class="type">int</span>)<span class="literal">result</span>;
+    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> <span class="built_in">stack</span>;
+    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> minStack;
+    <span class="keyword">public</span> Solution() {
+        <span class="comment">// do initialize if necessary</span>
+        <span class="built_in">stack</span> <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
+        minStack <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
     }
-}    
-</code></pre><p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Hash_table_4_1_1_0_0_1_0_LL.svg/300px-Hash_table_4_1_1_0_0_1_0_LL.svg.png" alt="">     </p>
+
+    <span class="keyword">public</span> <span class="literal">void</span> push(int number) {
+        <span class="comment">// write your code here</span>
+        <span class="built_in">stack</span><span class="built_in">.</span>push(number);
+        <span class="keyword">if</span> (minStack<span class="built_in">.</span>isEmpty()) {
+            minStack<span class="built_in">.</span>push(number);
+        } <span class="keyword">else</span> {
+            <span class="keyword">if</span> (number <span class="subst">&lt;</span> minStack<span class="built_in">.</span>peek()) {
+                minStack<span class="built_in">.</span>push(number);
+            } <span class="keyword">else</span> {
+                minStack<span class="built_in">.</span>push(minStack<span class="built_in">.</span>peek());
+            }
+        }
+
+    }
+
+    <span class="keyword">public</span> int pop() {
+        <span class="comment">// write your code here</span>
+        minStack<span class="built_in">.</span>pop();
+        <span class="keyword">return</span> <span class="built_in">stack</span><span class="built_in">.</span>pop();
+    }
+
+    <span class="keyword">public</span> int <span class="keyword">min</span>() {
+        <span class="comment">// write your code here</span>
+        <span class="keyword">return</span> minStack<span class="built_in">.</span>peek();
+    }
+}
+</code></pre><p><img src="http://www.ritambhara.in/wp-content/uploads/2012/07/minstack_1.png" alt="">     </p>
 <h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
         
         
@@ -1704,7 +1786,7 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LintCode/">LintCode</a><a href="/tags/Stack/">Stack</a>
   </div>
 
 </div>
@@ -1752,7 +1834,7 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
 		  
 		
 		  
@@ -1773,11 +1855,7 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>15</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>9</sup></a></li>
+				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>18</sup></a></li>
 			
 		
 			
@@ -1785,15 +1863,23 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>9</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>3</sup></a></li>
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>4</sup></a></li>
 			
 		
 			
 				<li><a href="/tags/Stack/" title="Stack">Stack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>3</sup></a></li>
 			
 		
 			
@@ -1802,10 +1888,6 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 		
 			
 				<li><a href="/tags/Sorting/" title="Sorting">Sorting<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>1</sup></a></li>
 			
 		
 			
