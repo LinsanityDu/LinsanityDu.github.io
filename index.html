@@ -85,6 +85,1000 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/08/27/LCAOfBinaryTree/" title="LCAOfBinaryTree" itemprop="url">LCAOfBinaryTree</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T02:17:38.000Z" itemprop="datePublished"> 發表於 2015-08-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/" target="_blank" rel="external">link</a></h5><p>Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.</p>
+<p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”</p>
+<pre><code><span class="code">    _______3______</span>
+   /              \
+<span class="strong">___5__</span>          <span class="strong">___1__</span>
+</code></pre><p>For example, the lowest common ancestor (LCA) of nodes 5 and 1 is 3. Another example is LCA of nodes 5 and 4 is 5, since a node can be a descendant of itself according to the LCA definition.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>there is a very good bottom-up approach with O(n) time. This solution, though very tricky, is the most standard and common interview question that can be asked about Binary Tree.</p>
+<p>We traverse from the bottom, and once we reach a node which matches one of the two nodes, we pass it up to its parent. The parent would then test its left and right subtree if each contain one of the two nodes. If yes, then the parent must be the LCA and we pass its parent up to the root. If not, we pass the lower node which contains either one of the two nodes (if the left or right subtree contains either p or q), or NULL (if both the left and right subtree does not contain either p or q) up.</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        <span class="keyword">if</span> (root == <span class="literal">null</span> || root == p || root == q) {
+            return root;
+        }
+
+        TreeNode <span class="built_in">left</span> = lowestCommonAncestor(root.<span class="built_in">left</span>, p, q);
+        TreeNode <span class="built_in">right</span> = lowestCommonAncestor(root.<span class="built_in">right</span>, p, q);
+
+        <span class="keyword">if</span> (<span class="built_in">left</span> != <span class="literal">null</span> &amp;&amp; <span class="built_in">right</span> != <span class="literal">null</span>) {
+            return root;
+        }
+        <span class="keyword">if</span> (<span class="built_in">left</span> != <span class="literal">null</span>) {
+            return <span class="built_in">left</span>;
+        }
+        <span class="keyword">if</span> (<span class="built_in">right</span> != <span class="literal">null</span>) {
+            return <span class="built_in">right</span>;
+        }
+        return <span class="literal">null</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Tree/">Tree</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/27/LCAOfBinarySearchTree/" title="[LeetCode 235] - LCAOfBinarySearchTree" itemprop="url">[LeetCode 235] - LCAOfBinarySearchTree</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T01:44:12.000Z" itemprop="datePublished"> 發表於 2015-08-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/" target="_blank" rel="external">link</a></h5><p>Given a binary search tree (BST), find the lowest common ancestor (LCA) of two given nodes in the BST.</p>
+<p>According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes v and w as the lowest node in T that has both v and w as descendants (where we allow a node to be a descendant of itself).”</p>
+<pre><code><span class="code">    _______6______</span>
+   /              \
+<span class="strong">___2__</span>          <span class="strong">___8__</span>
+</code></pre><p>For example, the lowest common ancestor (LCA) of nodes 2 and 8 is 6. Another example is LCA of nodes 2 and 4 is 2, since a node can be a descendant of itself according to the LCA definition.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>递归查找，利用BST的性质。注意三种情况。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        <span class="keyword">if</span> (root.<span class="keyword">val</span> == p.<span class="keyword">val</span> || root.<span class="keyword">val</span> == q.<span class="keyword">val</span> || root == <span class="keyword">null</span>) {
+            <span class="keyword">return</span> root;
+        }
+        <span class="keyword">if</span> ((root.<span class="keyword">val</span> &lt; p.<span class="keyword">val</span> &amp;&amp; root.<span class="keyword">val</span> &gt; q.<span class="keyword">val</span>) || (root.<span class="keyword">val</span> &lt; q.<span class="keyword">val</span> &amp;&amp; root.<span class="keyword">val</span> &gt; p.<span class="keyword">val</span>)) {
+            <span class="keyword">return</span> root;
+        } <span class="keyword">else</span> <span class="keyword">if</span> (root.<span class="keyword">val</span> &gt; q.<span class="keyword">val</span> &amp;&amp; root.<span class="keyword">val</span> &gt; p.<span class="keyword">val</span>) {
+            <span class="keyword">return</span> lowestCommonAncestor(root.left, p , q);
+        } <span class="keyword">else</span> {
+            <span class="keyword">return</span> lowestCommonAncestor(root.right, p , q);
+        }
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Tree/">Tree</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/27/ContainerWithMostWater/" title="[LeetCode 11] - ContainerWithMostWater" itemprop="url">[LeetCode 11] - ContainerWithMostWater</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T01:04:08.000Z" itemprop="datePublished"> 發表於 2015-08-27</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/container-with-most-water/" target="_blank" rel="external">link</a></h5><p>Given n non-negative integers a1, a2, …, an, where each represents a point at coordinate (i, ai). n vertical lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0). Find two lines, which together with x-axis forms a container, such that the container contains the most water.</p>
+<p>Note: You may not slant the container.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>暴力求解遍历每一个Container， 复杂度是O(N^2)</p>
+<p>复杂度为O(N)的解法，经典的两根指针灌水题目。九章高级版有模板。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> class Solution {
+    <span class="keyword">public</span> <span class="built_in">int</span> maxArea(<span class="built_in">int</span>[] <span class="variable">height</span>) {
+        <span class="keyword">if</span> (<span class="variable">height</span> == <span class="keyword">null</span> || <span class="variable">height</span>.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        <span class="built_in">int</span> start = <span class="number">0</span>;
+        <span class="built_in">int</span> end = <span class="variable">height</span>.length - <span class="number">1</span>;
+        <span class="built_in">int</span> <span class="built_in">max</span> = Integer.MIN_VALUE;
+        <span class="keyword">while</span> (start &lt; end) {
+            <span class="built_in">max</span> = Math.<span class="built_in">max</span>(<span class="built_in">max</span>, (end - start) * Math.<span class="built_in">min</span>(<span class="variable">height</span>[start], <span class="variable">height</span>[end]));
+            <span class="keyword">if</span> (<span class="variable">height</span>[start] &lt; <span class="variable">height</span>[end]) {
+                start++;
+            } <span class="keyword">else</span> {
+                end--;
+            }
+        }
+        <span class="keyword">return</span> <span class="built_in">max</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/26/FirstMissingPositive/" title="[LeetCode 41] - FirstMissingPositive" itemprop="url">[LeetCode 41] - FirstMissingPositive</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-26T17:42:57.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/first-missing-positive/" target="_blank" rel="external">link</a></h5><p>Given an unsorted integer array, find the first missing positive integer.</p>
+<p>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.</p>
+<p>Your algorithm should run in O(n) time and uses constant space.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>该题的要求很明确，即第一个不存在的正数，但是需要在线性时间和常量空间下得到。线性的时间意味着不能对数组进行常规排序，因为快排时间复杂度为O(nlogn)。常量空间指不能开辟额外的空间。</p>
+<p>因此为了搜寻元素，这里采用数组的下标作为其索引，即对数组的元素进行交换，将正数i放到i-1的位置上，对于负数和大于数组长度的元素弃之不顾。这样线性扫描一下数组就能得到第一个不存在的正数，即第j位置的元素不等于j+1。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution <span class="comment">{
+    public int firstMissingPositive(int[] A) {
+        //将正数放到值-1的位置上，这样1放在0号位置，2放在1号位置，。。。。
+        if(A==null || A.length==0)
+            return 1;
+        for(int i=0;i&lt;A.length;i++)
+        {
+            if(A[i]&lt;=A.length &amp;&amp; A[i]&gt;0 &amp;&amp; A[A[i]-1]!=A[i])
+            {
+                int temp=A[A[i]-1];
+                A[A[i]-1]=A[i];
+                A[i]=temp;
+                i--;
+            }</span>
+        }
+
+        <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;A.length;i++)
+        <span class="comment">{
+            if(A[i]!=(i+1))
+                return i+1;
+        }</span>
+        return A.length+<span class="number">1</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/26/ProductOfArrayExceptSelf/" title="[LeetCode 238] - ProductOfArrayExceptSelf" itemprop="url">[LeetCode 238] - ProductOfArrayExceptSelf</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-26T15:23:46.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank" rel="external">link</a></h5><p>Given an array of n integers where n &gt; 1, nums, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].</p>
+<p>Solve it without division and in O(n).</p>
+<p>For example, given [1,2,3,4], return [24,12,8,6].</p>
+<p>Follow up:<br>Could you solve it with constant space complexity? (Note: The output array does not count as extra space for the purpose of space complexity analysis.)</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>思路1: 用两个Array存储前序的乘积和后序的乘积。最后的解由这两个数组的组合乘积构成。<br>空间复杂度O(N^2) 时间复杂度O(N)</p>
+<p>思路2: 空间复杂度为O(1). 第一遍从后向前遍历，算出 i+1 到 n 的乘积， 第二遍从前向后遍历，算出从 0 到i - 1 的乘积。</p>
+<p>是否要考虑Overflow的问题？ From Int to Long: Long.valueOf(Integer)</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>Space O(N^2)</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) {
+        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="keyword">null</span>;
+        }
+        <span class="keyword">int</span>[] <span class="keyword">order</span> = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
+        <span class="keyword">int</span>[] <span class="keyword">reverse</span> = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
+        <span class="keyword">order</span>[<span class="number">0</span>] = nums[<span class="number">0</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) {
+            <span class="keyword">order</span>[i] = nums[i] * <span class="keyword">order</span>[i - <span class="number">1</span>];
+        }
+        <span class="keyword">reverse</span>[nums.length - <span class="number">1</span>] = nums[nums.length - <span class="number">1</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) {
+            <span class="keyword">reverse</span>[i] = nums[i] * <span class="keyword">reverse</span>[i + <span class="number">1</span>];
+        }
+
+        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
+        res[<span class="number">0</span>] = <span class="keyword">reverse</span>[<span class="number">1</span>];
+        res[nums.length - <span class="number">1</span>] = <span class="keyword">order</span>[nums.length - <span class="number">2</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length - <span class="number">1</span>; i++) {
+            res[i] = <span class="keyword">order</span>[i - <span class="number">1</span>] * <span class="keyword">reverse</span>[i + <span class="number">1</span>];
+        }
+
+        <span class="keyword">return</span> res;
+    }
+}
+</code></pre><p>Space O(1)</p>
+<pre><code>public class <span class="type">Solution</span> {
+    public <span class="type">int</span>[] productExceptSelf(<span class="type">int</span>[] nums) {
+        <span class="type">int</span>[] <span class="literal">result</span> = new <span class="type">int</span>[nums.length];
+        <span class="literal">result</span>[<span class="literal">result</span>.length-<span class="number">1</span>] = <span class="number">1</span>;
+
+        <span class="keyword">for</span>(<span class="type">int</span> i=nums.length-<span class="number">2</span>; i&gt;=<span class="number">0</span>; i--) {
+            <span class="literal">result</span>[i] = <span class="literal">result</span>[i+<span class="number">1</span>] * nums[i+<span class="number">1</span>];
+        }
+
+        <span class="type">int</span> left = <span class="number">1</span>;
+        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;nums.length; i++) {
+            <span class="literal">result</span>[i] *= left;
+            left *= nums[i];
+        }
+
+        <span class="keyword">return</span> <span class="literal">result</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/26/RemoveElement/" title="[LeetCode 27] - RemoveElement" itemprop="url">[LeetCode 27] - RemoveElement</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-26T12:51:23.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-element/" target="_blank" rel="external">link</a></h5><p>Given an array and a value, remove all instances of that value in place and return the new length.</p>
+<p>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>Two Pointer问题。前向指针和对撞指针都可以使用，对撞指针要简单一些。</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>前向：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> {
+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>{
+        <span class="keyword">int</span> res = <span class="number">0</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) {
+            <span class="keyword">if</span> (nums[i] != val) {
+                res++;
+            } <span class="keyword">else</span> {
+                <span class="keyword">int</span> start = i;
+                <span class="keyword">while</span> (start &lt; nums.length &amp;&amp; nums[start] == val) {
+                    start++;
+                }
+                <span class="keyword">if</span> (start == nums.length) {
+                    <span class="keyword">return</span> res;
+                } <span class="keyword">else</span> {
+                    <span class="keyword">int</span> temp = nums[i];
+                    nums[i] = nums[start];
+                    nums[start] = temp;
+                    res++;
+                }
+            }
+        }
+        <span class="keyword">return</span> res;
+    }
+}
+</code></pre><p>对撞：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> <span class="built_in">int</span> removeElement(<span class="built_in">int</span>[] A, <span class="built_in">int</span> elem) {
+        <span class="built_in">int</span> i = <span class="number">0</span>;
+        <span class="built_in">int</span> <span class="type">pointer</span> = A.length - <span class="number">1</span>;
+        <span class="keyword">while</span>(i &lt;= <span class="type">pointer</span>){
+            <span class="keyword">if</span>(A[i] == elem){
+                A[i] = A[<span class="type">pointer</span>];
+                <span class="type">pointer</span>--;
+            } <span class="keyword">else</span> {
+                i++;
+            }
+        }
+        <span class="keyword">return</span> <span class="type">pointer</span> + <span class="number">1</span>;
+    }
+} 
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/26/LongestPalindromeSubstring/" title="[LeetCode 5] - LongestPalindromeSubstring" itemprop="url">[LeetCode 5] - LongestPalindromeSubstring</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-26T12:20:13.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="external">link</a></h5><p>Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>思路1：Brute Force，O(N^3)，超时。</p>
+<p>思路2：DP. DP solution is straight-forward. Use 2D array to check palindrome intervals and make it as either true or false. Meanwhile, update longest. </p>
+<p>时间和空间均为O(N^2).</p>
+<p>思路3: Search around corner. Search around corner is basically iterate through the entire string and assume each char (or char pair) as center of the palindrome. 这里的center表示既可以even length，也可以odd length.</p>
+<p>时间O(N^2)，空间O(1).</p>
+<p>思路4: Manacher’s Algorithm. O(N)时间。</p>
+<h4 id="Used_APIs"><em>Used APIs</em></h4><p>String.substring(start, end + 1);</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>DP:</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="function"><span class="keyword">public</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>{
+        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="string">""</span>;
+        }
+        String longest = <span class="string">""</span>;
+        <span class="keyword">int</span> len = s.length();
+        <span class="comment">// dp[i][j] means substring of s from i to j is palindrome </span>
+        <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[len][len];
+        <span class="comment">// why i decrease from (len-1) to 0, but j increase from i to (len-1)?</span>
+        <span class="comment">// think about it! </span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; len; j++) {
+                <span class="keyword">if</span> (i == j) {
+                    dp[i][j] = <span class="keyword">true</span>;
+                } <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(i + <span class="number">1</span> == j)</span> </span>{
+                    dp[i][j] = s.charAt(i) == s.charAt(j);
+                } <span class="keyword">else</span> {
+                    <span class="comment">// important to note: dp[i+1][j-1]</span>
+                    <span class="comment">// i depends on (i+1), so i from large to small</span>
+                    <span class="comment">// j is just the opposite, small to large</span>
+                    dp[i][j] = s.charAt(i) == s.charAt(j) &amp;&amp; dp[i+<span class="number">1</span>][j-<span class="number">1</span>];
+                }
+                <span class="keyword">if</span> (dp[i][j] &amp;&amp; j + <span class="number">1</span> - i &gt; longest.length()) {
+                    longest = s.substring(i, j + <span class="number">1</span>);
+                }
+            }
+        }
+        <span class="keyword">return</span> longest;
+    }
+}
+</code></pre><p>Search around corner:</p>
+<pre><code><span class="keyword">public</span> class Solution {
+    <span class="keyword">public</span> <span class="keyword">String</span> longestPalindrome(<span class="keyword">String</span> s) {
+        <span class="keyword">if</span> (s.length() &lt;= <span class="number">1</span>) {
+            <span class="keyword">return</span> s;
+        }
+        <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">1</span>;
+        <span class="built_in">int</span> low, high;
+        <span class="built_in">int</span>[] pos = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];
+        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; s.length(); i++) {
+            <span class="comment">// find the even length substring whose center (right) is i</span>
+            low = i - <span class="number">1</span>;
+            high = i;
+            <span class="keyword">while</span> (low &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() &amp;&amp; s.charAt(low) == s.charAt(high)) {
+                <span class="keyword">if</span> (high - low + <span class="number">1</span> &gt; <span class="built_in">max</span>) {
+                    pos[<span class="number">0</span>] = low;
+                    pos[<span class="number">1</span>] = high;
+                    <span class="built_in">max</span> = high - low + <span class="number">1</span>;
+                }
+                low--;
+                high++;
+            }
+
+            <span class="comment">//find the odd length substring whose center is i</span>
+            low = i - <span class="number">1</span>;
+            high = i + <span class="number">1</span>;
+            <span class="keyword">while</span> (low &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() &amp;&amp; s.charAt(low) == s.charAt(high)) {
+                <span class="keyword">if</span> (high - low + <span class="number">1</span> &gt; <span class="built_in">max</span>) {
+                    pos[<span class="number">0</span>] = low;
+                    pos[<span class="number">1</span>] = high;
+                    <span class="built_in">max</span> = high - low + <span class="number">1</span>;
+                }
+                low--;
+                high++;
+            }
+        }
+        <span class="keyword">return</span> s.substring(pos[<span class="number">0</span>], pos[<span class="number">1</span>] + <span class="number">1</span>);
+    }
+}
+</code></pre><p>Manacher’s algorithm:</p>
+<p>To be finished…</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/String/">String</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/25/LongestSubstringWithoutRepeatingCharacters/" title="[LeetCode 3] - LongestSubstringWithoutRepeatingCharacters" itemprop="url">[LeetCode 3] - LongestSubstringWithoutRepeatingCharacters</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-26T03:29:40.000Z" itemprop="datePublished"> 發表於 2015-08-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="external">link</a></h5><p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>首先这题如果纯暴力解法的话，复杂度是O(N^3).</p>
+<p>思路1： substring类题目，可以想到用sliding window来做。具体的方法就是两根指针的模板。</p>
+<p>思路2： 可以考虑使用DP。</p>
+<p>动态规划的形式化定义如下：<br>length(i)：以A[i]结尾的最长不包含重复元素字串的长度；<br>maxlength(i,j):A[i]到A[j]的最长不包含重复元素字串的长度；<br>if i=0 Then maxlength(0,0)=1;<br>if i&gt;=1 Then maxlength(0,i)=Max(maxlength(0,i-1),length(i));<br>求解：maxlength(0,A.length);</p>
+<h4 id="Used_APIs"><em>Used APIs</em></h4><p>Interface: Set</p>
+<p>Concrete Class: HashSet</p>
+<p>Method:</p>
+<p>Set.add(E e);</p>
+<p>Set.contains(Object o);</p>
+<p>Set.remove(Object o);</p>
+<p>Set.isEmpty();</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> <span class="built_in">int</span> lengthOfLongestSubstring(<span class="built_in">String</span> s) {
+        <span class="keyword">if</span> (s == <span class="literal">null</span> || s.length() == <span class="number">0</span>) {
+            return <span class="number">0</span>;
+        }
+        <span class="built_in">int</span> res = <span class="number">0</span>;
+        <span class="built_in">int</span> <span class="built_in">left</span> = <span class="number">0</span>;
+        <span class="keyword">Set</span>&lt;Character&gt; <span class="keyword">set</span> = <span class="keyword">new</span> HashSet&lt;Character&gt;();
+        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) {
+            <span class="keyword">if</span> (!<span class="keyword">set</span>.contains(s.charAt(i))) {
+                <span class="keyword">set</span>.add(s.charAt(i));
+                res = Math.max(res, i - <span class="built_in">left</span> + <span class="number">1</span>);
+            } <span class="keyword">else</span> {
+                <span class="keyword">while</span> (<span class="built_in">left</span> &lt; i &amp;&amp; s.charAt(<span class="built_in">left</span>) != s.charAt(i)) {
+                    <span class="keyword">set</span>.remove(s.charAt(<span class="built_in">left</span>));
+                    <span class="built_in">left</span>++;
+                }
+                <span class="built_in">left</span>++;
+            }
+        }
+        return res;
+    }
+}
+</code></pre><p>DP：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> {
+    <span class="comment">//动态规划</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>{
+        <span class="keyword">if</span>(s==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        <span class="keyword">char</span>[] c=s.toCharArray();
+        <span class="keyword">if</span>(c.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        <span class="keyword">int</span> maxsublength=<span class="number">1</span>;
+        <span class="keyword">int</span> barrier=<span class="number">0</span>;
+        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;c.length;i++)
+        {
+            <span class="keyword">for</span>(<span class="keyword">int</span> j=i-<span class="number">1</span>;j&gt;=barrier;j--)
+            {
+                <span class="keyword">if</span>(c[i]==c[j])
+                {
+                    barrier=j+<span class="number">1</span>;
+                    <span class="keyword">break</span>;
+                }
+            }
+            maxsublength=Math.max(maxsublength,i-barrier+<span class="number">1</span>);
+        }
+        <span class="keyword">return</span> maxsublength;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/25/AddTwoNumbers/" title="[LeetCode 2] - AddTwoNumbers" itemprop="url">[LeetCode 2] - AddTwoNumbers</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-25T14:02:23.000Z" itemprop="datePublished"> 發表於 2015-08-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="external">link</a></h5><p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
+<p>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>经典的链表计算题，需要注意的地方有：</p>
+<ol>
+<li><p>新建dummy结点用来储存结果。</p>
+</li>
+<li><p>carry位的计算。</p>
+</li>
+<li><p>考虑两个链表长度不同的问题。</p>
+</li>
+<li><p>还要考虑最后一位的carry位。</p>
+</li>
+</ol>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="comment">/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */</span>
+public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
+    public <span class="type">ListNode</span> addTwoNumbers(<span class="type">ListNode</span> l1, <span class="type">ListNode</span> l2) {
+        <span class="keyword">if</span> (l1 == <span class="literal">null</span> &amp;&amp; l2 == <span class="literal">null</span>) {
+            <span class="keyword">return</span> <span class="literal">null</span>;
+        }
+        <span class="keyword">if</span> (l1 == <span class="literal">null</span> &amp;&amp; l2 != <span class="literal">null</span>) {
+            <span class="keyword">return</span> l2;
+        }
+        <span class="keyword">if</span> (l1 != <span class="literal">null</span> &amp;&amp; l2 == <span class="literal">null</span>) {
+            <span class="keyword">return</span> l1;
+        }
+        <span class="type">ListNode</span> dummy = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="number">0</span>);
+        <span class="type">ListNode</span> res = dummy;
+
+
+        int carry = <span class="number">0</span>;
+        <span class="keyword">while</span> (l1 != <span class="literal">null</span> &amp;&amp; l2 != <span class="literal">null</span>) {
+            int <span class="function"><span class="keyword">val</span> =</span> (l1.<span class="keyword">val</span> + l2.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
+            carry = (l1.<span class="keyword">val</span> + l2.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
+            res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
+            res = res.next;
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+        <span class="keyword">if</span> (l1 != <span class="literal">null</span>) {
+            <span class="keyword">while</span> (l1 != <span class="literal">null</span>) {
+                int <span class="function"><span class="keyword">val</span> =</span>(l1.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
+                carry = (l1.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
+                res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
+                res = res.next;
+                l1 = l1.next;
+            }
+        }
+
+        <span class="keyword">if</span> (l2 != <span class="literal">null</span>) {
+            <span class="keyword">while</span> (l2 != <span class="literal">null</span>) {
+                int <span class="function"><span class="keyword">val</span> =</span>(l2.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
+                carry = (l2.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
+                res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
+                res = res.next;
+                l2 = l2.next;
+            }
+        }
+        <span class="keyword">if</span> (carry != <span class="number">0</span>) {
+            res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(carry);
+        }
+
+        <span class="keyword">return</span> dummy.next;
+    }
+}
+</code></pre><p>More Concise:</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
+    <span class="keyword">public</span> ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int carry = <span class="number">0</span>;
+        ListNode res = <span class="keyword">new</span> ListNode(<span class="number">0</span>);
+        ListNode cur1 = l1, cur2 = l2, head = res;
+        <span class="keyword">while</span> (cur1 != <span class="literal">null</span> || cur2 != <span class="literal">null</span>) {
+            <span class="keyword">if</span> (cur1 != <span class="literal">null</span>) {
+                carry += cur1.val;
+                cur1 = cur1.<span class="keyword">next</span>;
+            }
+            <span class="keyword">if</span> (cur2 != <span class="literal">null</span>) {
+                carry += cur2.val;
+                cur2 = cur2.<span class="keyword">next</span>;
+            }
+            head.<span class="keyword">next</span> = <span class="keyword">new</span> ListNode(carry % <span class="number">10</span>);
+            head = head.<span class="keyword">next</span>;
+            carry /= <span class="number">10</span>;
+        }
+        <span class="keyword">if</span> (carry == <span class="number">1</span>)
+            head.<span class="keyword">next</span> = <span class="keyword">new</span> ListNode(<span class="number">1</span>);
+        <span class="keyword">return</span> res.<span class="keyword">next</span>;
+    }
+}
+</code></pre><p>Recursively:</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="keyword">public</span> ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        <span class="keyword">return</span> helper(l1, l2, <span class="number">0</span>);
+    }
+
+    <span class="keyword">private</span> ListNode helper(ListNode l1, ListNode l2, <span class="keyword">int</span> carry) {
+        <span class="keyword">if</span> (l1 == <span class="keyword">null</span> &amp;&amp; l2 == <span class="keyword">null</span>) {
+            <span class="keyword">if</span> (carry == <span class="number">0</span>) {
+                <span class="keyword">return</span> <span class="keyword">null</span>;
+            } <span class="keyword">else</span> {
+                <span class="keyword">return</span> <span class="keyword">new</span> ListNode(<span class="number">1</span>);
+            }
+        } <span class="keyword">else</span> <span class="keyword">if</span> (l1 == <span class="keyword">null</span>) {
+            <span class="keyword">return</span> helper(<span class="keyword">new</span> ListNode(<span class="number">0</span>), l2, carry);
+        } <span class="keyword">else</span> <span class="keyword">if</span> (l2 == <span class="keyword">null</span>) {
+            <span class="keyword">return</span> helper(l1, <span class="keyword">new</span> ListNode(<span class="number">0</span>), carry);
+        } <span class="keyword">else</span> {
+            <span class="comment">// both l1 and l2 have value</span>
+            <span class="keyword">int</span> <span class="keyword">sum</span> = l1.val + l2.val + carry;
+            <span class="keyword">int</span> resultNumber = <span class="keyword">sum</span> % <span class="number">10</span>;
+            <span class="keyword">int</span> newCarry = <span class="keyword">sum</span> / <span class="number">10</span>;
+            ListNode ans = <span class="keyword">new</span> ListNode(resultNumber);
+            ans.next = helper(l1.next, l2.next, newCarry);
+            <span class="keyword">return</span> ans;
+        }
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/24/ReverseLinkedList/" title="[LeetCode 206] - ReverseLinkedList" itemprop="url">[LeetCode 206] - ReverseLinkedList</a>
   </h1>
   <p class="article-author">By
@@ -185,7 +1179,7 @@ public class <span class="type">Solution</span> {
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/24/RemoveLinkedListElements/" title="RemoveLinkedListElements" itemprop="url">RemoveLinkedListElements</a>
+      <a href="/2015/08/24/RemoveLinkedListElements/" title="[LeetCode 203] - RemoveLinkedListElements" itemprop="url">[LeetCode 203] - RemoveLinkedListElements</a>
   </h1>
   <p class="article-author">By
        
@@ -705,1109 +1699,6 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/TwoSum/" title="[LeetCode 1] - TwoSum" itemprop="url">[LeetCode 1] - TwoSum</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T12:18:50.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="external">link</a></h5><p>Given an array of integers, find two numbers such that they add up to a specific target number.</p>
-<p>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.</p>
-<p>You may assume that each input would have exactly one solution.</p>
-<p>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>基础题，两种解法：</p>
-<ol>
-<li><p>BF解 时间O(N^2) 空间O(1)</p>
-</li>
-<li><p>用HashTable 时间O(N) 空间O(N)</p>
-</li>
-</ol>
-<p>该题是在给定一个数组中，搜索是否存在两个数的和等于给定的值。如果存在，则返回两个数的数组下标。如果采用“暴搜”，则时间复杂度为O(n^2),为了降低时间复杂度，显然是需要在查询方面做文章，因此可以采用散列存储。</p>
-<p>散列是将给定的值转变为一个数组的下标，即散列码，然后在数组中存放值的List。在JAVA中,散列码的求解采用HashCode()函数。具有散列功能的Collections容器有以下四种:HashMap,LinkedHashMap,HashSet和LinkedHashSet，因此本文采用HashMap实现散列功能，使得时间复杂度变为O(n)。</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>解法1：</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>) {
-        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];
-        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> res;
-        }
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">1</span>; i++) {
-            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++) {
-                <span class="keyword">if</span> (nums[i] + nums[j] == <span class="keyword">target</span>) {
-                    res[<span class="number">0</span>] = i + <span class="number">1</span>;
-                    res[<span class="number">1</span>] = j + <span class="number">1</span>;
-                    <span class="keyword">return</span> res;
-                }
-            }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre><p>解法2：</p>
-<pre><code><span class="keyword">public</span> class Solution {
-    <span class="keyword">public</span> <span class="built_in">int</span>[] twoSum(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> target) {
-        <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];
-        Map&lt;Integer, Integer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;Integer, Integer&gt;();
-        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) {
-            <span class="keyword">if</span> (<span class="built_in">map</span>.containsKey(target - nums[i])) {
-                res[<span class="number">0</span>] = <span class="built_in">map</span>.<span class="built_in">get</span>(target - nums[i]);
-                res[<span class="number">1</span>] = i + <span class="number">1</span>;
-                <span class="keyword">return</span> res;
-            } <span class="keyword">else</span> {
-                <span class="built_in">map</span>.put(nums[i], i + <span class="number">1</span>);
-            }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/11/LRUCache/" title="[LintCode] - LRUCache" itemprop="url">[LintCode] - LRUCache</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-12T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/lru-cache/#" target="_blank" rel="external">link</a></h5><p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.</p>
-<p>get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.</p>
-<p>set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
-<h4 id="Thought_and_solution"><em>Thought and solution</em></h4><p>If we need O(1) time complexity in the operation, we need to use HashMap.</p>
-<p>方法1：</p>
-<p>使用 HashMap+ 双向链表实现：</p>
-<ol>
-<li><p>如果需要移除老的节点，我们从头节点移除。</p>
-</li>
-<li><p>如果某个节点被访问（SET/GET），将其移除并挂在双向链表的结尾。</p>
-</li>
-<li><p>链表满了后，我们删除头节点。</p>
-</li>
-<li><p>最近访问的节点在链尾。最久被访问的节点在链头。</p>
-</li>
-</ol>
-<p>在这个方法中，头尾节点是Sentinel节点，在整个过程中并不移动。</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class Solution {
-    private class Node{
-        Node <span class="built_in">prev</span>;
-        Node <span class="built_in">next</span>;
-        <span class="typename">int</span> <span class="built_in">key</span>;
-        <span class="typename">int</span> <span class="built_in">value</span>;
-
-        public Node(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
-            this.<span class="built_in">key</span> = <span class="built_in">key</span>;
-            this.<span class="built_in">value</span> = <span class="built_in">value</span>;
-            this.<span class="built_in">prev</span> = <span class="built_in">null</span>;
-            this.<span class="built_in">next</span> = <span class="built_in">null</span>;
-        }
-    }
-
-    private <span class="typename">int</span> capacity;
-    private HashMap&lt;Integer, Node&gt; hs = new HashMap&lt;Integer, Node&gt;();
-    private Node head = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
-    private Node tail = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
-    <span class="comment">// @param capacity, an integer</span>
-    public Solution(<span class="typename">int</span> capacity) {
-        <span class="comment">// write your code here</span>
-        this.capacity = capacity;
-        tail.<span class="built_in">prev</span> = head;
-        head.<span class="built_in">next</span> = tail;
-    }
-
-    <span class="comment">// @return an integer</span>
-    public <span class="typename">int</span> <span class="built_in">get</span>(<span class="typename">int</span> <span class="built_in">key</span>) {
-        <span class="comment">// write your code here</span>
-        if( !hs.containsKey(<span class="built_in">key</span>)) {
-            return -<span class="number">1</span>;
-        }
-
-        <span class="comment">// remove current</span>
-        Node current = hs.<span class="built_in">get</span>(<span class="built_in">key</span>);
-        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current.<span class="built_in">next</span>;
-        current.<span class="built_in">next</span>.<span class="built_in">prev</span> = current.<span class="built_in">prev</span>;
-
-        <span class="comment">// move current to tail</span>
-        move_to_tail(current);
-
-        return hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span>;
-    }
-
-    <span class="comment">// @param key, an integer</span>
-    <span class="comment">// @param value, an integer</span>
-    <span class="comment">// @return nothing</span>
-    public void <span class="built_in">set</span>(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
-        <span class="comment">// write your code here</span>
-        if( <span class="built_in">get</span>(<span class="built_in">key</span>) != -<span class="number">1</span>) {
-            hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span> = <span class="built_in">value</span>;
-            return;
-        }
-
-        if (hs.size() == capacity) {
-            hs.remove(head.<span class="built_in">next</span>.<span class="built_in">key</span>);
-            head.<span class="built_in">next</span> = head.<span class="built_in">next</span>.<span class="built_in">next</span>;
-            head.<span class="built_in">next</span>.<span class="built_in">prev</span> = head;
-        }
-
-        Node insert = new Node(<span class="built_in">key</span>, <span class="built_in">value</span>);
-        hs.put(<span class="built_in">key</span>, insert);
-        move_to_tail(insert);
-    }
-
-    private void move_to_tail(Node current) {
-        current.<span class="built_in">prev</span> = tail.<span class="built_in">prev</span>;
-        tail.<span class="built_in">prev</span> = current;
-        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current;
-        current.<span class="built_in">next</span> = tail;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LinkedList/">LinkedList</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/MaxTree/" title="[LintCode] - MaxTree" itemprop="url">[LintCode] - MaxTree</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/max-tree/" target="_blank" rel="external">link</a></h5><p>Given an integer array with no duplicates. A max tree building on this array is defined as follow:</p>
-<p>The root is the maximum number in the array<br>The left subtree and right subtree are the max trees of the subarray divided by the root number.<br>Construct the max tree by the given array.</p>
-<h5 id="Challenge">Challenge</h5><p>O(n) time and memory.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Recursion: use recursion method, in the worst case, the complexity is O(n^2).</p>
-<p>Linear method: Refer to the analysis of some other people: <a href="http://www.meetqun.com/thread-3335-1-1.html" target="_blank" rel="external">link</a></p>
-<p>这个题Leetcode上没有，其实这种树叫做笛卡树（ Cartesian tree）。直接递归建树的话复杂度最差会退化到O(n^2)。经典建树方法，用到的是单调堆栈。我们堆栈里存放的树，只有左子树，没有有子树，且根节点最大。</p>
-<p>（1） 如果新来一个数，比堆栈顶的树根的数小，则把这个数作为一个单独的节点压入堆栈。</p>
-<p>（2） 否则，不断从堆栈里弹出树，新弹出的树以旧弹出的树为右子树，连接起来，直到目前堆栈顶的树根的数大于新来的数。然后，弹出的那些数，已经形成了一个新的树，这个树作为新节点的左子树，把这个新树压入堆栈。</p>
-<p>这样的堆栈是单调的，越靠近堆栈顶的数越小。</p>
-<p>最后还要按照（2）的方法，把所有树弹出来，每个旧树作为新树的右子树。</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>Non-recursion:</p>
-<pre><code>/**
- * <span class="type">Definition</span> <span class="keyword">of</span> <span class="type">TreeNode</span>:
- * public class <span class="type">TreeNode</span> {
- *     public <span class="type">int</span> val;
- *     public <span class="type">TreeNode</span> left, right;
- *     public <span class="type">TreeNode</span>(<span class="type">int</span> val) {
- *         this.val = val;
- *         this.left = this.right = null;
- *     }
- * }
- */
-public class <span class="type">Solution</span> {
-    /**
-     * @param A: <span class="type">Given</span> an integer <span class="type">array</span> <span class="keyword">with</span> no duplicates.
-     * @<span class="keyword">return</span>: <span class="type">The</span> root <span class="keyword">of</span> max tree.
-     */
-    public <span class="type">TreeNode</span> maxTree(<span class="type">int</span>[] A) {
-        // write your code here
-        <span class="keyword">if</span> (A == null || A.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> null;
-        }
-
-        <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt; stack = new <span class="type">Stack</span>&lt;<span class="type">TreeNode</span>&gt;();
-        <span class="type">int</span> len = A.length;
-
-        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; len; i++) {
-            <span class="keyword">if</span> (stack.isEmpty() || stack.peek().val &gt;= A[i]) {
-                stack.push(new <span class="type">TreeNode</span>(A[i]));
-            } <span class="keyword">else</span> {
-                <span class="type">TreeNode</span> hasLeftSon = new <span class="type">TreeNode</span>(A[i]);
-                <span class="type">TreeNode</span> leftson = stack.pop();
-                <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; stack.peek().val &lt; A[i]) {
-                    <span class="type">TreeNode</span> temp = stack.peek();
-                    temp.right = leftson;
-                    leftson = temp;
-                    stack.pop();
-                }
-                hasLeftSon.left = leftson;
-                stack.push(hasLeftSon);
-            }
-        }
-
-        <span class="type">TreeNode</span> <span class="literal">result</span> = stack.pop();
-
-        <span class="keyword">while</span>(!stack.isEmpty()) {
-            <span class="type">TreeNode</span> temp = stack.pop();
-            temp.right = <span class="literal">result</span>;
-            <span class="literal">result</span> = temp;
-        }
-
-        <span class="keyword">return</span> <span class="literal">result</span>;
-    }
-}
-</code></pre><p>Recursion: (in the future)</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/MedianInDataStream/" title="[LintCode] - MedianInDataStream" itemprop="url">[LintCode] - MedianInDataStream</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/data-stream-median/" target="_blank" rel="external">link</a></h5><p>Numbers keep coming, return the median of numbers at every time a new number added.</p>
-<h5 id="Example">Example</h5><p>For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].</p>
-<p>For numbers coming list: [4, 5, 1, 3, 2, 6, 0], return [4, 4, 4, 3, 3, 3, 3].</p>
-<p>For numbers coming list: [2, 20, 100], return [2, 2, 20].</p>
-<h5 id="Challenge">Challenge</h5><p>Total run time in O(nlogn).</p>
-<h5 id="Clarification">Clarification</h5><p>What’s the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Implementation_of_PriorityQueue_in_Java">Implementation of PriorityQueue in Java</h5><p>PriorityQueue是从JDK1.5开始提供的新的数据结构接口，它是一种基于优先级堆的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列（参阅 Comparable），也可以根据 Comparator 来指定，这取决于使用哪种构造方法。优先级队列不允许 null 元素。依靠自然排序的优先级队列还不允许插入不可比较的对象（这样做可能导致 ClassCastException）。</p>
-<p>比如队列 1 3 5 10 2 自动会被排列 1 2 3 5 10</p>
-<p>Example:</p>
-<p>MinHeap:</p>
-<p>Queue<integer> queue = new PriorityQueue<integer>();<br>            qi.add(5);<br>            qi.add(2);<br>            qi.add(1);<br>            qi.add(10);<br>            qi.add(3);</integer></integer></p>
-<p>从queue中poll出数据的顺序: 1 2 3 5 10</p>
-<p>MaxHeap:</p>
-<p>Override the comparator:</p>
-<pre><code>Comparator&lt;<span class="type">Integer</span>&gt; revCmp = new Comparator&lt;<span class="type">Integer</span>&gt;() {
-    @Override
-    <span class="keyword">public</span> <span class="built_in">int</span> compare(<span class="type">Integer</span> left, <span class="type">Integer</span> right) {
-        <span class="keyword">return</span> right - left;
-    }
-};
-</code></pre><p>Queue<integer> q2 = new PriorityQueue<integer>(5, cmp);<br>            q2.add(2);<br>            q2.add(8);<br>            q2.add(9);<br>            q2.add(1);</integer></integer></p>
-<p>从queue中poll出数据的顺序: 9 8 2 1</p>
-<h5 id="Solution_1">Solution 1</h5><p>我们创建两个堆，一个最大堆maxHeap，一个最小堆</p>
-<p>maxHeap保存较小的半边数据，minHeap保存较大的半边数据。</p>
-<p>1.无论如何，直接把新值插入到maxHeap。</p>
-<ol>
-<li><p>当minHeap为空，直接退出。</p>
-</li>
-<li><p>当maxHeap比minHeap多2个值，直接移动一个值到maxHeap即可。</p>
-</li>
-<li><p>当maxHeap比minHeap多1个值，比较顶端的2个值，如果maxHeap的最大值大于minHeap的最小值，交换2个值即可。</p>
-</li>
-<li><p>当maxHeap较大时，中值是maxHeap的顶值，否则取2者的顶值的中间值。</p>
-</li>
-</ol>
-<pre><code><span class="keyword">public</span> class Solution {
-<span class="comment">/**
- * @param nums: A list of integers.
- * @return: the median of numbers
- */</span>
-<span class="keyword">public</span> <span class="built_in">int</span>[] medianII(<span class="built_in">int</span>[] nums) {
-    <span class="comment">// write your code here</span>
-    <span class="keyword">if</span>(nums==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  
-    <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[nums.length];  
-
-    PriorityQueue&lt;Integer&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();  
-    PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;(<span class="number">11</span>, <span class="keyword">new</span> Comparator&lt;Integer&gt;() {  
-        @Override  
-        <span class="keyword">public</span> <span class="built_in">int</span> compare(Integer x, Integer y) {  
-            <span class="keyword">return</span> y-x;  
-        }  
-    });  
-    res[<span class="number">0</span>] = nums[<span class="number">0</span>];  
-    maxHeap.<span class="built_in">add</span>(nums[<span class="number">0</span>]);  
-
-    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++) {  
-        <span class="built_in">int</span> x = maxHeap.peek();  
-        <span class="keyword">if</span>(nums[i] &lt;= x) {  
-            maxHeap.<span class="built_in">add</span>(nums[i]);  
-        } <span class="keyword">else</span> {  
-            minHeap.<span class="built_in">add</span>(nums[i]);  
-        }  
-        <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &gt; minHeap.<span class="built_in">size</span>()+<span class="number">1</span> ) {  
-            minHeap.<span class="built_in">add</span>(maxHeap.poll());  
-        } <span class="keyword">else</span> <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &lt; minHeap.<span class="built_in">size</span>()) {  
-            maxHeap.<span class="built_in">add</span>(minHeap.poll());  
-        }  
-        res[i] = maxHeap.peek();  
-    }  
-    <span class="keyword">return</span> res;  
-}
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/LargestRectangleInHistogram/" title="[LintCode] - LargestRectangleInHistogram" itemprop="url">[LintCode] - LargestRectangleInHistogram</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/largest-rectangle-in-histogram/#" target="_blank" rel="external">link</a></h5><p>Given n non-negative integers representing the histogram’s bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.</p>
-<p><img src="http://www.lintcode.com/media/problem/histogram1.png" alt=""></p>
-<p>Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].</p>
-<p><img src="http://www.lintcode.com/media/problem/histogram_area.png" alt=""></p>
-<p>The largest rectangle is shown in the shaded area, which has area = 10 unit.</p>
-<h4 id="Thought_and_solution"><em>Thought and solution</em></h4><h5 id="Implementation_of_Monotone-Stack">Implementation of Monotone-Stack</h5><p>单调栈，顾名思义就是说栈内的元素，按照某种方式排序下，必须是单调的。如果新入栈的元素破坏了单调性，就弹出栈内元素，直到满足单调性。</p>
-<p>它可以很方便地求出某个数的左边或者右边第一个比它大或者小的元素，而且总时间复杂度O(N)。</p>
-<p>如果我们要找第一个比某个数<em>小</em>的数，我们就要维护一个<em>递增</em>序列</p>
-<p>如果我们要找第一个比某个数<em>大</em>得数，我们就要维护一个<em>递减</em>序列</p>
-<h6 id="例子">例子</h6><p>数组[2 1 5 6 2 3]   栈为空[]</p>
-<p>1.数字2进栈   栈中左边没有数字   不存在在2左边比他小的元素</p>
-<p>  数组[1 5 6 2 3] 栈为[2]</p>
-<p>2.数字1进栈 由于2&gt;1 2出栈 1成为2右边第一个比2小的元素 对于1来说不存在左边比他小的元素</p>
-<p>  数组[5 6 2 3]  栈为[1]</p>
-<p>3.数字5进栈 由于5&gt;1 1保留 1成为5左边第一个比5小的元素</p>
-<p>  数组[6 2 3]  栈为[1 5]</p>
-<p>4.数字6进栈 由于6&gt;5 6保留 5成为6左边第一个比6小的元素</p>
-<p>  数组[2 3]  栈为[1 5 6]</p>
-<p>5.数字2进栈 由于2&lt;6 6出栈 2成为6右边第一个比6小的元素<br>           同理，由于2&lt;5 5出栈 2成为5右边第一个比5小的元素<br>           1 成为2左边边比2小的第一个数<br>  数组[3]   栈为[1 2]</p>
-<p>6.数字3进栈 由于3&gt;2 2保留 2成为3右边第一个比3小的元素</p>
-<p>  此时数组为空  栈为[1 2 3]</p>
-<h4 id="Code_Reference"><em>Code Reference</em></h4><pre><code>Public class Solution {
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="built_in">int</span> largestRectangleArea(<span class="built_in">int</span>[] <span class="variable">height</span>) {
-        <span class="keyword">if</span>(<span class="variable">height</span> == <span class="keyword">null</span> || <span class="variable">height</span>.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }    
-
-        Stack&lt;Integer&gt; stack = <span class="keyword">new</span> Stack&lt;Integer&gt;();
-        <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">0</span>;
-        <span class="built_in">int</span> len = <span class="variable">height</span>.length;
-        <span class="built_in">int</span> i = <span class="number">0</span>;
-
-        <span class="keyword">while</span> (i &lt;= len) {
-            <span class="keyword">if</span> (stack.isEmpty() || (i &lt; len &amp;&amp; <span class="variable">height</span>[i] &gt;= <span class="variable">height</span>[stack.peek()])) {
-                s.push(i);
-                i++;
-            } <span class="keyword">else</span> {
-                <span class="built_in">int</span> h = <span class="variable">height</span>[stack.pop()];
-                <span class="built_in">int</span> <span class="variable">width</span> = stack.isEmpty() ? i : i - stack.peek() - <span class="number">1</span>;
-                <span class="built_in">max</span> = Math.<span class="built_in">max</span>(<span class="built_in">max</span>, h * <span class="variable">width</span>);
-
-            }
-        }
-        <span class="keyword">return</span> <span class="built_in">max</span>;
-
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LintCode/">LintCode</a><a href="/tags/Stack/">Stack</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/04/LongestConsecutiveSequence/" title="[LintCode] - LongestConsecutiveSequence" itemprop="url">[LintCode] - LongestConsecutiveSequence</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-05T01:49:51.000Z" itemprop="datePublished"> 發表於 2015-06-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/longest-consecutive-sequence/#" target="_blank" rel="external">link</a></h5><p>Given an unsorted array of integers, find the length of the longest consecutive elements sequence.</p>
-<h5 id="Example">Example</h5><p>Given [100, 4, 200, 1, 3, 2],<br>The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.</p>
-<h5 id="Clarification">Clarification</h5><p>Your algorithm should run in O(n) complexity.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Thought_1">Thought 1</h5><p>Using HashMap</p>
-<ol>
-<li><p>In the map, we create some sets representing consecutive space. For example, we have a sequence [3, 4, 5]. We can have key: 3 - value: 5 and key: 5 - value: 3. And put them in the HashMap.</p>
-</li>
-<li><p>When a new number coming in, such as N = 6. We can search whether the sequence ending from N - 1 and starting from N + 1 exists or not. We can join and enlarge the set.</p>
-</li>
-<li><p>update maxValue.</p>
-</li>
-</ol>
-<h4 id="My_Code_for_Thought_1"><em>My Code for Thought 1</em></h4><pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    public int longestConsecutive(int[] num) {
-        <span class="keyword">if</span> (num == null) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }
-
-        <span class="type">HashMap</span>&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="type">HashMap</span>&lt;<span class="type">Integer</span>, <span class="type">Integer</span>&gt;();
-        int <span class="built_in">max</span> = <span class="number">0</span>;
-        int len = num.length;
-
-        <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; len; i++) {
-            <span class="keyword">if</span> (<span class="built_in">map</span>.<span class="built_in">contains</span>(num[i])) {
-                <span class="keyword">continue</span>;
-            }
-
-            int <span class="keyword">left</span> = num[i];
-            int <span class="keyword">right</span> = num[i];
-
-            int board = <span class="built_in">map</span>.<span class="keyword">get</span>(num[i] - <span class="number">1</span>);
-            <span class="keyword">if</span> (board != null &amp;&amp; board &lt; <span class="keyword">left</span>) {
-                <span class="keyword">left</span> = board;
-
-                <span class="built_in">map</span>.remove(<span class="keyword">left</span>);
-                <span class="built_in">map</span>.remove(num[i] - <span class="number">1</span>);
-            }
-
-            board = <span class="built_in">map</span>.<span class="keyword">get</span>(num[i] + <span class="number">1</span>);
-            <span class="keyword">if</span> (board != null &amp;&amp; board &gt; <span class="keyword">right</span>) {
-                <span class="keyword">right</span> = board;
-
-                <span class="built_in">map</span>.remove(<span class="keyword">right</span>);
-                <span class="built_in">map</span>.remove(num[i] + <span class="number">1</span>);
-            }
-
-            <span class="built_in">map</span>.put(<span class="keyword">left</span>, <span class="keyword">right</span>);
-            <span class="built_in">map</span>.put(<span class="keyword">right</span>, <span class="keyword">left</span>);
-
-            <span class="built_in">max</span> = <span class="type">Math</span>.<span class="built_in">max</span>(<span class="built_in">max</span>, <span class="keyword">right</span> - <span class="keyword">left</span> + <span class="number">1</span>);
-        }
-        <span class="keyword">return</span> <span class="built_in">max</span>;
-
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/04/Heapify/" title="[LintCode] - Heapify" itemprop="url">[LintCode] - Heapify</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-05T01:12:54.000Z" itemprop="datePublished"> 發表於 2015-06-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/heapify/#" target="_blank" rel="external">link</a></h5><p>Given an integer array, heapify it into a min-heap array.</p>
-<p>For a heap array A, A[0] is the root of heap, and for each A[i], A[i <em> 2 + 1] is the left child of A[i] and A[i </em> 2 + 2] is the right child of A[i].</p>
-<h5 id="Example">Example</h5><p>Given [3,2,1,4,5], return [1,2,3,4,5] or any legal heap array.</p>
-<h5 id="Challenge">Challenge</h5><p>O(n) time complexity</p>
-<h5 id="Clarification">Clarification</h5><h6 id="What_is_heap?"><em>What is heap?</em></h6><p>Heap is a data structure, which usually have three methods: push, pop and top. where “push” add a new element the heap, “pop” delete the minimum/maximum element in the heap, “top” return the minimum/maximum element.</p>
-<h6 id="What_is_heapify?"><em>What is heapify?</em></h6><p>Convert an unordered integer array into a heap array. If it is min-heap, for each element A[i], we will get A[i <em> 2 + 1] &gt;= A[i] and A[i </em> 2 + 2] &gt;= A[i].</p>
-<p>What if there is a lot of solutions?<br>Return any of them.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>What is the representation of heap?</p>
-<p>The heap is often placed in an array with the layout of a complete binary tree. The complete binary tree maps the binary tree structure into the array indices; each array index represents a node:</p>
-<pre><code>If <span class="built_in">i</span> is the index of the current node:
-Parent of <span class="built_in">i</span> = <span class="built_in">floor</span>((<span class="built_in">i</span> - <span class="number">1</span>) / <span class="number">2</span>)
-Left Child of <span class="built_in">i</span> = <span class="number">2</span> * <span class="built_in">i</span> + <span class="number">1</span>
-Right Child of <span class="built_in">i</span> = <span class="number">2</span> * <span class="built_in">i</span> + <span class="number">2</span>
-</code></pre><p>Then, a sorted array is created by repeatly removing the largest element from the heap(the root of the heap), and inserting it into the array. The heap is updated after each removal to maintain the heap. Once all objects have been removed from the heap, the result is a sorted array.</p>
-<p>Heapsort can be performed in place. The array can be split into two parts, the sorted array and the heap. </p>
-<p>First, let us have the pseudocode of heapify:</p>
-<pre><code>(Put elements <span class="operator">of</span> <span class="string">'a'</span> <span class="operator">in</span> heap order, <span class="operator">in</span>-place)
-Procedure heapify(<span class="operator">a</span>, count) is
-    (<span class="built_in">start</span> is assigned <span class="operator">the</span> index <span class="operator">in</span> <span class="string">'a'</span> <span class="operator">of</span> <span class="operator">the</span> <span class="keyword">last</span> parent node)
-    (<span class="operator">the</span> <span class="keyword">last</span> <span class="keyword">element</span> <span class="operator">in</span> <span class="operator">a</span> <span class="number">0</span>-based array is <span class="keyword">at</span> index count - <span class="number">1</span>; find <span class="operator">the</span> parent <span class="operator">of</span> that <span class="keyword">element</span>)
-    <span class="built_in">start</span> = floor((count - <span class="number">2</span>) / <span class="number">2</span>)
-
-    <span class="keyword">while</span> <span class="built_in">start</span> &gt;= <span class="number">0</span> <span class="built_in">do</span>
-        (sift down <span class="operator">the</span> node <span class="keyword">at</span> <span class="operator">the</span> index <span class="string">'start'</span> <span class="built_in">to</span> <span class="operator">the</span> proper place such that all nodes below <span class="operator">the</span> <span class="built_in">start</span> index are <span class="operator">in</span> heap order)
-        siftDown(<span class="operator">a</span>, <span class="built_in">start</span>, count - <span class="number">1</span>)
-        (go <span class="built_in">to</span> <span class="operator">the</span> next parent node)
-        <span class="built_in">start</span> = <span class="built_in">start</span> - <span class="number">1</span>
-    (<span class="keyword">after</span> sifting down <span class="operator">the</span> root all nodes/elements are <span class="operator">in</span> heap order)
-
-
-Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start</span>, <span class="function"><span class="keyword">end</span>) <span class="title">is</span> </span>
-    root = <span class="built_in">start</span>
-    <span class="keyword">while</span> root * <span class="number">2</span> + <span class="number">1</span> &lt;= <span class="function"><span class="keyword">end</span> <span class="title">do</span>  (<span class="title">While</span> <span class="title">the</span> <span class="title">root</span> <span class="title">has</span> <span class="title">at</span> <span class="title">least</span> <span class="title">one</span> <span class="title">chile</span>)</span>
-        child = root * <span class="number">2</span> + <span class="number">1</span>
-        swap = root
-
-        <span class="keyword">if</span> (<span class="operator">a</span>[swap] &lt; <span class="operator">a</span>[child])
-            swap = child
-        (If there is <span class="operator">a</span> <span class="constant">right</span> child <span class="operator">and</span> that child is greater)
-        <span class="keyword">if</span> (child + <span class="number">1</span> &lt;= <span class="function"><span class="keyword">end</span> <span class="title">and</span> <span class="title">a</span>[<span class="title">swap</span>] &lt; <span class="title">a</span>[<span class="title">child</span> + <span class="title">1</span>])</span>
-            swap = child + <span class="number">1</span>
-        <span class="keyword">if</span> swap = root
-        (The root holds <span class="operator">the</span> largest <span class="keyword">element</span>. Since we assume <span class="operator">the</span> heaps rooted <span class="keyword">at</span> <span class="operator">the</span> children are valid. this means that we are done.)
-            <span class="constant">return</span> 
-        <span class="keyword">else</span> 
-            swap(s[root], <span class="operator">a</span>[swap])
-            root = swap (repear <span class="built_in">to</span> continue sifting down <span class="operator">the</span> child now)
-</code></pre><p>The <em>heapify</em> procedure can be thought of as building a heap from the bottom up by successively sifting downward to establish the heap property. An alternative version that builds the heap top-down and sifts upward is called “<em>siftup</em>“. This “siftup” version can be visualized as starting with an empty heap and successively inserting elements, but the “siftdown” treats the entire input array as a full but “broken” heap and “repairs” it starting from the last non-trivial sub-heap (that is, the last parent node).</p>
-<p>Below is the pesudocode of “siftup”</p>
-<pre><code>Procudure heapify(a, count) is
-    (<span class="operator"><span class="keyword">end</span> <span class="keyword">is</span> assigned the <span class="keyword">index</span> <span class="keyword">of</span> the <span class="keyword">first</span> child <span class="keyword">of</span> the root)
-    <span class="keyword">end</span> = <span class="number">1</span>
-
-    while <span class="keyword">end</span> &lt; <span class="keyword">count</span>
-        (sift up the node <span class="keyword">at</span> <span class="keyword">index</span> <span class="keyword">end</span> <span class="keyword">to</span> the proper place such that <span class="keyword">all</span> nodes above the <span class="keyword">end</span> <span class="keyword">index</span> <span class="keyword">are</span> <span class="keyword">in</span> heap <span class="keyword">order</span>)
-        siftup(a, <span class="number">0</span>, <span class="keyword">end</span>)
-        <span class="keyword">end</span> = <span class="keyword">end</span> + <span class="number">1</span>
-    (<span class="keyword">after</span> sifting up the <span class="keyword">last</span> node <span class="keyword">all</span> nodes <span class="keyword">are</span> <span class="keyword">in</span> heap <span class="keyword">order</span>)
-
-<span class="keyword">Procedure</span> siftup(a, <span class="keyword">start</span>, <span class="keyword">end</span>)
-    <span class="keyword">input</span>: <span class="keyword">start</span> represents the <span class="keyword">limit</span> <span class="keyword">of</span> how far up the heap <span class="keyword">to</span> sift.
-           <span class="keyword">end</span> <span class="keyword">is</span> the node <span class="keyword">to</span> sift up.
-
-    child = <span class="keyword">end</span>
-    while child &gt; <span class="keyword">start</span>
-        parent = <span class="keyword">floor</span> ((child - <span class="number">1</span>) / <span class="number">2</span>)
-        <span class="keyword">if</span> a[parent] &lt; a[child] 
-            swap(a[parent], a[child])
-            child = parent (<span class="keyword">repeat</span> <span class="keyword">to</span> <span class="keyword">continue</span> sifting up the parent <span class="keyword">now</span>)
-        <span class="keyword">else</span>
-            <span class="keyword">return</span></span>
-</code></pre><p>For comparison, the “siftdown” has O(n) time complexity, while the “siftup” has O(nlogn) time complexity due to its equivalence with inserting each element, one at a time, into an empty heap.</p>
-<h4 id="My_Code_(the_siftdown_approach)"><em>My Code (the siftdown approach)</em></h4><pre><code>public class Solution {
-    /**
-<span class="label">     * @param A:</span> Given an integer array
-<span class="label">     * @return:</span> void
-     */
-    public void heapify(int[] <span class="literal">A</span>) {
-        // write your code here
-        for (int i = <span class="literal">A</span>.length/<span class="number">2</span><span class="comment">; i &gt;= 0; i--) {</span>
-            siftdown(<span class="literal">A</span>, i)<span class="comment">;</span>
-        }
-
-    }
-
-    public void siftdown(int[] <span class="literal">A</span>, int k) {
-         <span class="keyword">while</span> (k &lt; <span class="literal">A</span>.length) {
-            int smallest = k<span class="comment">;</span>
-            <span class="keyword">if</span> (k * <span class="number">2</span> + <span class="number">1</span> &lt; <span class="literal">A</span>.length &amp;&amp; <span class="literal">A</span>[k * <span class="number">2</span> + <span class="number">1</span>] &lt; <span class="literal">A</span>[smallest]) {
-                smallest = k * <span class="number">2</span> + <span class="number">1</span><span class="comment">;</span>
-            }
-            <span class="keyword">if</span> (k * <span class="number">2</span> + <span class="number">2</span> &lt; <span class="literal">A</span>.length &amp;&amp; <span class="literal">A</span>[k * <span class="number">2</span> + <span class="number">2</span>] &lt; <span class="literal">A</span>[smallest]) {
-                smallest = k * <span class="number">2</span> + <span class="number">2</span><span class="comment">;</span>
-            }
-            <span class="keyword">if</span> (smallest == k) {
-                <span class="keyword">break</span><span class="comment">;</span>
-            }
-            int temp = <span class="literal">A</span>[smallest]<span class="comment">;</span>
-            <span class="literal">A</span>[smallest] = <span class="literal">A</span>[k]<span class="comment">;</span>
-            <span class="literal">A</span>[k] = temp<span class="comment">;</span>
-            swap(<span class="literal">A</span>[smallest], <span class="literal">A</span>[k])<span class="comment">;</span>
-            k = smallest<span class="comment">;</span>
-        }
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Heap/">Heap</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/01/ImplementQueueByTwoStacks/" title="[LintCode] - Implement Queue by Two Stacks" itemprop="url">[LintCode] - Implement Queue by Two Stacks</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-06-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/implement-queue-by-two-stacks/#" target="_blank" rel="external">link</a></h5><p>As the title described, you should only use two stacks to implement a queue’s actions.</p>
-<p>The queue should support push(element), pop() and top() where pop is pop the first(a.k.a front) element in the queue.</p>
-<p>Both pop and top methods should return the value of first element.</p>
-<h5 id="Example">Example</h5><p>For push(1), pop(), push(2), push(3), top(), pop(), you should return 1, 2 and 2</p>
-<h5 id="Challenge">Challenge</h5><p>implement it by two stacks, do not use any other data structure and push, pop and top should be O(1) by AVERAGE.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>Push: S1 - Push(x)</p>
-<p>Pop: if S2 is empty. S1 -&gt; S2 then S2.pop()</p>
-<p>Top: similar like Pop</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">private</span> Stack&lt;Integer&gt; stack1;
-    <span class="keyword">private</span> Stack&lt;Integer&gt; stack2;
-
-    <span class="keyword">public</span> Solution() {
-       <span class="comment">// do initialization if necessary</span>
-       stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
-       stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();
-    }
-
-    <span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">push</span>(<span class="keyword">int</span> element) {
-        <span class="comment">// write your code here</span>
-        stack1.<span class="keyword">push</span>(element);
-    }
-
-    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">pop</span>() {
-        <span class="comment">// write your code here</span>
-        <span class="keyword">if</span> (stack2.isEmpty()) {
-            <span class="keyword">while</span> (!stack1.isEmpty()) {
-                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
-            }
-        }
-        <span class="keyword">return</span> stack2.<span class="keyword">pop</span>();
-    }
-
-    <span class="keyword">public</span> <span class="keyword">int</span> top() {
-        <span class="comment">// write your code here</span>
-        <span class="keyword">if</span> (stack2.isEmpty()) {
-            <span class="keyword">while</span> (!stack1.isEmpty()) {
-                stack2.<span class="keyword">push</span>(stack1.<span class="keyword">pop</span>());
-            }
-        }
-        <span class="keyword">return</span> stack2.peek();
-    }
-}
-</code></pre><p><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTE3FA4w_ianic7LCKdQYJZGhkm_mXJWX3mAMBR4ha823hgB5936g" alt="">     </p>
-<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LintCode/">LintCode</a><a href="/tags/Queue/">Queue</a><a href="/tags/Stack/">Stack</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/01/MinStack/" title="[LintCode] - Min Stack" itemprop="url">[LintCode] - Min Stack</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-01T23:55:31.000Z" itemprop="datePublished"> 發表於 2015-06-01</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/min-stack/#" target="_blank" rel="external">link</a></h5><p>Implement a stack with min() function, which will return the smallest number in the stack.</p>
-<p>It should support push, pop and min operation all in O(1) cost.</p>
-<h5 id="Example">Example</h5><p>Operations: push(1), pop(), push(2), push(3), min(), push(1), min() Return: 1, 2, 1</p>
-<h5 id="Note">Note</h5><p>min operation will never be called if there is no number in the stack</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>This is a classic data structure problem. My thought is using two stack: one NORMAL stack is used to store all numbers that are pushed in; the other one is used to store the MINIMUM number so far. </p>
-<p>When we are doing “push” operation, we push the number into the NORMAL stack as usual; we also push this number into the MINIMUM stack if this number is smaller than the peek of the MINIMUM stack. Here we need to care about two things:</p>
-<p>(1) If the MINIMUM stack is empty, we just push the number into it.</p>
-<p>(2) If the number is larger than the peek of the MINIMUM stack, we just push the minStack.peek() into minStack to guarantee NORMAL and MINIMUM stack have the same number of elements.</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> class Solution {
-
-    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> <span class="built_in">stack</span>;
-    <span class="keyword">private</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span> minStack;
-    <span class="keyword">public</span> Solution() {
-        <span class="comment">// do initialize if necessary</span>
-        <span class="built_in">stack</span> <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
-        minStack <span class="subst">=</span> <span class="literal">new</span> <span class="built_in">Stack</span><span class="subst">&lt;</span><span class="built_in">Integer</span><span class="subst">&gt;</span>();
-    }
-
-    <span class="keyword">public</span> <span class="literal">void</span> push(int number) {
-        <span class="comment">// write your code here</span>
-        <span class="built_in">stack</span><span class="built_in">.</span>push(number);
-        <span class="keyword">if</span> (minStack<span class="built_in">.</span>isEmpty()) {
-            minStack<span class="built_in">.</span>push(number);
-        } <span class="keyword">else</span> {
-            <span class="keyword">if</span> (number <span class="subst">&lt;</span> minStack<span class="built_in">.</span>peek()) {
-                minStack<span class="built_in">.</span>push(number);
-            } <span class="keyword">else</span> {
-                minStack<span class="built_in">.</span>push(minStack<span class="built_in">.</span>peek());
-            }
-        }
-
-    }
-
-    <span class="keyword">public</span> int pop() {
-        <span class="comment">// write your code here</span>
-        minStack<span class="built_in">.</span>pop();
-        <span class="keyword">return</span> <span class="built_in">stack</span><span class="built_in">.</span>pop();
-    }
-
-    <span class="keyword">public</span> int <span class="keyword">min</span>() {
-        <span class="comment">// write your code here</span>
-        <span class="keyword">return</span> minStack<span class="built_in">.</span>peek();
-    }
-}
-</code></pre><p><img src="http://www.ritambhara.in/wp-content/uploads/2012/07/minstack_1.png" alt="">     </p>
-<h6 id="Please_leave_comments_if_you_find_anything_incorrect,_or_you_have_more_suggestions_on_this_topic-">Please leave comments if you find anything incorrect, or you have more suggestions on this topic.</h6>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LintCode/">LintCode</a><a href="/tags/Stack/">Stack</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1834,7 +1725,7 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>16</sup></a></li>
 		  
 		
 		  
@@ -1855,7 +1746,15 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>18</sup></a></li>
+				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>27</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>10</sup></a></li>
 			
 		
 			
@@ -1863,15 +1762,15 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 			
 		
 			
-				<li><a href="/tags/HashTable/" title="HashTable">HashTable<sup>9</sup></a></li>
+				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>7</sup></a></li>
+				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>5</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>4</sup></a></li>
+				<li><a href="/tags/Array/" title="Array">Array<sup>4</sup></a></li>
 			
 		
 			
@@ -1879,11 +1778,19 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 			
 		
 			
-				<li><a href="/tags/TwoPointers/" title="TwoPointers">TwoPointers<sup>3</sup></a></li>
+				<li><a href="/tags/Math/" title="Math">Math<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Others/" title="Others">Others<sup>1</sup></a></li>
+				<li><a href="/tags/Tree/" title="Tree">Tree<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/geeeksforgeeks/" title="geeeksforgeeks">geeeksforgeeks<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/String/" title="String">String<sup>1</sup></a></li>
 			
 		
 			
@@ -1899,7 +1806,7 @@ Procedure siftDown(<span class="operator">a</span>, <span class="built_in">start
 			
 		
 			
-				<li><a href="/tags/geeeksforgeeks/" title="geeeksforgeeks">geeeksforgeeks<sup>1</sup></a></li>
+				<li><a href="/tags/Others/" title="Others">Others<sup>1</sup></a></li>
 			
 		
 		</ul>
