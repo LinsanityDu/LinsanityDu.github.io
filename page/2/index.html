@@ -85,46 +85,49 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/26/FirstMissingPositive/" title="[LeetCode 41] - FirstMissingPositive" itemprop="url">[LeetCode 41] - FirstMissingPositive</a>
+      <a href="/2015/08/30/RemoveDuplicateFromSortedArray2/" title="[LeetCode 80] - Remove Duplicate From Sorted Array-2" itemprop="url">[LeetCode 80] - Remove Duplicate From Sorted Array-2</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-26T17:42:57.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    <time datetime="2015-08-30T22:42:18.000Z" itemprop="datePublished"> 發表於 2015-08-30</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/first-missing-positive/" target="_blank" rel="external">link</a></h5><p>Given an unsorted integer array, find the first missing positive integer.</p>
-<p>For example,<br>Given [1,2,0] return 3,<br>and [3,4,-1,1] return 2.</p>
-<p>Your algorithm should run in O(n) time and uses constant space.</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>该题的要求很明确，即第一个不存在的正数，但是需要在线性时间和常量空间下得到。线性的时间意味着不能对数组进行常规排序，因为快排时间复杂度为O(nlogn)。常量空间指不能开辟额外的空间。</p>
-<p>因此为了搜寻元素，这里采用数组的下标作为其索引，即对数组的元素进行交换，将正数i放到i-1的位置上，对于负数和大于数组长度的元素弃之不顾。这样线性扫描一下数组就能得到第一个不存在的正数，即第j位置的元素不等于j+1。</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution <span class="comment">{
-    public int firstMissingPositive(int[] A) {
-        //将正数放到值-1的位置上，这样1放在0号位置，2放在1号位置，。。。。
-        if(A==null || A.length==0)
-            return 1;
-        for(int i=0;i&lt;A.length;i++)
-        {
-            if(A[i]&lt;=A.length &amp;&amp; A[i]&gt;0 &amp;&amp; A[A[i]-1]!=A[i])
-            {
-                int temp=A[A[i]-1];
-                A[A[i]-1]=A[i];
-                A[i]=temp;
-                i--;
-            }</span>
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/" target="_blank" rel="external">link</a></h5><p>Follow up for “Remove Duplicates”:<br>What if duplicates are allowed at most twice?</p>
+<p>For example,<br>Given sorted array nums = [1,1,1,2,2,3],</p>
+<p>Your function should return length = 5, with the first five elements of nums being 1, 1, 2, 2 and 3. It doesn’t matter what you leave beyond the new length.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>同样是Two Pointers. 再加入一个变量维护最终的长度。此题可以有多种解法。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> <span class="built_in">int</span> removeDuplicates(<span class="built_in">int</span>[] nums) {
+        <span class="keyword">if</span> (nums == <span class="literal">null</span> || nums.length == <span class="number">0</span>) {
+            return <span class="number">0</span>;
         }
-
-        <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;A.length;i++)
-        <span class="comment">{
-            if(A[i]!=(i+1))
-                return i+1;
-        }</span>
-        return A.length+<span class="number">1</span>;
+        <span class="built_in">int</span> <span class="built_in">len</span> = nums.length;
+        <span class="keyword">if</span> (<span class="built_in">len</span> &lt;= <span class="number">2</span>) {
+            return <span class="built_in">len</span>;
+        }
+        <span class="built_in">int</span> res = <span class="number">0</span>;
+        <span class="built_in">int</span> <span class="built_in">left</span> = <span class="number">0</span>;
+        <span class="built_in">int</span> <span class="built_in">right</span> = <span class="number">0</span>;
+        <span class="keyword">while</span> (<span class="built_in">left</span> &lt; <span class="built_in">len</span>) {
+            <span class="built_in">right</span> = <span class="built_in">left</span> + <span class="number">1</span>;
+            <span class="keyword">while</span> (<span class="built_in">right</span> &lt; <span class="built_in">len</span> &amp;&amp; nums[<span class="built_in">right</span>] == nums[<span class="built_in">left</span>]) {
+                <span class="built_in">right</span>++;
+            }
+            <span class="keyword">if</span> (<span class="built_in">right</span> - <span class="built_in">left</span> &gt;= <span class="number">2</span>) {
+                nums[res++] = nums[<span class="built_in">right</span> - <span class="number">1</span>];
+                nums[res++] = nums[<span class="built_in">right</span> - <span class="number">1</span>];
+            } <span class="keyword">else</span> {
+                nums[res++] = nums[<span class="built_in">right</span> - <span class="number">1</span>];
+            }
+            <span class="built_in">left</span> = <span class="built_in">right</span>;
+        }
+        return res;
     }
 }
 </code></pre>
@@ -173,70 +176,131 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/26/ProductOfArrayExceptSelf/" title="[LeetCode 238] - ProductOfArrayExceptSelf" itemprop="url">[LeetCode 238] - ProductOfArrayExceptSelf</a>
+      <a href="/2015/08/30/RemoveDuplicateFromSortedArray/" title="[LeetCode 26] - Remove Duplicate From Sorted Array" itemprop="url">[LeetCode 26] - Remove Duplicate From Sorted Array</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-26T15:23:46.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    <time datetime="2015-08-30T22:41:56.000Z" itemprop="datePublished"> 發表於 2015-08-30</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/product-of-array-except-self/" target="_blank" rel="external">link</a></h5><p>Given an array of n integers where n &gt; 1, nums, return an array output such that output[i] is equal to the product of all the elements of nums except nums[i].</p>
-<p>Solve it without division and in O(n).</p>
-<p>For example, given [1,2,3,4], return [24,12,8,6].</p>
-<p>Follow up:<br>Could you solve it with constant space complexity? (Note: The output array does not count as extra space for the purpose of space complexity analysis.)</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>思路1: 用两个Array存储前序的乘积和后序的乘积。最后的解由这两个数组的组合乘积构成。<br>空间复杂度O(N^2) 时间复杂度O(N)</p>
-<p>思路2: 空间复杂度为O(1). 第一遍从后向前遍历，算出 i+1 到 n 的乘积， 第二遍从前向后遍历，算出从 0 到i - 1 的乘积。</p>
-<p>是否要考虑Overflow的问题？ From Int to Long: Long.valueOf(Integer)</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>Space O(N^2)</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    <span class="keyword">public</span> <span class="keyword">int</span>[] productExceptSelf(<span class="keyword">int</span>[] nums) {
-        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> <span class="keyword">null</span>;
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-duplicates-from-sorted-array/" target="_blank" rel="external">link</a></h5><p>Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.</p>
+<p>Do not allocate extra space for another array, you must do this in place with constant memory.</p>
+<p>For example,<br>Given input array nums = [1,1,2],</p>
+<p>Your function should return length = 2, with the first two elements of nums being 1 and 2 respectively. It doesn’t matter what you leave beyond the new length.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>Two Pointers. 一个指针维护当前扫过的变量，另一个指针维护应该输出的数组长度。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class <span class="type">Solution</span> {
+    public <span class="type">int</span> removeDuplicates(<span class="type">int</span>[] nums) {
+        <span class="keyword">if</span> (nums == null || nums.length == <span class="number">0</span>) {
+            <span class="keyword">return</span> <span class="number">0</span>;
         }
-        <span class="keyword">int</span>[] <span class="keyword">order</span> = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
-        <span class="keyword">int</span>[] <span class="keyword">reverse</span> = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
-        <span class="keyword">order</span>[<span class="number">0</span>] = nums[<span class="number">0</span>];
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) {
-            <span class="keyword">order</span>[i] = nums[i] * <span class="keyword">order</span>[i - <span class="number">1</span>];
+        <span class="type">int</span> <span class="literal">result</span> = <span class="number">1</span>;
+        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">1</span>; i++) {
+            <span class="keyword">if</span> (nums[i] == nums[i + <span class="number">1</span>]) {
+                <span class="keyword">continue</span>;
+            } <span class="keyword">else</span> {
+                nums[<span class="literal">result</span>] = nums[i + <span class="number">1</span>];
+                <span class="literal">result</span>++;
+            }
         }
-        <span class="keyword">reverse</span>[nums.length - <span class="number">1</span>] = nums[nums.length - <span class="number">1</span>];
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = nums.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) {
-            <span class="keyword">reverse</span>[i] = nums[i] * <span class="keyword">reverse</span>[i + <span class="number">1</span>];
-        }
-
-        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];
-        res[<span class="number">0</span>] = <span class="keyword">reverse</span>[<span class="number">1</span>];
-        res[nums.length - <span class="number">1</span>] = <span class="keyword">order</span>[nums.length - <span class="number">2</span>];
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length - <span class="number">1</span>; i++) {
-            res[i] = <span class="keyword">order</span>[i - <span class="number">1</span>] * <span class="keyword">reverse</span>[i + <span class="number">1</span>];
-        }
-
-        <span class="keyword">return</span> res;
+        <span class="keyword">return</span> <span class="literal">result</span>;
     }
 }
-</code></pre><p>Space O(1)</p>
-<pre><code>public class <span class="type">Solution</span> {
-    public <span class="type">int</span>[] productExceptSelf(<span class="type">int</span>[] nums) {
-        <span class="type">int</span>[] <span class="literal">result</span> = new <span class="type">int</span>[nums.length];
-        <span class="literal">result</span>[<span class="literal">result</span>.length-<span class="number">1</span>] = <span class="number">1</span>;
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
 
-        <span class="keyword">for</span>(<span class="type">int</span> i=nums.length-<span class="number">2</span>; i&gt;=<span class="number">0</span>; i--) {
-            <span class="literal">result</span>[i] = <span class="literal">result</span>[i+<span class="number">1</span>] * nums[i+<span class="number">1</span>];
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/30/PlusOne/" title="[LeetCode 66] - Plus One" itemprop="url">[LeetCode 66] - Plus One</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-30T20:55:40.000Z" itemprop="datePublished"> 發表於 2015-08-30</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/plus-one/" target="_blank" rel="external">link</a></h5><p>Given a non-negative number represented as an array of digits, plus one to the number.</p>
+<p>The digits are stored such that the most significant digit is at the head of the list.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>该题是对用数组表示的数进行加一，每一位的进位最多为1,思路是维护一个进位，对每一位进行加一，然后判断进位，如果有继续到下一位，否则就可以返回了，因为前面不需要计算了。如果最高位进位存在,其必为1,则需要重新开辟一个digit.length+1的空间，其中第一位为1,其余为都为0,因为只是加一操作，其余位一定是0，否则不会进最高位</p>
+<p>这道题应该有Follow Up.</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class <span class="type">Solution</span> {
+    public <span class="type">int</span>[] plusOne(<span class="type">int</span>[] digits) {
+        <span class="keyword">if</span> (digits == null || digits.length == <span class="number">0</span>) {
+            <span class="type">int</span>[] res = new <span class="type">int</span>[]{<span class="number">0</span>};
         }
-
-        <span class="type">int</span> left = <span class="number">1</span>;
-        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;nums.length; i++) {
-            <span class="literal">result</span>[i] *= left;
-            left *= nums[i];
+        <span class="keyword">if</span> (digits[digits.length - <span class="number">1</span>] != <span class="number">9</span>) {
+            digits[digits.length - <span class="number">1</span>] += <span class="number">1</span>;
+            <span class="keyword">return</span> digits;
         }
-
-        <span class="keyword">return</span> <span class="literal">result</span>;
+        digits[digits.length - <span class="number">1</span>] = <span class="number">0</span>;
+        <span class="type">int</span> len = digits.length - <span class="number">2</span>;
+        <span class="type">int</span> carry = <span class="number">1</span>;
+        <span class="keyword">while</span> (len &gt;= <span class="number">0</span> &amp;&amp; carry == <span class="number">1</span>) {
+            <span class="type">int</span> temp = digits[len] + carry;
+            digits[len] = temp % <span class="number">10</span>;
+            carry = temp / <span class="number">10</span>;
+            len--;
+        }
+        <span class="keyword">if</span> (len &lt; <span class="number">0</span> &amp;&amp; carry == <span class="number">1</span>) {
+            <span class="type">int</span>[] <span class="literal">result</span> = new <span class="type">int</span>[digits.length + <span class="number">1</span>];
+            <span class="literal">result</span>[<span class="number">0</span>] = carry;
+            <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>; i &lt; digits.length + <span class="number">1</span>; i++) {
+                <span class="literal">result</span>[i] = digits[i - <span class="number">1</span>];
+            }
+            <span class="keyword">return</span> <span class="literal">result</span>;
+        } 
+        <span class="keyword">return</span> digits;
     }
 }
 </code></pre>
@@ -285,63 +349,68 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/26/RemoveElement/" title="[LeetCode 27] - RemoveElement" itemprop="url">[LeetCode 27] - RemoveElement</a>
+      <a href="/2015/08/30/LeetCode160-IntersectionOfTwoLinkedList/" title="[LeetCode 160] - Intersection Of Two Linked List" itemprop="url">[LeetCode 160] - Intersection Of Two Linked List</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-26T12:51:23.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    <time datetime="2015-08-30T19:48:08.000Z" itemprop="datePublished"> 發表於 2015-08-30</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-element/" target="_blank" rel="external">link</a></h5><p>Given an array and a value, remove all instances of that value in place and return the new length.</p>
-<p>The order of elements can be changed. It doesn’t matter what you leave beyond the new length.</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>Two Pointer问题。前向指针和对撞指针都可以使用，对撞指针要简单一些。</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>前向：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> {
-    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">removeElement</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> val)</span> </span>{
-        <span class="keyword">int</span> res = <span class="number">0</span>;
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) {
-            <span class="keyword">if</span> (nums[i] != val) {
-                res++;
-            } <span class="keyword">else</span> {
-                <span class="keyword">int</span> start = i;
-                <span class="keyword">while</span> (start &lt; nums.length &amp;&amp; nums[start] == val) {
-                    start++;
-                }
-                <span class="keyword">if</span> (start == nums.length) {
-                    <span class="keyword">return</span> res;
-                } <span class="keyword">else</span> {
-                    <span class="keyword">int</span> temp = nums[i];
-                    nums[i] = nums[start];
-                    nums[start] = temp;
-                    res++;
-                }
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/intersection-of-two-linked-lists/" target="_blank" rel="external">link</a></h5><p>Write a program to find the node at which the intersection of two singly linked lists begins.</p>
+<p>For example, the following two linked lists:</p>
+<pre><code><span class="label">A:</span>      a1 → a2
+               ↘
+                 c1 → c2 → c3
+               ↗            
+<span class="label">B:</span> b1 → b2 → b3
+</code></pre><p>begin to intersect at node c1.</p>
+<p>Notes:</p>
+<p>If the two linked lists have no intersection at all, return null.<br>The linked lists must retain their original structure after the function returns.<br>You may assume there are no cycles anywhere in the entire linked structure.<br>Your code should preferably run in O(n) time and use only O(1) memory.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>首先计算每个list的长度，然后定义两个指针p,q. </p>
+<p>p指向长度为m的链表，q指向长度为n的链表，然后首先让q先向前遍历n-m个位置，然后p和q同时一起前进，当q==p时，此时的节点即为两个链表第一个公共节点。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        <span class="keyword">int</span> lengthA = getLength(headA);
+        <span class="keyword">int</span> lengthB = getLength(headB);
+        <span class="keyword">if</span> (lengthA &gt; lengthB) {
+            <span class="keyword">int</span> dif = lengthA - lengthB;
+            <span class="keyword">while</span> (dif &gt; <span class="number">0</span>) {
+                headA = headA.<span class="keyword">next</span>;
+                dif--;
+            }
+        } <span class="keyword">else</span> {
+            <span class="keyword">int</span> dif = lengthB - lengthA;
+            <span class="keyword">while</span> (dif &gt; <span class="number">0</span>) {
+                headB = headB.<span class="keyword">next</span>;
+                dif--;
             }
         }
+
+        <span class="keyword">while</span> (headA != <span class="keyword">null</span> &amp;&amp; headB != <span class="keyword">null</span>) {
+            <span class="keyword">if</span> (headA == headB) {
+                <span class="keyword">return</span> headA;
+            }
+            headA = headA.<span class="keyword">next</span>;
+            headB = headB.<span class="keyword">next</span>;
+        }
+        <span class="keyword">return</span> headA;
+    }
+
+    <span class="keyword">public</span> <span class="keyword">int</span> getLength(ListNode head) {
+        <span class="keyword">int</span> res = <span class="number">0</span>;
+        <span class="keyword">while</span> (head != <span class="keyword">null</span>) {
+            head = head.<span class="keyword">next</span>;
+            res++;
+        }  
         <span class="keyword">return</span> res;
     }
 }
-</code></pre><p>对撞：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">public</span> <span class="built_in">int</span> removeElement(<span class="built_in">int</span>[] A, <span class="built_in">int</span> elem) {
-        <span class="built_in">int</span> i = <span class="number">0</span>;
-        <span class="built_in">int</span> <span class="type">pointer</span> = A.length - <span class="number">1</span>;
-        <span class="keyword">while</span>(i &lt;= <span class="type">pointer</span>){
-            <span class="keyword">if</span>(A[i] == elem){
-                A[i] = A[<span class="type">pointer</span>];
-                <span class="type">pointer</span>--;
-            } <span class="keyword">else</span> {
-                i++;
-            }
-        }
-        <span class="keyword">return</span> <span class="type">pointer</span> + <span class="number">1</span>;
-    }
-} 
 </code></pre>
         
         
@@ -360,7 +429,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Linked-List/">Linked List</a>
   </div>
 
 </div>
@@ -388,101 +457,1036 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/08/26/LongestPalindromeSubstring/" title="[LeetCode 5] - LongestPalindromeSubstring" itemprop="url">[LeetCode 5] - LongestPalindromeSubstring</a>
+      <a href="/2015/08/28/UglyNumber2/" title="[LeetCode 264] - UglyNumber2" itemprop="url">[LeetCode 264] - UglyNumber2</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
 		
   <p class="article-time">
-    <time datetime="2015-08-26T12:20:13.000Z" itemprop="datePublished"> 發表於 2015-08-26</time>
+    <time datetime="2015-08-28T20:39:05.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
     
   </p>
 </header>
     <div class="article-content">
         
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/longest-palindromic-substring/" target="_blank" rel="external">link</a></h5><p>Given a string S, find the longest palindromic substring in S. You may assume that the maximum length of S is 1000, and there exists one unique longest palindromic substring.</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>思路1：Brute Force，O(N^3)，超时。</p>
-<p>思路2：DP. DP solution is straight-forward. Use 2D array to check palindrome intervals and make it as either true or false. Meanwhile, update longest. </p>
-<p>时间和空间均为O(N^2).</p>
-<p>思路3: Search around corner. Search around corner is basically iterate through the entire string and assume each char (or char pair) as center of the palindrome. 这里的center表示既可以even length，也可以odd length.</p>
-<p>时间O(N^2)，空间O(1).</p>
-<p>思路4: Manacher’s Algorithm. O(N)时间。</p>
-<h4 id="Used_APIs"><em>Used APIs</em></h4><p>String.substring(start, end + 1);</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>DP:</p>
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/ugly-number-ii/" target="_blank" rel="external">link</a></h5><p>Write a program to find the n-th ugly number.</p>
+<p>Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 1, 2, 3, 4, 5, 6, 8, 9, 10, 12 is the sequence of the first 10 ugly numbers.</p>
+<p>Note that 1 is typically treated as an ugly number.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>若是暴力做法，这题会超时。其实这题会用到一点DP的思想。可以值得研究，我的code是参考GeekForGeek上的答案。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> {
+    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">nthUglyNumber</span><span class="params">(<span class="keyword">int</span> n)</span> </span>{
+        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[n];
+        res[<span class="number">0</span>] = <span class="number">1</span>;
+        <span class="keyword">int</span> next2 = <span class="number">0</span>;
+        <span class="keyword">int</span> next3 = <span class="number">0</span>;
+        <span class="keyword">int</span> next5 = <span class="number">0</span>;
+        <span class="keyword">int</span> multi2 = res[next2] * <span class="number">2</span>;
+        <span class="keyword">int</span> multi3 = res[next3] * <span class="number">3</span>;
+        <span class="keyword">int</span> multi5 = res[next5] * <span class="number">5</span>;
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) {
+            multi2 = res[next2] * <span class="number">2</span>;
+            multi3 = res[next3] * <span class="number">3</span>;
+            multi5 = res[next5] * <span class="number">5</span>;
+            <span class="keyword">int</span> ugly = Math.min(multi2, Math.min(multi3, multi5));
+            <span class="keyword">if</span> (ugly == multi2) {
+                next2++;
+            }
+            <span class="keyword">if</span> (ugly == multi3) {
+                next3++;
+            }
+            <span class="keyword">if</span> (ugly == multi5) {
+                next5++;
+            }
+            res[i] = ugly;
+        }
+        <span class="keyword">return</span> res[n - <span class="number">1</span>];
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/DynamicProgramming/">DynamicProgramming</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/UglyNumber/" title="[LeetCode 263] - UglyNumber" itemprop="url">[LeetCode 263] - UglyNumber</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T20:39:01.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/ugly-number/" target="_blank" rel="external">link</a></h5><p>Write a program to check whether a given number is an ugly number.</p>
+<p>Ugly numbers are positive numbers whose prime factors only include 2, 3, 5. For example, 6, 8 are ugly while 14 is not ugly since it includes another prime factor 7.</p>
+<p>Note that 1 is typically treated as an ugly number.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>分别check 2， 3， 5的power，看是否能整除。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    public boolean isUgly(<span class="built_in">int</span> <span class="built_in">num</span>) {
+        <span class="keyword">if</span> (<span class="built_in">num</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+        <span class="keyword">while</span> (<span class="built_in">num</span> % <span class="number">2</span> == <span class="number">0</span>) {
+            <span class="built_in">num</span> /= <span class="number">2</span>;
+        }
+        <span class="keyword">while</span> (<span class="built_in">num</span> % <span class="number">3</span> == <span class="number">0</span>) {
+            <span class="built_in">num</span> /= <span class="number">3</span>;
+        }
+        <span class="keyword">while</span> (<span class="built_in">num</span> % <span class="number">5</span> == <span class="number">0</span>) {
+            <span class="built_in">num</span> /= <span class="number">5</span>;
+        }
+        <span class="keyword">if</span> (<span class="built_in">num</span> == <span class="number">1</span>) {
+            <span class="keyword">return</span> <span class="keyword">true</span>;
+        }
+        <span class="keyword">return</span> <span class="keyword">false</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/AddDigits/" title="[LeetCode 258] - AddDigits" itemprop="url">[LeetCode 258] - AddDigits</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T19:16:45.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/add-digits/" target="_blank" rel="external">link</a></h5><p>Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.</p>
+<p>For example:</p>
+<p>Given num = 38, the process is like: 3 + 8 = 11, 1 + 1 = 2. Since 2 has only one digit, return it.</p>
+<p>Follow up:<br>Could you do it without any loop/recursion in O(1) runtime?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>有定理，详情参考Wiki</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>O(1) 公式：</p>
+<pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    public <span class="built_in">int</span> addDigits(<span class="built_in">int</span> <span class="built_in">num</span>) {
+        <span class="keyword">if</span> (<span class="built_in">num</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        <span class="keyword">if</span> (<span class="built_in">num</span> % <span class="number">9</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">9</span>;
+        <span class="keyword">return</span> <span class="built_in">num</span> % <span class="number">9</span>;
+    }
+}
+</code></pre><p>Naive做法：</p>
+<pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    public <span class="built_in">int</span> addDigits(<span class="built_in">int</span> <span class="built_in">num</span>) {
+        <span class="keyword">while</span> (<span class="built_in">num</span> &gt;= <span class="number">10</span>) {
+            <span class="built_in">int</span> res = <span class="number">0</span>;
+            <span class="keyword">while</span> (<span class="built_in">num</span> &gt; <span class="number">0</span>) {
+                res += <span class="built_in">num</span> % <span class="number">10</span>;
+                <span class="built_in">num</span> /= <span class="number">10</span>;
+            }
+            <span class="built_in">num</span> = res;
+        }
+        <span class="keyword">return</span> <span class="built_in">num</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/RotateImage/" title="[LeetCode 48] - RotateImage" itemprop="url">[LeetCode 48] - RotateImage</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T18:49:32.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/rotate-image/" target="_blank" rel="external">link</a></h5><p>You are given an n x n 2D matrix representing an image.</p>
+<p>Rotate the image by 90 degrees (clockwise).</p>
+<p>Follow up:<br>Could you do this in-place?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>CC150 原题</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> void rotate(<span class="built_in">int</span>[][] matrix) {
+        <span class="keyword">if</span> (matrix == <span class="literal">null</span> || matrix.length &lt; <span class="number">1</span>) return;
+        <span class="built_in">int</span> <span class="built_in">len</span> = matrix.length;
+        <span class="keyword">for</span>(<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="built_in">len</span> / <span class="number">2</span>; i++) {
+            <span class="keyword">for</span> (<span class="built_in">int</span> j = i; j &lt; <span class="built_in">len</span> - <span class="number">1</span> - i; j++) {
+                    <span class="built_in">int</span> temp = matrix[i][j];
+                    matrix[i][j] = matrix[<span class="built_in">len</span> - <span class="number">1</span> - j][i];
+                    matrix[<span class="built_in">len</span> - <span class="number">1</span> - j][i] = matrix[<span class="built_in">len</span> - <span class="number">1</span> - i][<span class="built_in">len</span> - <span class="number">1</span> - j];
+                    matrix[<span class="built_in">len</span> - <span class="number">1</span> - i][<span class="built_in">len</span> - <span class="number">1</span> - j] = matrix[j][<span class="built_in">len</span> - <span class="number">1</span> - i];
+                    matrix[j][<span class="built_in">len</span> - <span class="number">1</span> - i] = temp;
+            }
+        }
+
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/SetMatrixZeroes/" title="[LeetCode 73] - SetMatrixZeroes" itemprop="url">[LeetCode 73] - SetMatrixZeroes</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T16:51:02.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/set-matrix-zeroes/" target="_blank" rel="external">link</a></h5><p>Given a m x n matrix, if an element is 0, set its entire row and column to 0. Do it in place.</p>
+<p>click to show follow up.</p>
+<p>Follow up:<br>Did you use extra space?<br>A straight forward solution using O(mn) space is probably a bad idea.<br>A simple improvement uses O(m + n) space, but still not the best solution.<br>Could you devise a constant space solution?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>O(MN) and O(M + N) methods are trivial.</p>
+<p>For O(1) method, we should use the first row and first column to store the information. </p>
+<h4 id="My_Code"><em>My Code</em></h4><p>O(M + N):</p>
+<pre><code>public class Solution {
+    public void setZeroes(<span class="keyword">int</span>[][] <span class="keyword">matrix</span>) {
+        <span class="comment">// Space O(m + n)</span>
+        <span class="keyword">int</span>[] row = new <span class="keyword">int</span>[<span class="keyword">matrix</span>.length];
+        <span class="keyword">int</span>[] column = new <span class="keyword">int</span>[<span class="keyword">matrix</span>[<span class="number">0</span>].length];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">matrix</span>.length; i++) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="keyword">matrix</span>[<span class="number">0</span>].length; j++) {
+                <span class="keyword">if</span> (<span class="keyword">matrix</span>[i][j] == <span class="number">0</span>) {
+                    <span class="keyword">if</span> (row[i] == <span class="number">0</span>) {
+                        row[i] = <span class="number">1</span>;
+                    }
+                    <span class="keyword">if</span> (column[j] == <span class="number">0</span>) {
+                        column[j] = <span class="number">1</span>;
+                    }
+                }
+            }
+        }
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">matrix</span>.length; i++) {
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="keyword">matrix</span>[<span class="number">0</span>].length; j++) {
+                <span class="keyword">if</span> (row[i] == <span class="number">1</span> || column[j] == <span class="number">1</span>) {
+                    <span class="keyword">matrix</span>[i][j] = <span class="number">0</span>;
+                }
+            }
+        }
+        <span class="keyword">return</span>;
+    }
+}
+</code></pre><p>O(1):</p>
+<pre><code>public class Solution {
+    public void setZeroes(int[][] <span class="keyword">matrix</span>) {
+        <span class="keyword">if</span>(<span class="keyword">matrix</span>==null || <span class="keyword">matrix</span>.<span class="built_in">length</span>==<span class="number">0</span> || <span class="keyword">matrix</span>[<span class="number">0</span>].<span class="built_in">length</span>==<span class="number">0</span>)
+            <span class="keyword">return</span>;
+        boolean rowflag=false;<span class="comment">//记录第一行是否会变成0</span>
+        boolean colflag=false;<span class="comment">//记录第一列是否会变成0</span>
+        <span class="comment">//判断第一行是否会变成0</span>
+        <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;<span class="keyword">matrix</span>[<span class="number">0</span>].<span class="built_in">length</span>;i++)
+        {
+            <span class="keyword">if</span>(<span class="keyword">matrix</span>[<span class="number">0</span>][i]==<span class="number">0</span>)
+            {
+                rowflag=true;
+                <span class="keyword">break</span>;
+            }
+        }
+        <span class="comment">//判断第一列是否会变成0</span>
+        <span class="keyword">for</span>(int j=<span class="number">0</span>;j&lt;<span class="keyword">matrix</span>.<span class="built_in">length</span>;j++)
+        {
+            <span class="keyword">if</span>(<span class="keyword">matrix</span>[j][<span class="number">0</span>]==<span class="number">0</span>)
+            {
+                colflag=true;
+                <span class="keyword">break</span>;
+            }
+        }
+        <span class="comment">//用第一行和第一列的位置来存放该行，该列是否应该变成0</span>
+        <span class="keyword">for</span>(int i=<span class="number">1</span>;i&lt;<span class="keyword">matrix</span>.<span class="built_in">length</span>;i++)
+        {
+            <span class="keyword">for</span>(int j=<span class="number">1</span>;j&lt;<span class="keyword">matrix</span>[<span class="number">0</span>].<span class="built_in">length</span>;j++)
+            {
+                <span class="keyword">if</span>(<span class="keyword">matrix</span>[i][j]==<span class="number">0</span>)
+                {
+                    <span class="keyword">matrix</span>[i][<span class="number">0</span>]=<span class="number">0</span>;
+                    <span class="keyword">matrix</span>[<span class="number">0</span>][j]=<span class="number">0</span>;
+                }
+            }
+        }
+
+        <span class="comment">//将应该变为0的行和列变为0</span>
+        <span class="keyword">for</span>(int i=<span class="number">1</span>;i&lt;<span class="keyword">matrix</span>.<span class="built_in">length</span>;i++)
+        {
+            <span class="keyword">for</span>(int j=<span class="number">1</span>;j&lt;<span class="keyword">matrix</span>[<span class="number">0</span>].<span class="built_in">length</span>;j++)
+            {
+                <span class="keyword">if</span>(<span class="keyword">matrix</span>[i][<span class="number">0</span>]==<span class="number">0</span> || <span class="keyword">matrix</span>[<span class="number">0</span>][j]==<span class="number">0</span>)
+                    <span class="keyword">matrix</span>[i][j]=<span class="number">0</span>;
+            }
+        }
+
+        <span class="comment">//判断第一行是否要变为0</span>
+        <span class="keyword">if</span>(rowflag==true)
+        {
+            <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;<span class="keyword">matrix</span>[<span class="number">0</span>].<span class="built_in">length</span>;i++)
+                <span class="keyword">matrix</span>[<span class="number">0</span>][i]=<span class="number">0</span>;
+        }
+
+         <span class="comment">//判断第一列是否要变为0</span>
+        <span class="keyword">if</span>(colflag==true)
+        {
+            <span class="keyword">for</span>(int i=<span class="number">0</span>;i&lt;<span class="keyword">matrix</span>.<span class="built_in">length</span>;i++)
+                <span class="keyword">matrix</span>[i][<span class="number">0</span>]=<span class="number">0</span>;
+        }
+
+        <span class="keyword">return</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/Array/">Array</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/LinkedListPalindrome/" title="[LeetCode 234] - LinkedListPalindrome" itemprop="url">[LeetCode 234] - LinkedListPalindrome</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T15:47:29.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/palindrome-linked-list/" target="_blank" rel="external">link</a></h5><p>Given a singly linked list, determine if it is a palindrome.</p>
+<p>Follow up:<br>Could you do it in O(n) time and O(1) space?</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>1.O(N) Space. 重新new一个新的linked list，元素与之前的list是回文。<br>2.O(1) Space, 直接把原来的list对半分开, 然后reverse后半部分与第一部分进行比较。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> <span class="keyword">boolean</span> isPalindrome(ListNode head) {
+
+        <span class="keyword">if</span>(head==<span class="keyword">null</span> || head.<span class="keyword">next</span>==<span class="keyword">null</span>){
+            <span class="keyword">return</span> <span class="keyword">true</span>;
+        }
+
+        ListNode mid = findMiddle(head);
+        ListNode midhead = mid.<span class="keyword">next</span>;
+
+        ListNode reverseHead = <span class="keyword">reverse</span>(midhead);
+
+        <span class="keyword">while</span>(reverseHead!=<span class="keyword">null</span>){
+            <span class="keyword">if</span>(head.val==reverseHead.val){
+                head = head.<span class="keyword">next</span>;
+                reverseHead = reverseHead.<span class="keyword">next</span>;
+            }<span class="keyword">else</span>{
+                <span class="keyword">return</span> <span class="keyword">false</span>;
+            }
+        }
+
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+
+    <span class="keyword">public</span> ListNode findMiddle(ListNode head1){
+        ListNode fast = head1.<span class="keyword">next</span>;
+        ListNode slow = head1;
+        <span class="keyword">while</span>(fast!=<span class="keyword">null</span> &amp;&amp; fast.<span class="keyword">next</span>!=<span class="keyword">null</span>){
+            slow = slow.<span class="keyword">next</span>;
+            fast = fast.<span class="keyword">next</span>.<span class="keyword">next</span>;
+        }
+        <span class="keyword">return</span> slow;
+    }
+
+    <span class="keyword">public</span> ListNode <span class="keyword">reverse</span>(ListNode head2){
+        ListNode pre = <span class="keyword">null</span>;
+        <span class="keyword">while</span>(head2!=<span class="keyword">null</span>){
+            ListNode tmp = head2.<span class="keyword">next</span>;
+            head2.<span class="keyword">next</span> = pre;
+            pre = head2;
+            head2 = tmp;
+        }
+        <span class="keyword">return</span> pre;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/IntegerToRoman/" title="[LeetCode 12] - IntegerToRoman" itemprop="url">[LeetCode 12] - IntegerToRoman</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T14:39:03.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/roman-to-integer/" target="_blank" rel="external">link</a></h5><p>Given an integer, convert it to a roman numeral.</p>
+<p>Input is guaranteed to be within the range from 1 to 3999.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>将对应关系找出，然后一个一个check。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    public <span class="built_in">String</span> intToRoman(<span class="built_in">int</span> <span class="built_in">num</span>) {
+        <span class="keyword">if</span> (<span class="built_in">num</span> &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;
+        <span class="built_in">int</span>[] nums = {<span class="number">1000</span>, <span class="number">900</span>, <span class="number">500</span>, <span class="number">400</span>, <span class="number">100</span>, <span class="number">90</span>, <span class="number">50</span>, <span class="number">40</span>, <span class="number">10</span>, <span class="number">9</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>};
+        <span class="built_in">String</span>[] symbols = {<span class="string">"M"</span>, <span class="string">"CM"</span>, <span class="string">"D"</span>, <span class="string">"CD"</span>, <span class="string">"C"</span>, <span class="string">"XC"</span>, <span class="string">"L"</span>, <span class="string">"XL"</span>, <span class="string">"X"</span>, <span class="string">"IX"</span>, <span class="string">"V"</span>, <span class="string">"IV"</span>, <span class="string">"I"</span>};
+        <span class="built_in">int</span> digit = <span class="number">0</span>;
+        StringBuilder res = <span class="keyword">new</span> StringBuilder();
+        <span class="keyword">while</span> (<span class="built_in">num</span> &gt; <span class="number">0</span>) {
+            <span class="built_in">int</span> times = <span class="built_in">num</span> / nums[digit];
+            <span class="built_in">num</span> = <span class="built_in">num</span> - nums[digit] * times;
+            <span class="keyword">while</span> (times &gt; <span class="number">0</span>) {
+                res.append(symbols[digit]);
+                times --;
+            }
+            digit ++;
+        }
+        <span class="keyword">return</span> res.toString();
+
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a><a href="/tags/String/">String</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/RomanToInteger/" title="[LeetCode 13] - RomanToInteger" itemprop="url">[LeetCode 13] - RomanToInteger</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T14:38:51.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/roman-to-integer/" target="_blank" rel="external">link</a></h5><p>Given a roman numeral, convert it to an integer.</p>
+<p>Input is guaranteed to be within the range from 1 to 3999.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>使用HashMap存对应的值，然后注意特殊情况即可。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class Solution {
+    public <span class="keyword">int</span> romanToInt(String <span class="keyword">s</span>) {
+        <span class="keyword">if</span> (<span class="keyword">s</span> == null || <span class="keyword">s</span>.<span class="keyword">length</span>() == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
+        Map&lt;Character, Integer&gt; <span class="keyword">map</span> = new HashMap&lt;Character, Integer&gt;();
+        <span class="keyword">map</span>.put(<span class="string">'M'</span>, <span class="number">1000</span>);
+        <span class="keyword">map</span>.put(<span class="string">'D'</span>, <span class="number">500</span>);
+        <span class="keyword">map</span>.put(<span class="string">'C'</span>, <span class="number">100</span>);
+        <span class="keyword">map</span>.put(<span class="string">'L'</span>, <span class="number">50</span>);
+        <span class="keyword">map</span>.put(<span class="string">'X'</span>, <span class="number">10</span>);
+        <span class="keyword">map</span>.put(<span class="string">'V'</span>, <span class="number">5</span>);
+        <span class="keyword">map</span>.put(<span class="string">'I'</span>, <span class="number">1</span>);
+        <span class="keyword">int</span> <span class="keyword">index</span> = <span class="number">0</span>;
+        <span class="keyword">int</span> res = <span class="number">0</span>;
+        <span class="keyword">while</span> (<span class="keyword">index</span> &lt; <span class="keyword">s</span>.<span class="keyword">length</span>() - <span class="number">1</span>) {
+            <span class="keyword">if</span> (<span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span>)) &gt;= <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span> + <span class="number">1</span>))) {
+                res += <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span>));
+                <span class="keyword">index</span>++;
+            } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span>)) &lt; <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span> + <span class="number">1</span>))) {
+                res += <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span> + <span class="number">1</span>)) - <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span>));
+                <span class="keyword">index</span> += <span class="number">2</span>;
+            }
+        }
+
+        <span class="keyword">if</span> (<span class="keyword">index</span> == <span class="keyword">s</span>.<span class="keyword">length</span>() - <span class="number">1</span>) {
+            res += <span class="keyword">map</span>.get(<span class="keyword">s</span>.charAt(<span class="keyword">index</span>));
+        }
+        <span class="keyword">return</span> res;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a><a href="/tags/String/">String</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/PalindromeNumber/" title="[LeetCode 9] - PalindromeNumber" itemprop="url">[LeetCode 9] - PalindromeNumber</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T13:08:02.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/palindrome-number/" target="_blank" rel="external">link</a></h5><p>Determine whether an integer is a palindrome. Do this without extra space.</p>
+<p>click to show spoilers.</p>
+<p>Some hints:<br>Could negative integers be palindromes? (ie, -1)</p>
+<p>If you are thinking of converting the integer to string, note the restriction of using extra space.</p>
+<p>You could also try reversing an integer. However, if you have solved the problem “Reverse Integer”, you know that the reversed integer might overflow. How would you handle such case?</p>
+<p>There is a more generic way of solving this problem.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>1.可以按照reverse integer的方法来做，但是要注意overflow。</p>
+<p>2.另外一种方法就是每次各取头尾的数进行比较。所谓的generic way?</p>
+<h4 id="My_Code"><em>My Code</em></h4><p>Reverse Integer</p>
 <pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    <span class="function"><span class="keyword">public</span> String <span class="title">longestPalindrome</span><span class="params">(String s)</span> </span>{
-        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.length() == <span class="number">0</span>) {
+    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(<span class="keyword">int</span> x)</span> </span>{
+        <span class="keyword">if</span> (x == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">true</span>;
+        <span class="keyword">if</span> (x &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+        <span class="keyword">long</span> res = <span class="number">0</span>;
+        <span class="keyword">int</span> ori = x;
+        <span class="keyword">while</span> (x != <span class="number">0</span>) {
+            res = res * <span class="number">10</span> + x % <span class="number">10</span>;
+            x /= <span class="number">10</span>;
+        }
+        <span class="keyword">if</span> (res &gt;= Integer.MAX_VALUE || res &lt;= Integer.MIN_VALUE) {
+            <span class="keyword">return</span> <span class="keyword">false</span>;
+        }
+        <span class="keyword">return</span> res == Long.valueOf(ori);
+    }
+}
+</code></pre><p>Generic Way</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
+    <span class="keyword">public</span> boolean isPalindrome(int x) {
+        <span class="keyword">if</span> (x &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;
+        int <span class="keyword">sig</span> = <span class="number">1</span>;
+        <span class="keyword">while</span> (x / <span class="keyword">sig</span> &gt;= <span class="number">10</span>) <span class="keyword">sig</span> = <span class="keyword">sig</span> * <span class="number">10</span>;
+        <span class="keyword">while</span> (x != <span class="number">0</span>) {
+            int l = x / <span class="keyword">sig</span>;
+            int r = x % <span class="number">10</span>;
+            <span class="keyword">if</span> (l != r) <span class="keyword">return</span> <span class="keyword">false</span>;
+            x = (x % <span class="keyword">sig</span>) / <span class="number">10</span>;
+            <span class="keyword">sig</span> = <span class="keyword">sig</span> / <span class="number">100</span>;
+        }
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/ReverseInteger/" title="[LeetCode 7] - ReverseInteger" itemprop="url">[LeetCode 7] - ReverseInteger</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T12:45:58.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/reverse-integer/" target="_blank" rel="external">link</a></h5><p>Reverse digits of an integer.</p>
+<p>Example1: x = 123, return 321<br>Example2: x = -123, return -321</p>
+<p>click to show spoilers.</p>
+<p>Have you thought about this?<br>Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!</p>
+<p>If the integer’s last digit is 0, what should the output be? ie, cases such as 10, 100.</p>
+<p>Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?</p>
+<p>For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.</p>
+<p>Update (2014-11-10):<br>Test cases had been added to test the overflow behavior.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>注意溢出的情况。取模翻转整数的方法要记住。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">reverse</span>(<span class="keyword">int</span> x) {
+        <span class="keyword">long</span> res = <span class="number">0</span>;
+        <span class="keyword">while</span> (x != <span class="number">0</span>) {
+            res = res * <span class="number">10</span> + x % <span class="number">10</span>;
+            x /= <span class="number">10</span>;
+        }
+        <span class="keyword">if</span> (res &gt;= Integer.MAX_VALUE || res &lt;= Integer.MIN_VALUE) {
+            <span class="keyword">return</span> <span class="number">0</span>;
+        }
+        <span class="keyword">return</span> (<span class="keyword">int</span>)res;
+    }
+}
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+<div class="article-categories">
+  <span></span>
+  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+</div>
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/Math/">Math</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/28/ZigZagConversion/" title="[LeetCode 6] - ZigZagConversion" itemprop="url">[LeetCode 6] - ZigZagConversion</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-28T12:27:20.000Z" itemprop="datePublished"> 發表於 2015-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/zigzag-conversion/" target="_blank" rel="external">link</a></h5><p>The string “PAYPALISHIRING” is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)</p>
+<p>P   A   H   N<br>A P L S I I G<br>Y   I   R<br>And then read line by line: “PAHNAPLSIIGYIR”<br>Write the code that will take a string and make this conversion given a number of rows:</p>
+<p>string convert(string text, int nRows);<br>convert(“PAYPALISHIRING”, 3) should return “PAHNAPLSIIGYIR”.</p>
+<h4 id="My_Thought"><em>My Thought</em></h4><p>模拟题。<br>给出两种解法。</p>
+<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class <span class="type">Solution</span> {
+    public <span class="type">String</span> convert(<span class="type">String</span> s, <span class="type">int</span> nRows) {
+        //每个zigzag是<span class="number">2</span>*m-<span class="number">2</span>个字符就可以，这里m是结果的行的数量
+        <span class="type">char</span>[] c=s.toCharArray();
+        <span class="type">int</span> len=c.length;
+        <span class="keyword">if</span>(len==<span class="number">0</span>)
             <span class="keyword">return</span> <span class="string">""</span>;
-        }
-        String longest = <span class="string">""</span>;
-        <span class="keyword">int</span> len = s.length();
-        <span class="comment">// dp[i][j] means substring of s from i to j is palindrome </span>
-        <span class="keyword">boolean</span>[][] dp = <span class="keyword">new</span> <span class="keyword">boolean</span>[len][len];
-        <span class="comment">// why i decrease from (len-1) to 0, but j increase from i to (len-1)?</span>
-        <span class="comment">// think about it! </span>
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--) {
-            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &lt; len; j++) {
-                <span class="keyword">if</span> (i == j) {
-                    dp[i][j] = <span class="keyword">true</span>;
-                } <span class="function"><span class="keyword">else</span> <span class="title">if</span> <span class="params">(i + <span class="number">1</span> == j)</span> </span>{
-                    dp[i][j] = s.charAt(i) == s.charAt(j);
-                } <span class="keyword">else</span> {
-                    <span class="comment">// important to note: dp[i+1][j-1]</span>
-                    <span class="comment">// i depends on (i+1), so i from large to small</span>
-                    <span class="comment">// j is just the opposite, small to large</span>
-                    dp[i][j] = s.charAt(i) == s.charAt(j) &amp;&amp; dp[i+<span class="number">1</span>][j-<span class="number">1</span>];
-                }
-                <span class="keyword">if</span> (dp[i][j] &amp;&amp; j + <span class="number">1</span> - i &gt; longest.length()) {
-                    longest = s.substring(i, j + <span class="number">1</span>);
-                }
-            }
-        }
-        <span class="keyword">return</span> longest;
-    }
-}
-</code></pre><p>Search around corner:</p>
-<pre><code><span class="keyword">public</span> class Solution {
-    <span class="keyword">public</span> <span class="keyword">String</span> longestPalindrome(<span class="keyword">String</span> s) {
-        <span class="keyword">if</span> (s.length() &lt;= <span class="number">1</span>) {
+        <span class="keyword">if</span>(nRows==<span class="number">1</span>)
             <span class="keyword">return</span> s;
-        }
-        <span class="built_in">int</span> <span class="built_in">max</span> = <span class="number">1</span>;
-        <span class="built_in">int</span> low, high;
-        <span class="built_in">int</span>[] pos = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];
-        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">1</span>; i &lt; s.length(); i++) {
-            <span class="comment">// find the even length substring whose center (right) is i</span>
-            low = i - <span class="number">1</span>;
-            high = i;
-            <span class="keyword">while</span> (low &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() &amp;&amp; s.charAt(low) == s.charAt(high)) {
-                <span class="keyword">if</span> (high - low + <span class="number">1</span> &gt; <span class="built_in">max</span>) {
-                    pos[<span class="number">0</span>] = low;
-                    pos[<span class="number">1</span>] = high;
-                    <span class="built_in">max</span> = high - low + <span class="number">1</span>;
-                }
-                low--;
-                high++;
-            }
+        <span class="type">String</span> <span class="literal">result</span>=<span class="string">""</span>;
+        <span class="type">int</span> zigsize=<span class="number">2</span>*nRows-<span class="number">2</span>;
+        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;nRows;i++)
+        {
+          <span class="keyword">for</span>(<span class="type">int</span> j=i;j&lt;len;j+=zigsize)
+          {
+              <span class="literal">result</span>+=c[j];
+              //需要判断j后面紧跟的元素，它的坐标为j+zigsize-<span class="number">2</span>*i,因为i表示行，正好为倒数第<span class="number">2</span>*i个元素
+              <span class="keyword">if</span>(i!=<span class="number">0</span>&amp;&amp;i!=nRows-<span class="number">1</span>&amp;&amp;(j+zigsize-<span class="number">2</span>*i)&lt;len)
+                    <span class="literal">result</span>+=c[j+zigsize-<span class="number">2</span>*i];
+          }
 
-            <span class="comment">//find the odd length substring whose center is i</span>
-            low = i - <span class="number">1</span>;
-            high = i + <span class="number">1</span>;
-            <span class="keyword">while</span> (low &gt;= <span class="number">0</span> &amp;&amp; high &lt; s.length() &amp;&amp; s.charAt(low) == s.charAt(high)) {
-                <span class="keyword">if</span> (high - low + <span class="number">1</span> &gt; <span class="built_in">max</span>) {
-                    pos[<span class="number">0</span>] = low;
-                    pos[<span class="number">1</span>] = high;
-                    <span class="built_in">max</span> = high - low + <span class="number">1</span>;
-                }
-                low--;
-                high++;
-            }
         }
-        <span class="keyword">return</span> s.substring(pos[<span class="number">0</span>], pos[<span class="number">1</span>] + <span class="number">1</span>);
+        <span class="keyword">return</span> <span class="literal">result</span>;      
     }
 }
-</code></pre><p>Manacher’s algorithm:</p>
-<p>To be finished…</p>
-
+</code></pre><p>StringBuilder:</p>
+<pre><code><span class="keyword">public</span> class Solution {
+    <span class="keyword">public</span> <span class="keyword">String</span> convert(<span class="keyword">String</span> s, <span class="built_in">int</span> nRows) {
+        <span class="keyword">if</span> (s == <span class="keyword">null</span> || nRows &lt;= <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">null</span>;
+        <span class="keyword">if</span> (nRows == <span class="number">1</span> || s.length() == <span class="number">0</span>) <span class="keyword">return</span> s;
+        StringBuilder[] sb = <span class="keyword">new</span> StringBuilder[nRows];
+        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nRows; i ++) {
+            sb[i] = <span class="keyword">new</span> StringBuilder();
+        }
+        <span class="built_in">int</span> row = <span class="number">0</span>;
+        <span class="built_in">boolean</span> zig = <span class="keyword">true</span>;
+        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; s.length(); i ++) {
+            sb[row].<span class="built_in">append</span>(s.charAt(i));
+            <span class="keyword">if</span> (row == <span class="number">0</span>) {
+                zig = <span class="keyword">true</span>;
+            } <span class="keyword">else</span> <span class="keyword">if</span> (row == nRows - <span class="number">1</span>) {
+                zig = <span class="keyword">false</span>;
+            }
+            <span class="keyword">if</span> (zig == <span class="keyword">true</span>) {
+                row ++;
+            } <span class="keyword">else</span> {
+                row --;
+            }
+        }
+        <span class="keyword">String</span> res = <span class="keyword">new</span> <span class="keyword">String</span>(<span class="string">""</span>);
+        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nRows; i ++) {
+            res += sb[i].toString();
+        }
+        <span class="keyword">return</span> res;
+    }
+}
+</code></pre>
         
         
         <p class="article-more-link">
@@ -522,1324 +1526,9 @@
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/25/LongestSubstringWithoutRepeatingCharacters/" title="[LeetCode 3] - LongestSubstringWithoutRepeatingCharacters" itemprop="url">[LeetCode 3] - LongestSubstringWithoutRepeatingCharacters</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-26T03:29:40.000Z" itemprop="datePublished"> 發表於 2015-08-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" rel="external">link</a></h5><p>Given a string, find the length of the longest substring without repeating characters. For example, the longest substring without repeating letters for “abcabcbb” is “abc”, which the length is 3. For “bbbbb” the longest substring is “b”, with the length of 1.</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>首先这题如果纯暴力解法的话，复杂度是O(N^3).</p>
-<p>思路1： substring类题目，可以想到用sliding window来做。具体的方法就是两根指针的模板。</p>
-<p>思路2： 可以考虑使用DP。</p>
-<p>动态规划的形式化定义如下：<br>length(i)：以A[i]结尾的最长不包含重复元素字串的长度；<br>maxlength(i,j):A[i]到A[j]的最长不包含重复元素字串的长度；<br>if i=0 Then maxlength(0,0)=1;<br>if i&gt;=1 Then maxlength(0,i)=Max(maxlength(0,i-1),length(i));<br>求解：maxlength(0,A.length);</p>
-<h4 id="Used_APIs"><em>Used APIs</em></h4><p>Interface: Set</p>
-<p>Concrete Class: HashSet</p>
-<p>Method:</p>
-<p>Set.add(E e);</p>
-<p>Set.contains(Object o);</p>
-<p>Set.remove(Object o);</p>
-<p>Set.isEmpty();</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">public</span> <span class="built_in">int</span> lengthOfLongestSubstring(<span class="built_in">String</span> s) {
-        <span class="keyword">if</span> (s == <span class="literal">null</span> || s.length() == <span class="number">0</span>) {
-            return <span class="number">0</span>;
-        }
-        <span class="built_in">int</span> res = <span class="number">0</span>;
-        <span class="built_in">int</span> <span class="built_in">left</span> = <span class="number">0</span>;
-        <span class="keyword">Set</span>&lt;Character&gt; <span class="keyword">set</span> = <span class="keyword">new</span> HashSet&lt;Character&gt;();
-        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) {
-            <span class="keyword">if</span> (!<span class="keyword">set</span>.contains(s.charAt(i))) {
-                <span class="keyword">set</span>.add(s.charAt(i));
-                res = Math.max(res, i - <span class="built_in">left</span> + <span class="number">1</span>);
-            } <span class="keyword">else</span> {
-                <span class="keyword">while</span> (<span class="built_in">left</span> &lt; i &amp;&amp; s.charAt(<span class="built_in">left</span>) != s.charAt(i)) {
-                    <span class="keyword">set</span>.remove(s.charAt(<span class="built_in">left</span>));
-                    <span class="built_in">left</span>++;
-                }
-                <span class="built_in">left</span>++;
-            }
-        }
-        return res;
-    }
-}
-</code></pre><p>DP：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Solution</span> {
-    <span class="comment">//动态规划</span>
-    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>{
-        <span class="keyword">if</span>(s==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;
-        <span class="keyword">char</span>[] c=s.toCharArray();
-        <span class="keyword">if</span>(c.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;
-        <span class="keyword">int</span> maxsublength=<span class="number">1</span>;
-        <span class="keyword">int</span> barrier=<span class="number">0</span>;
-        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;c.length;i++)
-        {
-            <span class="keyword">for</span>(<span class="keyword">int</span> j=i-<span class="number">1</span>;j&gt;=barrier;j--)
-            {
-                <span class="keyword">if</span>(c[i]==c[j])
-                {
-                    barrier=j+<span class="number">1</span>;
-                    <span class="keyword">break</span>;
-                }
-            }
-            maxsublength=Math.max(maxsublength,i-barrier+<span class="number">1</span>);
-        }
-        <span class="keyword">return</span> maxsublength;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/25/AddTwoNumbers/" title="[LeetCode 2] - AddTwoNumbers" itemprop="url">[LeetCode 2] - AddTwoNumbers</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-25T14:02:23.000Z" itemprop="datePublished"> 發表於 2015-08-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/add-two-numbers/" target="_blank" rel="external">link</a></h5><p>You are given two linked lists representing two non-negative numbers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.</p>
-<p>Input: (2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)<br>Output: 7 -&gt; 0 -&gt; 8</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>经典的链表计算题，需要注意的地方有：</p>
-<ol>
-<li><p>新建dummy结点用来储存结果。</p>
-</li>
-<li><p>carry位的计算。</p>
-</li>
-<li><p>考虑两个链表长度不同的问题。</p>
-</li>
-<li><p>还要考虑最后一位的carry位。</p>
-</li>
-</ol>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="comment">/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */</span>
-public <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-    public <span class="type">ListNode</span> addTwoNumbers(<span class="type">ListNode</span> l1, <span class="type">ListNode</span> l2) {
-        <span class="keyword">if</span> (l1 == <span class="literal">null</span> &amp;&amp; l2 == <span class="literal">null</span>) {
-            <span class="keyword">return</span> <span class="literal">null</span>;
-        }
-        <span class="keyword">if</span> (l1 == <span class="literal">null</span> &amp;&amp; l2 != <span class="literal">null</span>) {
-            <span class="keyword">return</span> l2;
-        }
-        <span class="keyword">if</span> (l1 != <span class="literal">null</span> &amp;&amp; l2 == <span class="literal">null</span>) {
-            <span class="keyword">return</span> l1;
-        }
-        <span class="type">ListNode</span> dummy = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="number">0</span>);
-        <span class="type">ListNode</span> res = dummy;
-
-
-        int carry = <span class="number">0</span>;
-        <span class="keyword">while</span> (l1 != <span class="literal">null</span> &amp;&amp; l2 != <span class="literal">null</span>) {
-            int <span class="function"><span class="keyword">val</span> =</span> (l1.<span class="keyword">val</span> + l2.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
-            carry = (l1.<span class="keyword">val</span> + l2.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
-            res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
-            res = res.next;
-            l1 = l1.next;
-            l2 = l2.next;
-        }
-
-        <span class="keyword">if</span> (l1 != <span class="literal">null</span>) {
-            <span class="keyword">while</span> (l1 != <span class="literal">null</span>) {
-                int <span class="function"><span class="keyword">val</span> =</span>(l1.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
-                carry = (l1.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
-                res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
-                res = res.next;
-                l1 = l1.next;
-            }
-        }
-
-        <span class="keyword">if</span> (l2 != <span class="literal">null</span>) {
-            <span class="keyword">while</span> (l2 != <span class="literal">null</span>) {
-                int <span class="function"><span class="keyword">val</span> =</span>(l2.<span class="keyword">val</span> + carry) % <span class="number">10</span>;
-                carry = (l2.<span class="keyword">val</span> + carry) / <span class="number">10</span>;
-                res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(<span class="function"><span class="keyword">val</span>);</span>
-                res = res.next;
-                l2 = l2.next;
-            }
-        }
-        <span class="keyword">if</span> (carry != <span class="number">0</span>) {
-            res.next = <span class="keyword">new</span> <span class="type">ListNode</span>(carry);
-        }
-
-        <span class="keyword">return</span> dummy.next;
-    }
-}
-</code></pre><p>More Concise:</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-    <span class="keyword">public</span> ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int carry = <span class="number">0</span>;
-        ListNode res = <span class="keyword">new</span> ListNode(<span class="number">0</span>);
-        ListNode cur1 = l1, cur2 = l2, head = res;
-        <span class="keyword">while</span> (cur1 != <span class="literal">null</span> || cur2 != <span class="literal">null</span>) {
-            <span class="keyword">if</span> (cur1 != <span class="literal">null</span>) {
-                carry += cur1.val;
-                cur1 = cur1.<span class="keyword">next</span>;
-            }
-            <span class="keyword">if</span> (cur2 != <span class="literal">null</span>) {
-                carry += cur2.val;
-                cur2 = cur2.<span class="keyword">next</span>;
-            }
-            head.<span class="keyword">next</span> = <span class="keyword">new</span> ListNode(carry % <span class="number">10</span>);
-            head = head.<span class="keyword">next</span>;
-            carry /= <span class="number">10</span>;
-        }
-        <span class="keyword">if</span> (carry == <span class="number">1</span>)
-            head.<span class="keyword">next</span> = <span class="keyword">new</span> ListNode(<span class="number">1</span>);
-        <span class="keyword">return</span> res.<span class="keyword">next</span>;
-    }
-}
-</code></pre><p>Recursively:</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    <span class="keyword">public</span> ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        <span class="keyword">return</span> helper(l1, l2, <span class="number">0</span>);
-    }
-
-    <span class="keyword">private</span> ListNode helper(ListNode l1, ListNode l2, <span class="keyword">int</span> carry) {
-        <span class="keyword">if</span> (l1 == <span class="keyword">null</span> &amp;&amp; l2 == <span class="keyword">null</span>) {
-            <span class="keyword">if</span> (carry == <span class="number">0</span>) {
-                <span class="keyword">return</span> <span class="keyword">null</span>;
-            } <span class="keyword">else</span> {
-                <span class="keyword">return</span> <span class="keyword">new</span> ListNode(<span class="number">1</span>);
-            }
-        } <span class="keyword">else</span> <span class="keyword">if</span> (l1 == <span class="keyword">null</span>) {
-            <span class="keyword">return</span> helper(<span class="keyword">new</span> ListNode(<span class="number">0</span>), l2, carry);
-        } <span class="keyword">else</span> <span class="keyword">if</span> (l2 == <span class="keyword">null</span>) {
-            <span class="keyword">return</span> helper(l1, <span class="keyword">new</span> ListNode(<span class="number">0</span>), carry);
-        } <span class="keyword">else</span> {
-            <span class="comment">// both l1 and l2 have value</span>
-            <span class="keyword">int</span> <span class="keyword">sum</span> = l1.val + l2.val + carry;
-            <span class="keyword">int</span> resultNumber = <span class="keyword">sum</span> % <span class="number">10</span>;
-            <span class="keyword">int</span> newCarry = <span class="keyword">sum</span> / <span class="number">10</span>;
-            ListNode ans = <span class="keyword">new</span> ListNode(resultNumber);
-            ans.next = helper(l1.next, l2.next, newCarry);
-            <span class="keyword">return</span> ans;
-        }
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a><a href="/tags/Math/">Math</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/ReverseLinkedList/" title="[LeetCode 206] - ReverseLinkedList" itemprop="url">[LeetCode 206] - ReverseLinkedList</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T23:44:34.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/reverse-linked-list/" target="_blank" rel="external">link</a></h5><p>Reverse a singly linked list.</p>
-<p>Hint:<br>A linked list can be reversed either iteratively or recursively. Could you implement both?</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>两种方法：iteratively and recursively</p>
-<p>Iteratively: 模板做法</p>
-<p>Recursively: 更加直观 需要看面试官要求</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>两种方法：迭代和递归</p>
-<pre><code>/**
- * <span class="type">Definition</span> <span class="keyword">for</span> singly-linked list.
- * public class <span class="type">ListNode</span> {
- *     <span class="type">int</span> val;
- *     <span class="type">ListNode</span> next;
- *     <span class="type">ListNode</span>(<span class="type">int</span> x) { val = x; }
- * }
- */
-public class <span class="type">Solution</span> {
-    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
-        <span class="keyword">if</span> (head == null) <span class="keyword">return</span> head;
-        <span class="keyword">if</span> (head.next == null) <span class="keyword">return</span> head;
-        <span class="type">ListNode</span> secondEle = head.next;
-        head.next = null;
-        <span class="type">ListNode</span> revSecondEle = reverseList(secondEle);
-        secondEle.next = head;
-        <span class="keyword">return</span> revSecondEle;
-    }
-}
-
-
-
-public class <span class="type">Solution</span> {
-    public <span class="type">ListNode</span> reverseList(<span class="type">ListNode</span> head) {
-        <span class="type">ListNode</span> <span class="literal">result</span> = null;
-        <span class="type">ListNode</span> cur = head;
-        <span class="keyword">while</span> (cur != null) {
-             <span class="type">ListNode</span> temp = cur.next;
-             cur.next = <span class="literal">result</span>;
-             <span class="literal">result</span> = cur;
-             cur = temp;
-        }
-        <span class="keyword">return</span> <span class="literal">result</span>;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/RemoveLinkedListElements/" title="[LeetCode 203] - RemoveLinkedListElements" itemprop="url">[LeetCode 203] - RemoveLinkedListElements</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T22:08:45.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/remove-linked-list-elements/" target="_blank" rel="external">link</a></h5><p>Remove all elements from a linked list of integers that have value val.</p>
-<p>Example<br>Given: 1 —&gt; 2 —&gt; 6 —&gt; 3 —&gt; 4 —&gt; 5 —&gt; 6, val = 6<br>Return: 1 —&gt; 2 —&gt; 3 —&gt; 4 —&gt; 5</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>由于头结点可能删除，所以我们要使用dummy node。另外删除一个node需要维护的当前node和当前node的前一个node。然后OnePass就可以解决了。</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>/**
- * Definition <span class="keyword">for</span> singly-linked list.
- * <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> {</span>
- *     int val;
- *     ListNode <span class="keyword">next</span>;
- *     ListNode(int x) { val = x; }
- * }
- */
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-    <span class="keyword">public</span> ListNode removeElements(ListNode head, int val) {
-        <span class="keyword">if</span> (head == <span class="literal">null</span>) {
-            <span class="keyword">return</span> head;
-        }
-        ListNode dummy = <span class="keyword">new</span> ListNode(<span class="number">0</span>);
-        dummy.<span class="keyword">next</span> = head;
-        ListNode pre = dummy;
-        ListNode cur = head;
-        <span class="keyword">while</span> (cur != <span class="literal">null</span>) {
-            <span class="keyword">if</span> (cur.val == val) {
-                pre.<span class="keyword">next</span> = cur.<span class="keyword">next</span>;
-                cur = cur.<span class="keyword">next</span>;
-            } <span class="keyword">else</span> {
-                pre = pre.<span class="keyword">next</span>;
-                cur = cur.<span class="keyword">next</span>;
-            }
-        }
-        <span class="keyword">return</span> dummy.<span class="keyword">next</span>;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/DeleteNodeInLinkedList/" title="[LeetCode 237] - DeleteNodeInLinkedList" itemprop="url">[LeetCode 237] - DeleteNodeInLinkedList</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T21:47:06.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/delete-node-in-a-linked-list/" target="_blank" rel="external">link</a></h5><p>Write a function to delete a node (except the tail) in a singly linked list, given only access to that node.</p>
-<p>Supposed the linked list is 1 -&gt; 2 -&gt; 3 -&gt; 4 and you are given the third node with value 3, the linked list should become 1 -&gt; 2 -&gt; 4 after calling your function.</p>
-<h4 id="My_Thought"><em>My Thought</em></h4><p>一般来说 delete node 需要知道node的前一个node， 这个题里面只给了要删的node，所以只需要把当前node overwrite掉就好了。code也很简单，两行搞定。</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>/**
- * Definition <span class="keyword">for</span> singly-linked list.
- * <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ListNode</span> {</span>
- *     int val;
- *     ListNode <span class="keyword">next</span>;
- *     ListNode(int x) { val = x; }
- * }
- */
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> {</span>
-    <span class="keyword">public</span> void deleteNode(ListNode node) {
-        node.val = node.<span class="keyword">next</span>.val;
-        node.<span class="keyword">next</span> = node.<span class="keyword">next</span>.<span class="keyword">next</span>;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/LinkedList/">LinkedList</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/3SumCloset/" title="[LeetCode 16]- 3SumCloset" itemprop="url">[LeetCode 16]- 3SumCloset</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T16:02:46.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/3sumcloset/" target="_blank" rel="external">link</a></h5><p>Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target. Return the sum of the three integers. You may assume that each input would have exactly one solution.</p>
-<pre><code>For example, given<span class="instruction"> array </span>S = {-1 2 1 -4},<span class="instruction"> and </span>target = 1.
-
-The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 2 + 1 = 2<span class="function">)</span>.
-</code></pre><h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>该题是求解是找到三个数的和，使得该和最接近给定的目标值。因为a+b+c的和最接近target,可以看成是b+c的最接近于target-a,这样三个数的问题就可以变为两个数的问题。而两个数的问题可以采用左右夹逼法进行求解，当然这个前提是数组必须是排好序的。</p>
-<p>时间复杂度为O(n^2+nlogn),即O(n^2). 空间复杂度 O(1).</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">public</span> <span class="built_in">int</span> threeSumClosest(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> <span class="type">target</span>) {
-        <span class="keyword">if</span> (nums == null || nums.length &lt; <span class="number">3</span>) {
-            <span class="keyword">return</span> <span class="number">0</span>;
-        }
-        Arrays.sort(nums);
-        <span class="built_in">int</span> dif = <span class="type">Integer</span>.MAX_VALUE;
-        <span class="built_in">int</span> res = <span class="number">0</span>;
-        for (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++) {
-            <span class="keyword">if</span> (i <span class="comment">!= 0 &amp;&amp; nums[i] == nums[i - 1]) {</span>
-                <span class="keyword">continue</span>;
-            }
-            <span class="built_in">int</span> start = i + <span class="number">1</span>;
-            <span class="built_in">int</span> <span class="keyword">end</span> = nums.length - <span class="number">1</span>;
-            <span class="keyword">while</span> (start &lt; <span class="keyword">end</span>) {
-                <span class="built_in">int</span> <span class="built_in">sum</span> = nums[i] + nums[start] + nums[<span class="keyword">end</span>];
-                <span class="keyword">if</span> (Math.<span class="built_in">abs</span>(<span class="built_in">sum</span> - <span class="type">target</span>) &lt; dif) {
-                    dif = Math.<span class="built_in">abs</span>(<span class="built_in">sum</span> - <span class="type">target</span>);
-                    res = <span class="built_in">sum</span>;
-                }
-                <span class="keyword">if</span> (<span class="built_in">sum</span> == <span class="type">target</span>) {
-                    <span class="keyword">return</span> <span class="type">target</span>;
-                } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">sum</span> &gt; <span class="type">target</span>) {
-                    <span class="keyword">end</span>--;
-                } <span class="keyword">else</span> {
-                    start++;
-                }
-
-            }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/4Sum/" title="[LeetCode 18] - 4Sum" itemprop="url">[LeetCode 18] - 4Sum</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T15:04:22.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/4sum/" target="_blank" rel="external">link</a></h5><p>Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target? Find all unique quadruplets in the array which gives the sum of target.</p>
-<p>Note:<br>Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)<br>The solution set must not contain duplicate quadruplets.<br>    For example, given array S = {1 0 -1 0 -2 2}, and target = 0.</p>
-<pre><code>A solution <span class="keyword">set</span> <span class="keyword">is</span>:
-(-<span class="number">1</span>,  <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>)
-(-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>)
-(-<span class="number">2</span>,  <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>)
-</code></pre><h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>思路与3Sum基本相同。<br>注意一点：这里去重可以用哈希表去重，但是需要额外空间。</p>
-<p>时间: O(N^3) 空间: O(1)</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>和3Sum相同的解法：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">public</span> List&lt;List&lt;<span class="type">Integer</span>&gt;&gt; fourSum(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> <span class="type">target</span>) {
-        List&lt;List&lt;<span class="type">Integer</span>&gt;&gt; res = new ArrayList&lt;List&lt;<span class="type">Integer</span>&gt;&gt;();
-        <span class="keyword">if</span> (nums == null || nums.length &lt; <span class="number">4</span>) {
-            <span class="keyword">return</span> res;
-        }
-        Arrays.sort(nums);
-        for (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">3</span>; i++) {
-            <span class="keyword">if</span> (i <span class="comment">!= 0 &amp;&amp; nums[i] == nums[i - 1]) {</span>
-                <span class="keyword">continue</span>;
-            }
-            for (<span class="built_in">int</span> j = i + <span class="number">1</span>; j &lt; nums.length - <span class="number">2</span>; j++) {
-                <span class="keyword">if</span> (j <span class="comment">!= i + 1 &amp;&amp; nums[j] == nums[j - 1]) {</span>
-                    <span class="keyword">continue</span>;
-                }
-                <span class="built_in">int</span> start = j + <span class="number">1</span>;
-                <span class="built_in">int</span> <span class="keyword">end</span> = nums.length - <span class="number">1</span>;
-                <span class="keyword">while</span> (start &lt; <span class="keyword">end</span>) {
-                    <span class="built_in">int</span> <span class="built_in">sum</span> = nums[start] + nums[<span class="keyword">end</span>] + nums[i] + nums[j];
-                    <span class="keyword">if</span> (<span class="built_in">sum</span> == <span class="type">target</span>) {
-                        List&lt;<span class="type">Integer</span>&gt; temp = new ArrayList&lt;<span class="type">Integer</span>&gt;();
-                        temp.add(nums[i]);
-                        temp.add(nums[j]);
-                        temp.add(nums[start]);
-                        temp.add(nums[<span class="keyword">end</span>]);
-                        res.add(temp);
-                        start++;
-                        <span class="keyword">end</span>--;
-                        <span class="keyword">while</span> (start &lt; <span class="keyword">end</span> &amp;&amp; nums[start] == nums[start - <span class="number">1</span>]) { // to skip duplicates
-                            start++;
-                        }
-                        <span class="keyword">while</span> (start &lt; <span class="keyword">end</span> &amp;&amp; nums[<span class="keyword">end</span>] == nums[<span class="keyword">end</span> + <span class="number">1</span>]) { //         // to skip duplicates
-                            <span class="keyword">end</span>--;
-                        }
-                    } <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">sum</span> &gt; <span class="type">target</span>) {
-                        <span class="keyword">end</span>--;
-                    } <span class="keyword">else</span> {
-                        start++;
-                    }
-                }
-            } 
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre><p>哈希表去重的方法：</p>
-<pre><code>public <span class="type">ArrayList</span>&lt;<span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;&gt; fourSum(<span class="type">int</span>[] num, <span class="type">int</span> target) {
-    <span class="type">Arrays</span>.sort(num);
-
-    <span class="type">HashSet</span>&lt;<span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;&gt; hashSet = new <span class="type">HashSet</span>&lt;<span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;&gt;();
-    <span class="type">ArrayList</span>&lt;<span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;&gt; <span class="literal">result</span> = new <span class="type">ArrayList</span>&lt;<span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;&gt;();
-
-    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num.length; i++) {
-        <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; num.length; j++) {
-            <span class="type">int</span> k = j + <span class="number">1</span>;
-            <span class="type">int</span> l = num.length - <span class="number">1</span>;
-
-            <span class="keyword">while</span> (k &lt; l) {
-                <span class="type">int</span> sum = num[i] + num[j] + num[k] + num[l];
-
-                <span class="keyword">if</span> (sum &gt; target) {
-                    l--;
-                } <span class="keyword">else</span> <span class="keyword">if</span> (sum &lt; target) {
-                    k++;
-                } <span class="keyword">else</span> <span class="keyword">if</span> (sum == target) {
-                    <span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt; temp = new <span class="type">ArrayList</span>&lt;<span class="type">Integer</span>&gt;();
-                    temp.add(num[i]);
-                    temp.add(num[j]);
-                    temp.add(num[k]);
-                    temp.add(num[l]);
-
-                    <span class="keyword">if</span> (!hashSet.contains(temp)) {
-                        hashSet.add(temp);
-                        <span class="literal">result</span>.add(temp);
-                    }
-
-                    k++;
-                    l--;
-                }
-            }
-        }
-    }
-
-    <span class="keyword">return</span> <span class="literal">result</span>;
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/3Sum/" title="[LeetCode 15] - 3Sum" itemprop="url">[LeetCode 15] - 3Sum</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T14:15:28.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/3sum/" target="_blank" rel="external">link</a></h5><p>Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.</p>
-<p>Note:<br>Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)<br>The solution set must not contain duplicate triplets.<br>    For example, given array S = {-1 0 1 2 -1 -4},</p>
-<pre><code>A solution <span class="keyword">set</span> <span class="keyword">is</span>:
-(-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>)
-(-<span class="number">1</span>, -<span class="number">1</span>, <span class="number">2</span>)
-</code></pre><h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>注意的点：</p>
-<p>1.由于输出要求升序排列，所以此题应该先对数组排序。</p>
-<p>2.注意到可能有重复的数字，所以需要避免重复计算。</p>
-<p>3.剩下的就是经典的一头一尾两根指针的解法。</p>
-<p>复杂度：<br>时间O(N^2)<br>空间O(1)</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code><span class="keyword">public</span> <span class="keyword">class</span> Solution {
-    <span class="keyword">public</span> List&lt;List&lt;<span class="type">Integer</span>&gt;&gt; threeSum(<span class="built_in">int</span>[] nums) {
-        List&lt;List&lt;<span class="type">Integer</span>&gt;&gt; res = new ArrayList&lt;List&lt;<span class="type">Integer</span>&gt;&gt;();
-        <span class="keyword">if</span> (nums == null || nums.length &lt; <span class="number">3</span>) {
-            <span class="keyword">return</span> res;
-        }
-        Arrays.sort(nums);
-        for (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">2</span>; i++) {
-            <span class="keyword">if</span> (i <span class="comment">!= 0 &amp;&amp; nums[i] == nums[i - 1]) {</span>
-                <span class="keyword">continue</span>;
-            }
-            <span class="built_in">int</span> start = i + <span class="number">1</span>;
-            <span class="built_in">int</span> <span class="keyword">end</span> = nums.length - <span class="number">1</span>;
-            <span class="built_in">int</span> <span class="type">target</span> = nums[i] * (-<span class="number">1</span>);
-            <span class="keyword">while</span> (start &lt; <span class="keyword">end</span>) {
-                    <span class="keyword">if</span> (nums[start] + nums[<span class="keyword">end</span>] == <span class="type">target</span>) {
-                        List&lt;<span class="type">Integer</span>&gt; temp = new ArrayList&lt;<span class="type">Integer</span>&gt;();
-                        temp.add(nums[i]);
-                        temp.add(nums[start]);
-                        temp.add(nums[<span class="keyword">end</span>]);
-                        res.add(temp);
-                        start++;
-                        <span class="keyword">end</span>--;
-                        <span class="keyword">while</span> (start &lt; <span class="keyword">end</span> &amp;&amp; nums[start] == nums[start - <span class="number">1</span>]) { // to skip duplicates
-                            start++;
-                        }
-                        <span class="keyword">while</span> (start &lt; <span class="keyword">end</span> &amp;&amp; nums[<span class="keyword">end</span>] == nums[<span class="keyword">end</span> + <span class="number">1</span>]) { // to skip duplicates
-                            <span class="keyword">end</span>--;
-                        }
-                    } <span class="keyword">else</span> <span class="keyword">if</span> (nums[start] + nums[<span class="keyword">end</span>] &gt; <span class="type">target</span>) {
-                        <span class="keyword">end</span>--;
-                    } <span class="keyword">else</span> {
-                        start++;
-                    }
-                }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a><a href="/tags/TwoPointers/">TwoPointers</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/24/TwoSum/" title="[LeetCode 1] - TwoSum" itemprop="url">[LeetCode 1] - TwoSum</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-24T12:18:50.000Z" itemprop="datePublished"> 發表於 2015-08-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="https://leetcode.com/problems/two-sum/" target="_blank" rel="external">link</a></h5><p>Given an array of integers, find two numbers such that they add up to a specific target number.</p>
-<p>The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.</p>
-<p>You may assume that each input would have exactly one solution.</p>
-<p>Input: numbers={2, 7, 11, 15}, target=9<br>Output: index1=1, index2=2</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><p>基础题，两种解法：</p>
-<ol>
-<li><p>BF解 时间O(N^2) 空间O(1)</p>
-</li>
-<li><p>用HashTable 时间O(N) 空间O(N)</p>
-</li>
-</ol>
-<p>该题是在给定一个数组中，搜索是否存在两个数的和等于给定的值。如果存在，则返回两个数的数组下标。如果采用“暴搜”，则时间复杂度为O(n^2),为了降低时间复杂度，显然是需要在查询方面做文章，因此可以采用散列存储。</p>
-<p>散列是将给定的值转变为一个数组的下标，即散列码，然后在数组中存放值的List。在JAVA中,散列码的求解采用HashCode()函数。具有散列功能的Collections容器有以下四种:HashMap,LinkedHashMap,HashSet和LinkedHashSet，因此本文采用HashMap实现散列功能，使得时间复杂度变为O(n)。</p>
-<h4 id="My_Code"><em>My Code</em></h4><p>解法1：</p>
-<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
-    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">target</span>) {
-        <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>];
-        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length == <span class="number">0</span>) {
-            <span class="keyword">return</span> res;
-        }
-        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length - <span class="number">1</span>; i++) {
-            <span class="keyword">for</span> (<span class="keyword">int</span> j = i + <span class="number">1</span>; j &lt; nums.length; j++) {
-                <span class="keyword">if</span> (nums[i] + nums[j] == <span class="keyword">target</span>) {
-                    res[<span class="number">0</span>] = i + <span class="number">1</span>;
-                    res[<span class="number">1</span>] = j + <span class="number">1</span>;
-                    <span class="keyword">return</span> res;
-                }
-            }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre><p>解法2：</p>
-<pre><code><span class="keyword">public</span> class Solution {
-    <span class="keyword">public</span> <span class="built_in">int</span>[] twoSum(<span class="built_in">int</span>[] nums, <span class="built_in">int</span> target) {
-        <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[<span class="number">2</span>];
-        Map&lt;Integer, Integer&gt; <span class="built_in">map</span> = <span class="keyword">new</span> <span class="keyword">HashMap</span>&lt;Integer, Integer&gt;();
-        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) {
-            <span class="keyword">if</span> (<span class="built_in">map</span>.containsKey(target - nums[i])) {
-                res[<span class="number">0</span>] = <span class="built_in">map</span>.<span class="built_in">get</span>(target - nums[i]);
-                res[<span class="number">1</span>] = i + <span class="number">1</span>;
-                <span class="keyword">return</span> res;
-            } <span class="keyword">else</span> {
-                <span class="built_in">map</span>.put(nums[i], i + <span class="number">1</span>);
-            }
-        }
-        <span class="keyword">return</span> res;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/11/LRUCache/" title="[LintCode] - LRUCache" itemprop="url">[LintCode] - LRUCache</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-12T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/lru-cache/#" target="_blank" rel="external">link</a></h5><p>Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and set.</p>
-<p>get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.</p>
-<p>set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.</p>
-<h4 id="Thought_and_solution"><em>Thought and solution</em></h4><p>If we need O(1) time complexity in the operation, we need to use HashMap.</p>
-<p>方法1：</p>
-<p>使用 HashMap+ 双向链表实现：</p>
-<ol>
-<li><p>如果需要移除老的节点，我们从头节点移除。</p>
-</li>
-<li><p>如果某个节点被访问（SET/GET），将其移除并挂在双向链表的结尾。</p>
-</li>
-<li><p>链表满了后，我们删除头节点。</p>
-</li>
-<li><p>最近访问的节点在链尾。最久被访问的节点在链头。</p>
-</li>
-</ol>
-<p>在这个方法中，头尾节点是Sentinel节点，在整个过程中并不移动。</p>
-<h4 id="My_Code"><em>My Code</em></h4><pre><code>public class Solution {
-    private class Node{
-        Node <span class="built_in">prev</span>;
-        Node <span class="built_in">next</span>;
-        <span class="typename">int</span> <span class="built_in">key</span>;
-        <span class="typename">int</span> <span class="built_in">value</span>;
-
-        public Node(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
-            this.<span class="built_in">key</span> = <span class="built_in">key</span>;
-            this.<span class="built_in">value</span> = <span class="built_in">value</span>;
-            this.<span class="built_in">prev</span> = <span class="built_in">null</span>;
-            this.<span class="built_in">next</span> = <span class="built_in">null</span>;
-        }
-    }
-
-    private <span class="typename">int</span> capacity;
-    private HashMap&lt;Integer, Node&gt; hs = new HashMap&lt;Integer, Node&gt;();
-    private Node head = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
-    private Node tail = new Node(-<span class="number">1</span>, -<span class="number">1</span>);
-    <span class="comment">// @param capacity, an integer</span>
-    public Solution(<span class="typename">int</span> capacity) {
-        <span class="comment">// write your code here</span>
-        this.capacity = capacity;
-        tail.<span class="built_in">prev</span> = head;
-        head.<span class="built_in">next</span> = tail;
-    }
-
-    <span class="comment">// @return an integer</span>
-    public <span class="typename">int</span> <span class="built_in">get</span>(<span class="typename">int</span> <span class="built_in">key</span>) {
-        <span class="comment">// write your code here</span>
-        if( !hs.containsKey(<span class="built_in">key</span>)) {
-            return -<span class="number">1</span>;
-        }
-
-        <span class="comment">// remove current</span>
-        Node current = hs.<span class="built_in">get</span>(<span class="built_in">key</span>);
-        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current.<span class="built_in">next</span>;
-        current.<span class="built_in">next</span>.<span class="built_in">prev</span> = current.<span class="built_in">prev</span>;
-
-        <span class="comment">// move current to tail</span>
-        move_to_tail(current);
-
-        return hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span>;
-    }
-
-    <span class="comment">// @param key, an integer</span>
-    <span class="comment">// @param value, an integer</span>
-    <span class="comment">// @return nothing</span>
-    public void <span class="built_in">set</span>(<span class="typename">int</span> <span class="built_in">key</span>, <span class="typename">int</span> <span class="built_in">value</span>) {
-        <span class="comment">// write your code here</span>
-        if( <span class="built_in">get</span>(<span class="built_in">key</span>) != -<span class="number">1</span>) {
-            hs.<span class="built_in">get</span>(<span class="built_in">key</span>).<span class="built_in">value</span> = <span class="built_in">value</span>;
-            return;
-        }
-
-        if (hs.size() == capacity) {
-            hs.remove(head.<span class="built_in">next</span>.<span class="built_in">key</span>);
-            head.<span class="built_in">next</span> = head.<span class="built_in">next</span>.<span class="built_in">next</span>;
-            head.<span class="built_in">next</span>.<span class="built_in">prev</span> = head;
-        }
-
-        Node insert = new Node(<span class="built_in">key</span>, <span class="built_in">value</span>);
-        hs.put(<span class="built_in">key</span>, insert);
-        move_to_tail(insert);
-    }
-
-    private void move_to_tail(Node current) {
-        current.<span class="built_in">prev</span> = tail.<span class="built_in">prev</span>;
-        tail.<span class="built_in">prev</span> = current;
-        current.<span class="built_in">prev</span>.<span class="built_in">next</span> = current;
-        current.<span class="built_in">next</span> = tail;
-    }
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LinkedList/">LinkedList</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/10/MedianInDataStream/" title="[LintCode] - MedianInDataStream" itemprop="url">[LintCode] - MedianInDataStream</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Lin Du" target="_blank" itemprop="author">Lin Du</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-11T02:11:01.000Z" itemprop="datePublished"> 發表於 2015-06-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h4 id="Question"><em>Question</em></h4><h5 id="link"><a href="http://www.lintcode.com/en/problem/data-stream-median/" target="_blank" rel="external">link</a></h5><p>Numbers keep coming, return the median of numbers at every time a new number added.</p>
-<h5 id="Example">Example</h5><p>For numbers coming list: [1, 2, 3, 4, 5], return [1, 1, 2, 2, 3].</p>
-<p>For numbers coming list: [4, 5, 1, 3, 2, 6, 0], return [4, 4, 4, 3, 3, 3, 3].</p>
-<p>For numbers coming list: [2, 20, 100], return [2, 2, 20].</p>
-<h5 id="Challenge">Challenge</h5><p>Total run time in O(nlogn).</p>
-<h5 id="Clarification">Clarification</h5><p>What’s the definition of Median? - Median is the number that in the middle of a sorted array. If there are n numbers in a sorted array A, the median is A[(n - 1) / 2]. For example, if A=[1,2,3], median is 2. If A=[1,19], median is 1.</p>
-<h4 id="Thought_and_Solution"><em>Thought and Solution</em></h4><h5 id="Implementation_of_PriorityQueue_in_Java">Implementation of PriorityQueue in Java</h5><p>PriorityQueue是从JDK1.5开始提供的新的数据结构接口，它是一种基于优先级堆的极大优先级队列。优先级队列是不同于先进先出队列的另一种队列。每次从队列中取出的是具有最高优先权的元素。如果不提供Comparator的话，优先队列中元素默认按自然顺序排列，也就是数字默认是小的在队列头，字符串则按字典序排列（参阅 Comparable），也可以根据 Comparator 来指定，这取决于使用哪种构造方法。优先级队列不允许 null 元素。依靠自然排序的优先级队列还不允许插入不可比较的对象（这样做可能导致 ClassCastException）。</p>
-<p>比如队列 1 3 5 10 2 自动会被排列 1 2 3 5 10</p>
-<p>Example:</p>
-<p>MinHeap:</p>
-<p>Queue<integer> queue = new PriorityQueue<integer>();<br>            qi.add(5);<br>            qi.add(2);<br>            qi.add(1);<br>            qi.add(10);<br>            qi.add(3);</integer></integer></p>
-<p>从queue中poll出数据的顺序: 1 2 3 5 10</p>
-<p>MaxHeap:</p>
-<p>Override the comparator:</p>
-<pre><code>Comparator&lt;<span class="type">Integer</span>&gt; revCmp = new Comparator&lt;<span class="type">Integer</span>&gt;() {
-    @Override
-    <span class="keyword">public</span> <span class="built_in">int</span> compare(<span class="type">Integer</span> left, <span class="type">Integer</span> right) {
-        <span class="keyword">return</span> right - left;
-    }
-};
-</code></pre><p>Queue<integer> q2 = new PriorityQueue<integer>(5, cmp);<br>            q2.add(2);<br>            q2.add(8);<br>            q2.add(9);<br>            q2.add(1);</integer></integer></p>
-<p>从queue中poll出数据的顺序: 9 8 2 1</p>
-<h5 id="Solution_1">Solution 1</h5><p>我们创建两个堆，一个最大堆maxHeap，一个最小堆</p>
-<p>maxHeap保存较小的半边数据，minHeap保存较大的半边数据。</p>
-<p>1.无论如何，直接把新值插入到maxHeap。</p>
-<ol>
-<li><p>当minHeap为空，直接退出。</p>
-</li>
-<li><p>当maxHeap比minHeap多2个值，直接移动一个值到maxHeap即可。</p>
-</li>
-<li><p>当maxHeap比minHeap多1个值，比较顶端的2个值，如果maxHeap的最大值大于minHeap的最小值，交换2个值即可。</p>
-</li>
-<li><p>当maxHeap较大时，中值是maxHeap的顶值，否则取2者的顶值的中间值。</p>
-</li>
-</ol>
-<pre><code><span class="keyword">public</span> class Solution {
-<span class="comment">/**
- * @param nums: A list of integers.
- * @return: the median of numbers
- */</span>
-<span class="keyword">public</span> <span class="built_in">int</span>[] medianII(<span class="built_in">int</span>[] nums) {
-    <span class="comment">// write your code here</span>
-    <span class="keyword">if</span>(nums==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;  
-    <span class="built_in">int</span>[] res = <span class="keyword">new</span> <span class="built_in">int</span>[nums.length];  
-
-    PriorityQueue&lt;Integer&gt; minHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;();  
-    PriorityQueue&lt;Integer&gt; maxHeap = <span class="keyword">new</span> PriorityQueue&lt;Integer&gt;(<span class="number">11</span>, <span class="keyword">new</span> Comparator&lt;Integer&gt;() {  
-        @Override  
-        <span class="keyword">public</span> <span class="built_in">int</span> compare(Integer x, Integer y) {  
-            <span class="keyword">return</span> y-x;  
-        }  
-    });  
-    res[<span class="number">0</span>] = nums[<span class="number">0</span>];  
-    maxHeap.<span class="built_in">add</span>(nums[<span class="number">0</span>]);  
-
-    <span class="keyword">for</span>(<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++) {  
-        <span class="built_in">int</span> x = maxHeap.peek();  
-        <span class="keyword">if</span>(nums[i] &lt;= x) {  
-            maxHeap.<span class="built_in">add</span>(nums[i]);  
-        } <span class="keyword">else</span> {  
-            minHeap.<span class="built_in">add</span>(nums[i]);  
-        }  
-        <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &gt; minHeap.<span class="built_in">size</span>()+<span class="number">1</span> ) {  
-            minHeap.<span class="built_in">add</span>(maxHeap.poll());  
-        } <span class="keyword">else</span> <span class="keyword">if</span>(maxHeap.<span class="built_in">size</span>() &lt; minHeap.<span class="built_in">size</span>()) {  
-            maxHeap.<span class="built_in">add</span>(minHeap.poll());  
-        }  
-        res[i] = maxHeap.peek();  
-    }  
-    <span class="keyword">return</span> res;  
-}
-}
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/LintCode/">LintCode</a>
-</div>
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Algorithms/">Algorithms</a><a href="/tags/HashTable/">HashTable</a><a href="/tags/LintCode/">LintCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1863,7 +1552,7 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 		  
 		
 		  
-			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>28</sup></a></li>
+			<li><a href="/categories/LeetCode/" title="LeetCode">LeetCode<sup>45</sup></a></li>
 		  
 		
 		  
@@ -1884,11 +1573,19 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>39</sup></a></li>
+				<li><a href="/tags/Algorithms/" title="Algorithms">Algorithms<sup>56</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>28</sup></a></li>
+				<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>45</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Math/" title="Math">Math<sup>11</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Array/" title="Array">Array<sup>11</sup></a></li>
 			
 		
 			
@@ -1896,11 +1593,11 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 			
 		
 			
-				<li><a href="/tags/Math/" title="Math">Math<sup>9</sup></a></li>
+				<li><a href="/tags/LintCode/" title="LintCode">LintCode<sup>9</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LintCode/" title="LintCode">LintCode<sup>9</sup></a></li>
+				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>8</sup></a></li>
 			
 		
 			
@@ -1908,15 +1605,19 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 			
 		
 			
-				<li><a href="/tags/Array/" title="Array">Array<sup>7</sup></a></li>
+				<li><a href="/tags/String/" title="String">String<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/LinkedList/" title="LinkedList">LinkedList<sup>6</sup></a></li>
+				<li><a href="/tags/Tree/" title="Tree">Tree<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/String/" title="String">String<sup>4</sup></a></li>
+				<li><a href="/tags/DFS/" title="DFS">DFS<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Backtracking/" title="Backtracking">Backtracking<sup>4</sup></a></li>
 			
 		
 			
@@ -1924,7 +1625,7 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 			
 		
 			
-				<li><a href="/tags/Tree/" title="Tree">Tree<sup>2</sup></a></li>
+				<li><a href="/tags/Others/" title="Others">Others<sup>1</sup></a></li>
 			
 		
 			
@@ -1932,11 +1633,11 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 			
 		
 			
-				<li><a href="/tags/geeeksforgeeks/" title="geeeksforgeeks">geeeksforgeeks<sup>1</sup></a></li>
+				<li><a href="/tags/Sorting/" title="Sorting">Sorting<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Others/" title="Others">Others<sup>1</sup></a></li>
+				<li><a href="/tags/Linked-List/" title="Linked List">Linked List<sup>1</sup></a></li>
 			
 		
 			
@@ -1948,7 +1649,7 @@ The sum that is closest to the target is 2.<span class="function"> (</span>-1 + 
 			
 		
 			
-				<li><a href="/tags/Sorting/" title="Sorting">Sorting<sup>1</sup></a></li>
+				<li><a href="/tags/DP/" title="DP">DP<sup>1</sup></a></li>
 			
 		
 		</ul>
